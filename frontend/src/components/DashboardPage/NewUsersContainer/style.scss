@@ -1,0 +1,40 @@
+@import '../../../styles/variables';
+.dashboardPage__new-user {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1000px; 
+  
+
+  h1 {
+    font-size: $font-size-h1;
+    margin-bottom: 10px;
+    color: $color-text-primary;
+  }
+
+  h2 {
+    font-size: $font-size-h2;
+    margin-bottom: 20px;
+  }
+
+  h3 {
+    font-size: $font-size-h3;
+    margin-bottom: 20px;
+    text-align: center;
+    color: $color-text-secondary;
+  }
+
+  .dashboardPage__button {
+    width: 60%;
+    margin-bottom: 30px;
+  }
+
+  .specialties-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+    width: 100%;
+  }
+}
