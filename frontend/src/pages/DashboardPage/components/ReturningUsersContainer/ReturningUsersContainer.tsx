@@ -4,6 +4,8 @@ import Button from "../../../../components/Button/Button";
 import AppointmentsSection from "../AppointmentsSection/AppointmentsSection";
 import { useDoctorFilter } from "../../../../hooks/useDoctorFilter";
 
+import "./styles.scss"
+
 type ReturningUsersContainerProps = {
   upcomingAppointments: AppointmentProps[];
   pastAppointments: AppointmentProps[];

@@ -1,5 +1,6 @@
 import type { AppointmentProps } from "../../../../types/types";
 import AppointmentGrid from "../AppointmentsGrid/AppointmentsGrid";
+import "./style.scss"
 
 
 type AppointmentsSectionProps = {
