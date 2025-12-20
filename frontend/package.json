@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "test": "vitest",
     "test:ui": "vitest --ui",
-    "test:run": "vitest run"
+    "test:run": "vitest run",
+    "vercel-build": "npm run build"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -41,6 +42,7 @@
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.46.4",
     "vite": "^7.2.4",
-    "vitest": "^4.0.16"
+    "vitest": "^4.0.16",
+    "sass-embedded": "^1.80.4"
   }
 }
