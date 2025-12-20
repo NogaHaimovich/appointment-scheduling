@@ -21,7 +21,7 @@ const DashboardPage = () => {
     [data]
   );
 
-  if (loading)
+  if (loading || !data)
     return <div className="dashboardPage_container">Loading appointments...</div>;
 
   if (error)
