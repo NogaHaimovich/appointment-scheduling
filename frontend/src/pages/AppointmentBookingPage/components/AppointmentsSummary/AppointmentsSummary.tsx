@@ -1,5 +1,5 @@
 import Button from "../../../../components/Button/Button";
-import { formatDateToDisplay } from "../../../../utils/dateFormat";
+import { formatDateToDisplay, formatTimeToDisplay } from "../../../../utils/dateFormat";
 import "./styles.scss"
 
 type AppointmentSummaryProps = {
@@ -16,6 +16,7 @@ type AppointmentSummaryProps = {
 
 const AppointmentSummary = ({ specialty, doctor, date, time, loading, error, onConfirm, isReschedule = false, disabled = false}: AppointmentSummaryProps) => {
   const formattedDate = formatDateToDisplay(date);
+  const formattedTime = formatTimeToDisplay(time, date);
   
   return (
     <div className="appointment-summary">
@@ -25,7 +26,7 @@ const AppointmentSummary = ({ specialty, doctor, date, time, loading, error, onC
         <SummaryRow label="Specialty" value={specialty} />
         <SummaryRow label="Doctor" value={doctor} />
         <SummaryRow label="Date" value={formattedDate} />
-        <SummaryRow label="Time" value={time} />
+        <SummaryRow label="Time" value={formattedTime} />
       </div>
 
       {error && <div className="summary-error">{error}</div>}

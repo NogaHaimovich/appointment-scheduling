@@ -3,6 +3,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 import dayjs, { Dayjs } from "dayjs";
 import type { FC } from "react";
+import { formatTimeToDisplay } from "../../../../utils/dateFormat";
 
 import "./styles.scss";
 
@@ -22,14 +23,23 @@ const DateTimeSelector: FC<DateTimeSelectorProps> = ({ groupedSlots, selectedDat
   
   const selectedDateValue = selectedDate ? dayjs(selectedDate) : null;
   
-  const availableTimes = selectedDate ? groupedSlots[selectedDate] || [] : [];
-
+  const availableTimesLocal = selectedDate ? (groupedSlots[selectedDate] || []).map(utcTime => {
+    return formatTimeToDisplay(utcTime, selectedDate);
+  }) : [];
+  
+  const timeMapping = selectedDate ? (() => {
+    const mapping: Record<string, string> = {};
+    (groupedSlots[selectedDate] || []).forEach(utcTime => {
+      const localTime = formatTimeToDisplay(utcTime, selectedDate);
+      mapping[localTime] = utcTime;
+    });
+    return mapping;
+  })() : {};
 
   const shouldDisableDate = (date: Dayjs) => {
     const dateString = date.format("YYYY-MM-DD");
     return !availableDates.includes(dateString);
   };
-
 
   const handleDateChange = (newDate: Dayjs | null) => {
     if (newDate) {
@@ -57,18 +67,22 @@ const DateTimeSelector: FC<DateTimeSelectorProps> = ({ groupedSlots, selectedDat
       {selectedDate && (
         <div className="time-slots-section">
           <h3 className="section-title">Select Time</h3>
-          {availableTimes.length > 0 ? (
+          {availableTimesLocal.length > 0 ? (
             <div className="time-slots-grid">
-              {availableTimes.map((time, index) => (
-                <button
-                  key={`${time}-${index}`}
-                  className={`time-slot-button ${selectedTime === time ? "selected" : ""}`}
-                  onClick={() => onTimeChange(time)}
-                  disabled={disable}
-                >
-                  {time}
-                </button>
-              ))}
+              {availableTimesLocal.map((localTime, index) => {
+                const utcTime = timeMapping[localTime];
+                const isSelected = selectedTime === utcTime;
+                return (
+                  <button
+                    key={`${localTime}-${index}`}
+                    className={`time-slot-button ${isSelected ? "selected" : ""}`}
+                    onClick={() => onTimeChange(utcTime)}
+                    disabled={disable}
+                  >
+                    {localTime}
+                  </button>
+                );
+              })}
             </div>
           ) : (
             <div className="no-slots-message">

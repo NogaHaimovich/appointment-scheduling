@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { authUtils } from "../utils/auth";
-import { formatDateToDisplay } from "../utils/dateFormat";
+import { formatDateToDisplay, formatTimeToDisplay } from "../utils/dateFormat";
 import { useMutation } from "./useMutation";
 import type { ApiMessageResponse } from "../types/types";
 
@@ -47,8 +47,10 @@ export const useAppointmentBooking = () => {
     }
 
     if (isRescheduleMode && rescheduleParams) {
+      const formattedDate = formatDateToDisplay(selectedDate);
+      const formattedTime = formatTimeToDisplay(selectedTime, selectedDate);
       const confirmed = window.confirm(
-        `Reschedule to ${formatDateToDisplay(selectedDate)} at ${selectedTime}?`
+        `Reschedule to ${formattedDate} at ${formattedTime}?`
       );
       if (!confirmed) return;
     }

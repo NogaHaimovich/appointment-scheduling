@@ -1,6 +1,6 @@
 import { useMutation } from "../../../../hooks/useMutation";
 import { useNavigate } from "react-router-dom";
-import { formatDateToDisplay } from "../../../../utils/dateFormat";
+import { formatDateToDisplay, formatTimeToDisplay } from "../../../../utils/dateFormat";
 import Button from "../../../../components/Button/Button";
 import type { AppointmentProps, ApiMessageResponse } from "../../../../types/types";
 
@@ -41,7 +41,8 @@ const AppointmentCard = ({
 
     const handleCancel = async () => {
         const formattedDate = formatDateToDisplay(date);
-        const confirmMessage = `Are you sure you want to cancel your appointment on ${formattedDate} at ${time}?`;
+        const formattedTime = formatTimeToDisplay(time, date);
+        const confirmMessage = `Are you sure you want to cancel your appointment on ${formattedDate} at ${formattedTime}?`;
         const confirmed = window.confirm(confirmMessage);
         
         if (!confirmed) {
@@ -59,10 +60,11 @@ const AppointmentCard = ({
     };
 
     const formattedDate = formatDateToDisplay(date);
+    const formattedTime = formatTimeToDisplay(time, date);
 
     return (
         <div className="appointment_cube">
-            <h3>Date: {formattedDate}, {time}</h3>
+            <h3>Date: {formattedDate}, {formattedTime}</h3>
             <h3>Dr: {doctor_name}</h3>
             <h3>Speciality: {specialty_name}</h3>
 

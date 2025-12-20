@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { convertToGCalUTC } from "../../utils/dateFormat";
+import { convertToGCalUTC, formatDateToDisplay, formatTimeToDisplay } from "../../utils/dateFormat";
 import { getGCalUrl } from "../../utils/googleCalendar";
 import "./styles.scss";
 import PopupButtons from "../PopupButtons/PopupButtons";
@@ -19,13 +19,15 @@ type SuccessPopupProps = {
 
 const SuccessPopup = ({isOpen, onClose, title, message, date, time, doctor, specialty, isReschedule = false}: SuccessPopupProps) => {
   const gcalTimes = convertToGCalUTC(date, time);
+  const formattedDate = formatDateToDisplay(date);
+  const formattedTime = formatTimeToDisplay(time, date);
 
   const eventTitle = doctor ? `Appointment with ${doctor}` : title;
   const eventDetails = [
     message,
     specialty && `Specialty: ${specialty}`,
     doctor && `Doctor: ${doctor}`,
-    date && time && `Date: ${date} at ${time}`,
+    date && time && `Date: ${formattedDate} at ${formattedTime}`,
   ]
     .filter(Boolean)
     .join("\n");

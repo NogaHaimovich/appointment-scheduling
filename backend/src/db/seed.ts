@@ -3,8 +3,10 @@ import { randomUUID } from "crypto";
 
 
 function formatDate(date: Date): string {
-  const iso: string = date.toISOString();
-  return iso.split("T")[0]!; 
+  const year = date.getUTCFullYear();
+  const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+  const day = String(date.getUTCDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
 }
 
 
@@ -14,7 +16,7 @@ function generateAppointments(
   doctors: { id: number }[]
 ) {
   const appointments: { doctor_id: number; date: string; time: string }[] = [];
-  for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
+  for (let d = new Date(start); d <= end; d.setUTCDate(d.getUTCDate() + 1)) {
     const dateStr = formatDate(new Date(d));
     for (const doctor of doctors) {
       for (let hour = 9; hour <= 17; hour++) {
@@ -106,8 +108,8 @@ export async function seed() {
     console.log(`Inserted ${users.length} users`);
 
     const doctorRows = await allAsync<{ id: number }>("SELECT id FROM doctors");
-    const startDate = new Date(2025, 11, 15); 
-    const endDate = new Date(2025, 11, 31);
+    const startDate = new Date(Date.UTC(2025, 11, 15)); 
+    const endDate = new Date(Date.UTC(2025, 11, 31));
     const appointments = generateAppointments(startDate, endDate, doctorRows);
 
     for (const a of appointments) {
