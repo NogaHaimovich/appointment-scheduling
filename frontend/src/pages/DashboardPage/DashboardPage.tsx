@@ -6,7 +6,8 @@ import { authUtils } from "../../utils/auth";
 import "./styles.scss";
 import NewUserContainer from "./components/NewUsersContainer/NewUsersContainer";
 import ReturningUsersContainer from "./components/ReturningUsersContainer/ReturningUsersContainer";
-import type { AppointmentsResponse } from "../../types/types";
+import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
+import type { AppointmentsResponse, SpecialitiesResponse } from "../../types/types";
 
 const DashboardPage = () => {
   const userId = authUtils.getUserIdFromToken();
@@ -21,19 +22,40 @@ const DashboardPage = () => {
     [data]
   );
 
+  const hasAppointments = useMemo(
+    () => upcomingAppointments.length > 0 || pastAppointments.length > 0,
+    [upcomingAppointments, pastAppointments]
+  );
+
+  const shouldLoadSpecialties = !loading && !!data && !hasAppointments;
+  const { data: specialtiesData, loading: loadingSpecialties } = useData<SpecialitiesResponse>(
+    API_ENDPOINTS.getSpecialties,
+    0,
+    undefined,
+    shouldLoadSpecialties
+  );
+
   if (loading || !data)
-    return <div className="dashboardPage_container">Loading appointments...</div>;
+    return (
+      <div className="dashboardPage_container">
+        <LoadingSpinner />
+      </div>
+    );
 
   if (error)
     return <div className="dashboardPage_container">Error loading appointments</div>;
 
-  const hasAppointments =
-    upcomingAppointments.length > 0 || pastAppointments.length > 0;
+  if (!hasAppointments && (loadingSpecialties || !specialtiesData))
+    return (
+      <div className="dashboardPage_container">
+        <LoadingSpinner />
+      </div>
+    );
 
   return (
     <div className="dashboardPage_container">
       {!hasAppointments ? (
-        <NewUserContainer/>
+        <NewUserContainer specialties={specialtiesData} />
       ) : (
         <ReturningUsersContainer
           upcomingAppointments={upcomingAppointments} 

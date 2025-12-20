@@ -1,8 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import Button from "../../../../components/Button/Button";
 import type { SpecialitiesResponse } from "../../../../types/types";
-import { useData } from "../../../../hooks/useData";
-import { API_ENDPOINTS } from "../../../../config/api";
 
 import cardiologyImage from "../../../../images/cardiology.png";
 import dermatologyImage from "../../../../images/dermatology.png";
@@ -25,10 +23,11 @@ const getSpecialtyImage = (specialtyName: string): string => {
   return imageMap[specialtyName] || "";
 };
 
-const NewUserContainer = () => {
-  const { data: specialties, loading: loadingSpecialties } =
-    useData<SpecialitiesResponse>(API_ENDPOINTS.getSpecialties, 0);
+type NewUserContainerProps = {
+  specialties: SpecialitiesResponse | null;
+};
 
+const NewUserContainer = ({ specialties }: NewUserContainerProps) => {
   const navigate = useNavigate();
   const handleScheduleClick = () => {
     navigate("/booking");
@@ -43,11 +42,9 @@ const NewUserContainer = () => {
       </Button>
 
       <h2>Our specialties:</h2>
-      {loadingSpecialties ? (
-        <p>Loading specialties...</p>
-      ) : (
+      {specialties && specialties.specialties ? (
         <div className="specialties-cards">
-          {specialties?.specialties.map((s) => (
+          {specialties.specialties.map((s) => (
             <SpecialtyCard
               key={s.id}
               specialty={s}
@@ -55,7 +52,7 @@ const NewUserContainer = () => {
             />
           ))}
         </div>
-      )}
+      ) : null}
     </div>
   );
 };
