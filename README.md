@@ -11,6 +11,7 @@ A full-stack web application for managing medical appointments. Users can book, 
 - **Appointment Management**: View upcoming and past appointments
 - **Rescheduling**: Reschedule existing appointments to different time slots
 - **Cancellation**: Cancel appointments when needed
+- **Google Calendar Integration**: Add appointments to Google Calendar via URL-based integration
 - **Responsive Design**: Modern UI built with React and Material-UI
 
 ## 🛠️ Tech Stack
@@ -42,29 +43,31 @@ Before you begin, ensure you have the following installed:
 - **npm** (v9 or higher) or **yarn**
 - **Git**
 
-## 🔧 Installation
+## 🔧 Setup Instructions
 
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd appointment-manager/apps
-   ```
+### 1. Clone the Repository
+```bash
+git clone <repository-url>
+cd appointment-manager/apps
+```
 
-2. **Install backend dependencies**
-   ```bash
-   cd backend
-   npm install
-   ```
+### 2. Install Dependencies
 
-3. **Install frontend dependencies**
-   ```bash
-   cd ../frontend
-   npm install
-   ```
+**Backend:**
+```bash
+cd backend
+npm install
+```
 
-## ⚙️ Environment Setup
+**Frontend:**
+```bash
+cd ../frontend
+npm install
+```
 
-### Backend Environment Variables
+### 3. Environment Configuration
+
+**Backend Environment Variables**
 
 Create a `.env` file in the `backend` directory:
 
@@ -82,22 +85,17 @@ CORS_ORIGIN=http://localhost:5173,http://localhost:5174
 
 **Important**: Replace `JWT_SECRET` with a strong, random secret key in production.
 
-### Frontend Configuration
+**Frontend Configuration**
 
-The frontend API base URL is configured in `frontend/src/config/api.ts`. By default, it points to `http://localhost:5000/api`. Update this if your backend runs on a different port.
+The frontend API base URL is configured in `frontend/src/config/api.ts`. By default, it points to `http://localhost:5000`. Update this if your backend runs on a different port.
 
-## 🗄️ Database Setup
+### 4. Database Initialization
 
-The application uses SQLite. You need to initialize the database and seed it with sample data before starting the server.
+The application uses SQLite. Initialize the database and seed it with sample data:
 
-1. **Ensure the data directory exists** (optional - will be created automatically)
+1. **Initialize the database** (creates tables)
    ```bash
    cd backend
-   mkdir -p data
-   ```
-
-2. **Initialize the database** (creates tables)
-   ```bash
    npm run init
    ```
    You should see:
@@ -108,7 +106,7 @@ The application uses SQLite. You need to initialize the database and seed it wit
    Database connection closed
    ```
 
-3. **Seed the database** (populates sample data)
+2. **Seed the database** (populates sample data)
    ```bash
    npm run seed
    ```
@@ -119,20 +117,75 @@ The application uses SQLite. You need to initialize the database and seed it wit
    - Available appointment slots from December 15-31, 2025 (9 AM - 5 PM)
    - 3 sample users (for testing)
 
-4. **Start the server**
-   ```bash
-   npm run dev
-   ```
+### 5. Start the Application
 
-The database file will be created at `backend/data/app.db` when you run the init command.
+**Start Backend Server:**
+```bash
+cd backend
+npm run dev
+```
+The server will run on `http://localhost:5000` (or the port specified in your `.env` file).
+
+**Start Frontend Development Server:**
+```bash
+cd frontend
+npm run dev
+```
+The frontend will run on `http://localhost:5173` (or the next available port).
+
+### 6. Access the Application
+
+Open your browser and navigate to `http://localhost:5173` (or the port shown in your terminal).
+
+**Test Login:**
+- Use any phone number (e.g., `1234567890`)
+- The OTP code will be returned in the API response (for development purposes)
+- Enter the code to log in and access the dashboard
+
+## 🏗️ Architecture Decisions
+
+### Project Structure
+
+The application follows a **monorepo structure** with separate `backend` and `frontend` directories, allowing independent development and deployment of each service.
+
+### Backend Architecture
+
+**Key Decisions:**
+- **SQLite Database**: Chosen for simplicity and ease of setup. Suitable for development and small-scale deployments. Can be easily migrated to PostgreSQL/MySQL for production.
+- **JWT Authentication**: Stateless authentication using JWT tokens stored in HTTP-only cookies and Authorization headers for flexibility.
+- **In-Memory OTP Storage**: OTP codes stored in memory (Map) for simplicity. In production, consider Redis or a database for distributed systems.
+- **RESTful API Design**: Clear separation of concerns with dedicated routes for auth, appointments, and specialties.
+
+### Frontend Architecture
+
+**Component-Based Architecture:**
+
+**Key Decisions:**
+- **React Hooks Pattern**: Custom hooks encapsulate business logic and state management, promoting reusability.
+- **Vite Build Tool**: Fast development server and optimized production builds.
+- **Material-UI**: Consistent design system with pre-built components.
+- **Axios for HTTP**: Promise-based HTTP client with interceptors and error handling.
+- **Google Calendar Integration**: Implemented using a simple URL-based approach (`googleCalendar.ts`) that opens Google Calendar with pre-filled appointment details. This was intentionally kept as simple as possible to avoid over-engineering. **Note**: In a production application, this method would not be suitable. A proper implementation would require:
+  - Google Calendar API integration with OAuth 2.0 authentication
+  - Server-side API calls to create calendar events programmatically
+  - Event management (create, update, delete) synchronized with appointment changes
+  - Proper error handling and user consent flows
 
 ### Database Schema
 
-- **users**: Stores user information (id, phone)
-- **doctors**: Stores doctor information (id, name)
-- **specialties**: Stores medical specialties (id, name, description)
-- **doctor_specialties**: Junction table linking doctors to specialties
-- **appointments**: Stores appointment slots (id, doctor_id, date, time, user_id)
+**Relational Design:**
+- **users**: Stores user information (id as UUID, phone as unique identifier)
+- **doctors**: Stores doctor information (id as auto-increment integer, name)
+- **specialties**: Stores medical specialties (id as auto-increment integer, name as unique, description)
+- **doctor_specialties**: Junction table for many-to-many relationship between doctors and specialties
+- **appointments**: Stores appointment slots (id, doctor_id, date, time, user_id nullable)
+  - Unique constraint on (doctor_id, date, time) prevents double-booking
+  - user_id is nullable to represent available slots vs booked appointments
+
+**Design Rationale:**
+- Normalized schema prevents data duplication
+- Junction table allows doctors to have multiple specialties
+- Appointment slots are pre-created and assigned to users, simplifying availability queries
 
 ## 🧪 Testing
 
