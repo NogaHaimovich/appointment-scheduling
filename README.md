@@ -2,6 +2,10 @@
 
 A full-stack web application for managing medical appointments. Users can book, view, and reschedule appointments with doctors across different medical specialties.
 
+## 🌐 Live Demo
+
+🔗 **[View Live Application](https://appoinments-manager.netlify.app/)** - Deployed on Netlify
+
 ## 🚀 Features
 
 - **Phone-based Authentication**: Secure login using phone number and OTP verification
