@@ -93,6 +93,16 @@ The frontend API base URL is configured in `frontend/src/config/api.ts`. By defa
 
 The application uses SQLite. Initialize the database and seed it with sample data:
 
+**Option 1: Combined Setup (Recommended)**
+```bash
+cd backend
+npm run setup
+```
+This single command will:
+- Create all database tables
+- Seed the database with sample data
+
+**Option 2: Separate Commands**
 1. **Initialize the database** (creates tables)
    ```bash
    cd backend
@@ -111,11 +121,11 @@ The application uses SQLite. Initialize the database and seed it with sample dat
    npm run seed
    ```
    
-   This will populate the database with:
-   - 5 medical specialties (Dermatology, Orthopedics, Cardiology, Pediatrics, Neurology)
-   - 13 doctors across different specialties
-   - Available appointment slots from December 15-31, 2025 (9 AM - 5 PM)
-   - 3 sample users (for testing)
+The seed data includes:
+- 5 medical specialties (Dermatology, Orthopedics, Cardiology, Pediatrics, Neurology)
+- 13 doctors across different specialties
+- Available appointment slots from December 15-31, 2025 (9 AM - 5 PM)
+- 3 sample users (for testing)
 
 ### 5. Start the Application
 
@@ -142,6 +152,15 @@ Open your browser and navigate to `http://localhost:5173` (or the port shown in 
 - The OTP code will be returned in the API response (for development purposes)
 - Enter the code to log in and access the dashboard
 
+## 🚀 Deployment
+
+The application is configured for deployment using **Netlify** (frontend) and **Render** (backend).
+
+**Frontend (Netlify):** Optimized for static sites/SPAs with automatic GitHub deployments, built-in CDN, and easy configuration via `netlify.toml`. Set `VITE_API_BASE_URL` environment variable to your Render backend URL.
+
+**Backend (Render):** Excellent Node.js/TypeScript support with automatic deployments via `render.yaml`. Database is automatically initialized and seeded on each deployment using `setup:prod`.
+
+**Note:** Render's free tier uses ephemeral filesystems, so the SQLite database resets on restarts.
 ## 🏗️ Architecture Decisions
 
 ### Project Structure

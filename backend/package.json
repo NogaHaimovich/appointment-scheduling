@@ -4,9 +4,15 @@
   "main": "index.js",
   "scripts": {
     "start": "ts-node src/index.ts",
+    "start:prod": "node dist/index.js",
+    "build": "tsc",
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "init": "ts-node src/db/init.ts",
+    "init:prod": "node dist/db/init.js",
     "seed": "ts-node src/db/seed.ts",
+    "seed:prod": "node dist/db/seed.js",
+    "setup": "ts-node src/db/setup.ts",
+    "setup:prod": "node dist/db/setup.js",
     "test": "jest"
   },
   "keywords": [],

@@ -9,6 +9,7 @@ import authRoutes from "./auth/auth.routes";
 
 import { validateEnvVariables } from "./utils/envValidation";
 import specialtiesRoutes from "./specialties/specialties.routes";
+import { initializeOnStartup } from "./startup";
 
 dotenv.config();
 
@@ -31,6 +32,8 @@ app.use(cors({
 app.use(express.json());
 app.use(cookieParser());
 
+// Initialize database on startup
+initializeOnStartup();
 
 app.use("/", authRoutes);
 app.use("/appointments", appointmentsRoutes);
