@@ -2,18 +2,22 @@ import SpecialtySelector from "./components/SpecialtySelection/SpecialtySelectio
 import DoctorSelector from "./components/DoctorSelection/DoctorSelection";
 import DateTimeSelector from "./components/DateAndTimeSelection/DateAndTimeSelection";
 import AppointmentSummary from "./components/AppointmentsSummary/AppointmentsSummary";
-import { useAppointmentBooking } from "../../hooks/useAppointmentsBooking";
-import "./styles.scss"
 import SuccessPopup from "../../components/SuccessPopup/SuccessPopup";
+import { useAppointmentBooking } from "../../hooks/useAppointmentsBooking";
+
+import "./styles.scss";
 
 const AppointmentBookingPage = () => {
   const booking = useAppointmentBooking();
   const isPopupOpen = booking.showSuccessPopup;
+  console.log(booking.selectedDoctor)
 
   return (
     <div className="bookingPage-container">
       <h1 className="bookingPage_title">
-        {booking.isRescheduleMode ? "Reschedule Appointment" : "Book a new appointment"}
+        {booking.isRescheduleMode
+          ? "Reschedule Appointment"
+          : "Book a new appointment"}
       </h1>
 
       <SpecialtySelector
@@ -29,7 +33,11 @@ const AppointmentBookingPage = () => {
         options={booking.doctorsOptions}
         onChange={booking.handleDoctorChange}
         loading={booking.loadingDoctors}
-        disabled={booking.isRescheduleMode || !booking.selectedSpecialtyId || isPopupOpen}
+        disabled={
+          isPopupOpen ||
+          booking.isRescheduleMode ||
+          !booking.selectedSpecialty
+        }
       />
 
       <DateTimeSelector
@@ -39,7 +47,10 @@ const AppointmentBookingPage = () => {
         onDateChange={booking.setSelectedDate}
         onTimeChange={booking.setSelectedTime}
         loadingSlots={booking.loadingSlots}
-        disable={!booking.selectedDoctorId || isPopupOpen}
+        disable={
+          isPopupOpen ||
+          !booking.selectedDoctor
+        }
       />
 
       {booking.isFormComplete && (
@@ -59,10 +70,16 @@ const AppointmentBookingPage = () => {
       <SuccessPopup
         isOpen={booking.showSuccessPopup}
         onClose={booking.handleCloseSuccessPopup}
-        title={booking.isRescheduleMode ? "Appointment Rescheduled!" : "Appointment Scheduled!"}
-        message={booking.isRescheduleMode 
-          ? "Your appointment has been rescheduled successfully." 
-          : "Your appointment has been scheduled successfully."}
+        title={
+          booking.isRescheduleMode
+            ? "Appointment Rescheduled!"
+            : "Appointment Scheduled!"
+        }
+        message={
+          booking.isRescheduleMode
+            ? "Your appointment has been rescheduled successfully."
+            : "Your appointment has been scheduled successfully."
+        }
         date={booking.selectedDate}
         time={booking.selectedTime}
         doctor={booking.selectedDoctor}
