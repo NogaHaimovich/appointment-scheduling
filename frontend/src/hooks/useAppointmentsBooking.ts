@@ -206,7 +206,6 @@ export const useAppointmentBooking = () => {
       if ((response as any)?.success) {
         setLocalError(null);
         setShowSuccessPopup(true);
-        // Form will be cleared when user closes the popup
       } else {
         setLocalError((response as any)?.message || `Failed to ${isRescheduleMode ? 'reschedule' : 'schedule'} appointment.`);
       }
@@ -220,7 +219,6 @@ export const useAppointmentBooking = () => {
 
   const handleCloseSuccessPopup = useCallback(() => {
     setShowSuccessPopup(false);
-    // Clear form when closing popup
     setSelectedSpecialty("");
     setSelectedSpecialtyId(null);
     setSelectedDoctor("");

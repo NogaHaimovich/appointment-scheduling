@@ -1,0 +1,38 @@
+@import '../../styles/variables';
+
+.input-wrapper {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.input_field {
+  width: 100%;
+  padding: 18px;
+  font-size: $font-size-body;
+  border-radius: 8px;
+  border: 1px solid $color-border-default;
+  box-sizing: border-box;
+
+  &:focus {
+    outline: none;
+    border-color: $color-border-focus;
+    box-shadow: 0 0 5px $color-shadow-focus;
+  }
+
+  &--error {
+    border-color: $color-text-error;
+
+    &:focus {
+      border-color: $color-text-error;
+      box-shadow: 0 0 5px rgba(220, 53, 69, 0.5);
+    }
+  }
+}
+
+.input_field__error {
+  color: $color-text-error;
+  font-size: $font-size-body;
+  margin-top: 5px;
+  text-align: left;
+  min-height: 20px;
+}

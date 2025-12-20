@@ -3,7 +3,7 @@ import { db } from "./index";
 
 export function initializeDatabase(db: Database): void {
   db.serialize(() => {
-    console.log("🧱 Creating tables...");
+    console.log("Creating tables...");
 
     db.run(`
       CREATE TABLE IF NOT EXISTS users (
@@ -50,7 +50,7 @@ export function initializeDatabase(db: Database): void {
       )
     `);
 
-    console.log("✅ Tables created");
+    console.log("Tables created");
   });
 }
 

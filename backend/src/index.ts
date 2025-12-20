@@ -4,10 +4,11 @@ import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 import cors from "cors";
 
-import appointmentsRoutes from "./routes/appointments.routes";
-import authRoutes from "./routes/auth.routes";
-import specialtiesRoutes from "./routes/specialties.routes";
+import appointmentsRoutes from "./appointments/appointments.routes";
+import authRoutes from "./auth/auth.routes";
+
 import { validateEnvVariables } from "./utils/envValidation";
+import specialtiesRoutes from "./specialties/specialties.routes";
 
 dotenv.config();
 
@@ -31,11 +32,10 @@ app.use(express.json());
 app.use(cookieParser());
 
 
-app.use("/api", authRoutes);
-app.use("/api/appointments", appointmentsRoutes);
-app.use("/api/specialties", specialtiesRoutes);
+app.use("/", authRoutes);
+app.use("/appointments", appointmentsRoutes);
+app.use("/specialties", specialtiesRoutes);
 
-// 404 handler
 app.use((req: Request, res: Response) => {
   res.status(404).json({ success: false, message: "Route not found" });
 });

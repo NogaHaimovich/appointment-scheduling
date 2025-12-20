@@ -1,0 +1,66 @@
+@import '../../styles/variables';
+
+.success-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;      
+  justify-content: center;  
+  animation: fadeIn 0.3s ease;
+  backdrop-filter: blur(2px);
+  z-index: 10000;
+}
+
+.success-popup {
+  background-color: $color-background-primary; 
+  border-radius: 15px;
+  padding: 40px;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease;
+  pointer-events: all;
+
+
+  &__icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #4caf50;
+    color: white;
+    font-size: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-weight: bold;
+  }
+
+  &__title {
+    font-size: $font-size-h2;
+    color: $color-text-primary;
+    margin: 0 0 15px 0;
+  }
+
+  &__message {
+    font-size: $font-size-body;
+    color: $color-text-secondary;
+    margin: 0 0 30px 0;
+    line-height: 1.5;
+  }
+
+
+  &__subtitle {
+    font-size: 0.875rem;
+    color: $color-text-secondary;
+    margin: 20px 0 0 0;
+    line-height: 1.4;
+    font-style: italic;
+    opacity: 0.8;
+  }
+}

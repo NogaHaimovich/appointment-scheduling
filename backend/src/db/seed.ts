@@ -51,7 +51,7 @@ export async function seed() {
     await runAsync("DELETE FROM doctors");
     await runAsync("DELETE FROM specialties");
     await runAsync("DELETE FROM users");
-    console.log("✅ Cleared existing data");
+    console.log("Cleared existing data");
 
     const specialties = [
       { id: 1, name: "Dermatology", description: "Skin specialist" },
@@ -66,7 +66,7 @@ export async function seed() {
         [s.id, s.name, s.description]
       );
     }
-    console.log(`✅ Inserted ${specialties.length} specialties`);
+    console.log(`Inserted ${specialties.length} specialties`);
 
     const doctors = [
       { name: "Dr. Cohen", specialtyId: 1 },
@@ -96,14 +96,14 @@ export async function seed() {
         });
       });
     }
-    console.log(`✅ Inserted ${doctors.length} doctors`);
+    console.log(`Inserted ${doctors.length} doctors`);
 
     const users = ["0501111111", "0502222222", "0503333333"];
     for (const phone of users) {
       const userId = randomUUID();
       await runAsync("INSERT INTO users (id, phone) VALUES (?, ?)", [userId, phone]);
     }
-    console.log(`✅ Inserted ${users.length} users`);
+    console.log(`Inserted ${users.length} users`);
 
     const doctorRows = await allAsync<{ id: number }>("SELECT id FROM doctors");
     const startDate = new Date(2025, 11, 15); 
@@ -117,11 +117,11 @@ export async function seed() {
         a.time,
       ]);
     }
-    console.log(`✅ Inserted ${appointments.length} appointments`);
+    console.log(`Inserted ${appointments.length} appointments`);
 
-    console.log("✅ Seed completed successfully!");
+    console.log("Seed completed successfully!");
   } catch (error) {
-    console.error("❌ Seed failed:", error);
+    console.error("Seed failed:", error);
     throw error;
   }
 }

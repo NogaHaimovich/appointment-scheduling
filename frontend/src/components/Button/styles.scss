@@ -1,0 +1,32 @@
+@import '../../styles/variables';
+
+button {
+  width: 100%;
+  padding: 18px;
+  font-size: $font-size-button !important;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s;
+
+  &:hover:enabled {
+    opacity: 0.9;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  &.primary {
+    background-color: $color-background-button;  
+  }
+
+  &.info {
+      background-color: $color-background-button-info; 
+  }
+
+  &.danger {
+    background-color: $color-background-button-danger; 
+  }
+}

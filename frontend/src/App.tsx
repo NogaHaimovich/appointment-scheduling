@@ -1,6 +1,6 @@
-import AppointmentBookingPage from "./pages/AppointmentBookingPage";
-import DashboardPage from "./pages/DashboardPage";
-import LoginPage from "./pages/LoginPage";
+import AppointmentBookingPage from "./pages/AppointmentBookingPage/AppointmentBookingPage";
+import DashboardPage from "./pages/DashboardPage/DashboardPage";
+import LoginPage from "./pages/LoginPage/LoginPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 
