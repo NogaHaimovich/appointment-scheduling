@@ -174,9 +174,9 @@ The application follows a **monorepo structure** with separate `backend` and `fr
 ### Backend Architecture
 
 **Key Decisions:**
-- **SQLite Database**: Chosen for simplicity and ease of setup. Suitable for development and small-scale deployments. Can be easily migrated to PostgreSQL/MySQL for production.
+- **SQLite Database**: Chosen for simplicity and ease of setup. Suitable for development and small-scale deployments. 
 - **JWT Authentication**: Stateless authentication using JWT tokens stored in HTTP-only cookies and Authorization headers for flexibility.
-- **In-Memory OTP Storage**: OTP codes stored in memory (Map) for simplicity. In production, consider Redis or a database for distributed systems.
+- **In-Memory OTP Storage**: OTP codes stored in memory (Map) for simplicity.
 - **RESTful API Design**: Clear separation of concerns with dedicated routes for auth, appointments, and specialties.
 
 ### Frontend Architecture
@@ -209,6 +209,11 @@ The application follows a **monorepo structure** with separate `backend` and `fr
 - Normalized schema prevents data duplication
 - Junction table allows doctors to have multiple specialties
 - Appointment slots are pre-created and assigned to users, simplifying availability queries
+
+## 📝 Assumptions
+
+- **Phone Number Validation**: The only restriction on phone numbers is that they must be exactly 10 digits. In a more professional project, additional validation would be needed (e.g., country code validation, format checking, etc.).
+- **Doctor Specialties**: One doctor can have multiple specialties. This is supported by the `doctor_specialties` junction table in the database schema.
 
 ## 🧪 Testing
 
