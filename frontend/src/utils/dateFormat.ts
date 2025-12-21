@@ -24,13 +24,12 @@ export const formatDateToAPI = (dateString: string): string => {
   
   const parts = dateString.split('-');
   if (parts.length >= 3) {
-    const [day, month, year] = parts.map(Number);
-    if (!isNaN(day) && !isNaN(month) && !isNaN(year)) {
-      const localDate = new Date(year, month - 1, day);
-      const utcYear = localDate.getUTCFullYear();
-      const utcMonth = String(localDate.getUTCMonth() + 1).padStart(2, '0');
-      const utcDay = String(localDate.getUTCDate()).padStart(2, '0');
-      return `${utcYear}-${utcMonth}-${utcDay}`;
+    const day = parts[0];
+    const month = parts[1];
+    const year = parts[2];
+    
+    if (day && month && year) {
+      return `${year}-${month}-${day}`;
     }
   }
   

@@ -5,7 +5,6 @@ import fs from "fs";
 const dbPath = path.join(__dirname, "../../data/app.db");
 const dbDir = path.dirname(dbPath);
 
-// Ensure data directory exists
 if (!fs.existsSync(dbDir)) {
   fs.mkdirSync(dbDir, { recursive: true });
 }

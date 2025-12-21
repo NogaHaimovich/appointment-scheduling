@@ -2,29 +2,25 @@ import { db } from "./index";
 import { initializeDatabase } from "./init";
 import { seed } from "./seed";
 
-// Combined script to initialize and seed the database
 async function setupDatabase(): Promise<void> {
   try {
-    console.log("🔧 Setting up database...");
+    console.log(" Setting up database...");
     
-    // Initialize tables (wrap in promise to ensure completion)
-    console.log("📋 Initializing database tables...");
+    console.log("Initializing database tables...");
     await new Promise<void>((resolve, reject) => {
       initializeDatabase(db);
-      // Wait for all operations in serialize queue to complete
       db.wait((err) => {
         if (err) reject(err);
         else resolve();
       });
     });
     
-    // Seed data
-    console.log("🌱 Seeding database...");
+    console.log("Seeding database...");
     await seed();
     
-    console.log("✅ Database setup complete!");
+    console.log("Database setup complete!");
   } catch (error) {
-    console.error("❌ Database setup failed:", error);
+    console.error("Database setup failed:", error);
     throw error;
   } finally {
     db.close((err) => {
