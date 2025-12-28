@@ -1,0 +1,101 @@
+@import '../../styles/variables';
+
+.MuiFormControl-root {
+  .MuiInputLabel-root {
+    font-size: $font-size-body !important;
+    font-weight: 500 !important;
+    
+    &.Mui-focused {
+      color: $color-border-focus !important;
+      font-weight: 600 !important;
+    }
+  }
+  
+  .MuiSelect-select {
+    font-size: $font-size-body !important;
+    font-weight: 600 !important;
+    padding: 16px 16px !important;
+    line-height: 1.5 !important;
+  }
+  
+  .MuiOutlinedInput-root {
+    font-size: $font-size-body !important;
+    border-radius: 12px !important;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.3) 100%) !important;
+    backdrop-filter: blur(10px);
+    transition: all $transition-smooth !important;
+    box-shadow: 0 2px 8px rgba(137, 168, 178, 0.1) !important;
+    
+    .MuiOutlinedInput-notchedOutline {
+      border-color: rgba(137, 168, 178, 0.3) !important;
+      border-width: 2px !important;
+    }
+    
+    &:hover:not(.Mui-disabled) {
+      box-shadow: 0 4px 12px rgba(137, 168, 178, 0.15) !important;
+      transform: translateY(-1px);
+      
+      .MuiOutlinedInput-notchedOutline {
+        border-color: rgba(137, 168, 178, 0.5) !important;
+      }
+    }
+    
+    &.Mui-focused {
+      box-shadow: 0 0 0 4px rgba(137, 168, 178, 0.15), 0 4px 16px rgba(137, 168, 178, 0.2) !important;
+      transform: translateY(-2px);
+      
+      .MuiOutlinedInput-notchedOutline {
+        border-color: $color-border-focus !important;
+        border-width: 2px !important;
+      }
+    }
+    
+    &.Mui-disabled {
+      opacity: 0.4;
+      background: rgba(0, 0, 0, 0.03) !important;
+    }
+  }
+  
+  .MuiSelect-icon {
+    color: rgba(137, 168, 178, 0.8) !important;
+    font-size: 1.75rem !important;
+    transition: transform $transition-smooth !important;
+  }
+  
+  &.Mui-focused .MuiSelect-icon {
+    transform: rotate(180deg);
+  }
+}
+
+.MuiMenu-paper {
+  .MuiMenuItem-root {
+    font-size: $font-size-body !important;
+    font-weight: 500 !important;
+    min-height: 48px !important;
+    padding: 12px 16px !important;
+    
+    &:hover {
+      background-color: rgba(137, 168, 178, 0.08) !important;
+    }
+    
+    &.Mui-selected {
+      font-weight: 600 !important;
+      background-color: rgba(137, 168, 178, 0.12) !important;
+      
+      &:hover {
+        background-color: rgba(137, 168, 178, 0.16) !important;
+      }
+    }
+  }
+  
+  .MuiListItemText-primary {
+    font-size: $font-size-body !important;
+    font-weight: 500 !important;
+  }
+  
+  .MuiListItemText-secondary {
+    font-size: $font-size-body-small !important;
+    font-weight: 400 !important;
+  }
+}
+

@@ -5,10 +5,43 @@
     flex-direction: row;
     align-items: center;
     min-height: 120px;
-    border: 2px solid $color-border-sage;
-    border-radius: 15px;
+    border: none;
+    border-radius: 16px;
     overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 12px rgba(137, 168, 178, 0.15);
+    background: linear-gradient(135deg, $color-background-secondary 0%, lighten($color-background-secondary, 2%) 100%);
+    transition: all $transition-smooth;
+    cursor: pointer;
+    position: relative;
+    transform: translateY(0);
+    
+    // Subtle gradient overlay on hover
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(137, 168, 178, 0.05) 0%, rgba(179, 200, 207, 0.05) 100%);
+      opacity: 0;
+      transition: opacity $transition-smooth;
+      pointer-events: none;
+    }
+    
+    &:hover {
+      transform: translateY(-4px) scale(1.01);
+      box-shadow: 0 8px 24px rgba(137, 168, 178, 0.25);
+      
+      &::before {
+        opacity: 1;
+      }
+    }
+    
+    &:active {
+      transform: translateY(-2px) scale(1);
+      box-shadow: 0 4px 16px rgba(137, 168, 178, 0.2);
+    }
 
 
     &__content {
@@ -16,30 +49,42 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: 20px;
+      padding: 24px;
+      position: relative;
+      z-index: 1;
     }
 
     &__title {
-      font-size: $font-size-h3;
-      font-weight: 600;
+      font-size: $font-size-h5;
+      font-weight: 500;
       text-align: left;
-      margin: 0 0 10px 0;
+      margin: 0 0 $spacing-sm 0;
       color: $color-text-primary;
+      letter-spacing: 0.00938em;
     }
 
     &__description {
-      font-size: $font-size-small;
+      font-size: $font-size-body;
       text-align: left;
       margin: 0;
       color: $color-text-secondary;
       line-height: 1.5;
+      letter-spacing: 0.01071em;
+      font-weight: 400;
     }
 
     &__image {
       width: 120px;
       height: 120px;
-      padding:10px;
+      padding: 12px;
       object-fit: cover;
       flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+      transition: transform $transition-smooth;
+    }
+    
+    &:hover &__image {
+      transform: scale(1.05);
     }
   }

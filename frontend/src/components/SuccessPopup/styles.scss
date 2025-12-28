@@ -1,5 +1,25 @@
 @import '../../styles/variables';
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
 .success-popup-overlay {
   position: fixed;
   top: 0;
@@ -11,56 +31,95 @@
   align-items: center;      
   justify-content: center;  
   animation: fadeIn 0.3s ease;
-  backdrop-filter: blur(2px);
+  backdrop-filter: blur(4px);
   z-index: 10000;
 }
 
 .success-popup {
-  background-color: $color-background-primary; 
-  border-radius: 15px;
-  padding: 40px;
+  background: linear-gradient(135deg, $color-background-secondary 0%, lighten($color-background-secondary, 2%) 100%); 
+  border-radius: 24px;
+  padding: $spacing-xl;
   max-width: 400px;
   width: 90%;
   text-align: center;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-  animation: slideUp 0.3s ease;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  border: none;
+  animation: slideUp 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   pointer-events: all;
+  position: relative;
+  overflow: hidden;
+  
+  // Decorative glow
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(137, 168, 178, 0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
 
 
   &__icon {
-    width: 80px;
-    height: 80px;
+    width: 90px;
+    height: 90px;
     border-radius: 50%;
-    background-color: #4caf50;
+    background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
     color: white;
-    font-size: 3rem;
+    font-size: 3.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto 20px;
+    margin: 0 auto 24px;
     font-weight: bold;
+    box-shadow: 0 8px 24px rgba(76, 175, 80, 0.4);
+    position: relative;
+    z-index: 1;
+    animation: scaleIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.2s both;
+  }
+  
+  @keyframes scaleIn {
+    from {
+      transform: scale(0);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
   }
 
   &__title {
-    font-size: $font-size-h2;
+    font-size: $font-size-h5;
+    font-weight: 600;
     color: $color-text-primary;
-    margin: 0 0 15px 0;
+    margin: 0 0 $spacing-md 0;
+    letter-spacing: 0.00938em;
+    position: relative;
+    z-index: 1;
   }
 
   &__message {
     font-size: $font-size-body;
+    font-weight: 500;
     color: $color-text-secondary;
-    margin: 0 0 30px 0;
+    margin: 0 0 $spacing-lg 0;
     line-height: 1.5;
+    letter-spacing: 0.01071em;
+    position: relative;
+    z-index: 1;
   }
 
 
   &__subtitle {
-    font-size: 0.875rem;
+    font-size: $font-size-body-small;
     color: $color-text-secondary;
-    margin: 20px 0 0 0;
-    line-height: 1.4;
+    margin: $spacing-md 0 0 0;
+    line-height: 1.43;
     font-style: italic;
-    opacity: 0.8;
+    opacity: 0.7;
+    letter-spacing: 0.01071em;
   }
 }

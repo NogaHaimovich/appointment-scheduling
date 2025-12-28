@@ -4,10 +4,13 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin-bottom: 40px;
-  padding: 40px;
-  border-radius: 15px;
+  margin-bottom: $spacing-xl;
+  padding: $spacing-xl;
+  border-radius: 4px;
   width: 90%;
+  background-color: $color-background-secondary;
+  box-shadow: $elevation-2;
+  border: none;
 
   &__header {
     font-size: $font-size-h1;
@@ -15,7 +18,7 @@
   }
 
   .dashboardPage__button {
-    width: 100%;
+    width: 20%;
     align-self: center;
     margin: 30px 0;
   }

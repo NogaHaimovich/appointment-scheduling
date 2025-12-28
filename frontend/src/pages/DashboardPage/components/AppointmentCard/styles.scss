@@ -1,21 +1,52 @@
     @import '../../../../styles/variables';
 
     .appointment_cube {
-        border: 3px solid $color-background-dark;
-        border-radius: 15px;
-        padding: 20px;
-        background-color: $color-background-primary;
-        box-shadow: 0 2px 8px $color-shadow-default;
+        border: none;
+        border-radius: 16px;
+        padding: $spacing-lg;
+        background: linear-gradient(135deg, $color-background-secondary 0%, lighten($color-background-secondary, 1%) 100%);
+        box-shadow: 0 2px 12px rgba(137, 168, 178, 0.15);
         min-height: 150px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        transition: all $transition-smooth;
+        position: relative;
+        transform: translateY(0);
+        overflow: hidden;
+        
+        // Decorative accent line
+        &::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 4px;
+          height: 100%;
+          background: linear-gradient(180deg, $color-background-dark 0%, $color-background-button-info 100%);
+          opacity: 0;
+          transition: opacity $transition-smooth;
+        }
+        
+        &:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 8px 24px rgba(137, 168, 178, 0.25);
+          
+          &::before {
+            opacity: 1;
+          }
+        }
+        
+        &:active {
+          transform: translateY(-2px);
+          box-shadow: 0 4px 16px rgba(137, 168, 178, 0.2);
+        }
 
 
 
         h3 {
             font-size: $font-size-h3;
+            font-weight: 500;
             margin: 8px 0;
             word-wrap: break-word;
         }

@@ -16,15 +16,29 @@
 
   .dashboardPage__doctor-filter {
     padding: 8px 16px;
-    border-radius: 8px;
-    border: 2px solid $color-border-sage;
-    background-color: $color-background-primary;
-    font-size: $font-size-small;
+    border-radius: 4px;
+    border: 1px solid rgba(0, 0, 0, 0.23);
+    background-color: transparent;
+    font-size: $font-size-body;
     cursor: pointer;
     outline: none;
+    transition: $transition-standard;
+    color: $color-text-primary;
+    min-height: 40px;
 
-    &:hover {
-      border-color: darken($color-border-sage, 10%);
+    &:hover:not(:disabled) {
+      border-color: rgba(0, 0, 0, 0.87);
+    }
+    
+    &:focus {
+      border-color: $color-background-dark;
+      border-width: 2px;
+      padding: 7px 15px;
+    }
+    
+    &:disabled {
+      opacity: 0.38;
+      cursor: not-allowed;
     }
   }
 }

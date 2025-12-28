@@ -2,19 +2,43 @@
 
 .appointment-summary {
     width: 100%;
-    background-color: white;
-    border-radius: 8px;
-    padding: 24px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(135deg, $color-background-secondary 0%, lighten($color-background-secondary, 1.5%) 100%);
+    border-radius: 20px;
+    padding: $spacing-xl;
+    box-shadow: 0 4px 20px rgba(137, 168, 178, 0.2);
+    border: none;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: $spacing-md;
+    transition: all $transition-smooth;
+    position: relative;
+    overflow: hidden;
+    
+    // Decorative gradient overlay
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(137, 168, 178, 0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    
+    &:hover {
+      box-shadow: 0 8px 30px rgba(137, 168, 178, 0.3);
+      transform: translateY(-2px);
+    }
 
     .summary-title {
-      font-size: $font-size-h3;
-      margin: 0;
+      font-size: $font-size-h5;
+      margin: 0 0 $spacing-sm 0;
       color: $color-text-primary;
       font-weight: 600;
+      letter-spacing: 0.00938em;
+      position: relative;
+      z-index: 1;
     }
 
     .summary-content {
@@ -27,32 +51,38 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 8px 0;
-      border-bottom: 1px solid $color-border-default;
+      padding: $spacing-sm 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+      transition: $transition-standard;
 
       &:last-child {
         border-bottom: none;
       }
 
       .summary-label {
-        font-weight: 600;
+        font-weight: 500;
         color: $color-text-secondary;
-        font-size: $font-size-small;
+        font-size: $font-size-body;
+        letter-spacing: 0.01071em;
       }
 
       .summary-value {
         color: $color-text-primary;
-        font-size: $font-size-small;
+        font-size: $font-size-body;
+        font-weight: 600;
         text-align: right;
+        letter-spacing: 0.01071em;
       }
     }
 
     .summary-error {
       color: $color-text-error;
-      font-size: $font-size-small;
-      padding: 8px;
-      background-color: rgba(220, 53, 69, 0.1);
+      font-size: $font-size-body-small;
+      padding: $spacing-md;
+      background-color: rgba(231, 76, 60, 0.08);
       border-radius: 4px;
+      border-left: 4px solid $color-text-error;
+      letter-spacing: 0.01071em;
     }
 
     .schedule-button {

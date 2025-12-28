@@ -1,5 +1,6 @@
 import { Select, MenuItem, InputLabel, FormControl, ListItemText } from "@mui/material";
 import type { DropdownOption } from "../../types/types";
+import "./styles.scss";
 
 type DropdownProps = {
   label: string;

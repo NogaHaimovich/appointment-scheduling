@@ -2,31 +2,78 @@
 
 button {
   width: 100%;
-  padding: 18px;
+  padding: 12px 28px;
   font-size: $font-size-button !important;
-  border-radius: 8px;
+  font-weight: $font-weight-button;
+  letter-spacing: 0.02857em;
+  border-radius: 12px;
   border: none;
   cursor: pointer;
-  transition: opacity 0.2s;
+  transition: all $transition-smooth;
+  text-transform: uppercase;
+  min-height: 44px;
+  position: relative;
+  overflow: hidden;
+  color: $color-text-white;
+  box-shadow: 0 4px 14px 0 rgba(137, 168, 178, 0.25);
+  transform: translateY(0);
+
 
   &:hover:enabled {
-    opacity: 0.9;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px 0 rgba(137, 168, 178, 0.35);
+    
+    &::before {
+      left: 100%;
+    }
+  }
+
+  &:active:enabled {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px 0 rgba(137, 168, 178, 0.2);
+    
+    &::after {
+      width: 300px;
+      height: 300px;
+    }
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(137, 168, 178, 0.2);
   }
 
   &:disabled {
-    opacity: 0.6;
+    opacity: 0.5;
     cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
   }
 
   &.primary {
-    background-color: $color-background-button;  
+    background: linear-gradient(135deg, $color-background-button 0%, darken($color-background-button, 8%) 100%);
+    
+    &:hover:enabled {
+      background: linear-gradient(135deg, lighten($color-background-button, 3%) 0%, $color-background-button 100%);
+    }
   }
 
   &.info {
-      background-color: $color-background-button-info; 
+    background: linear-gradient(135deg, $color-background-button-info 0%, darken($color-background-button-info, 5%) 100%);
+    color: $color-text-primary;
+    box-shadow: 0 2px 8px 0 rgba(179, 200, 207, 0.3);
+    
+    &:hover:enabled {
+      background: linear-gradient(135deg, lighten($color-background-button-info, 3%) 0%, $color-background-button-info 100%);
+      box-shadow: 0 4px 12px 0 rgba(179, 200, 207, 0.4);
+    }
   }
 
   &.danger {
-    background-color: $color-background-button-danger; 
+    background: linear-gradient(135deg, $color-background-button-danger 0%, darken($color-background-button-danger, 8%) 100%);
+    
+    &:hover:enabled {
+      background: linear-gradient(135deg, lighten($color-background-button-danger, 3%) 0%, $color-background-button-danger 100%);
+    }
   }
 }

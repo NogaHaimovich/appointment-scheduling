@@ -1,39 +1,70 @@
 
 // Background Colors
-$color-background-primary: #f0f1ed;   
-$color-background-secondary: #D2DCB6; 
-$color-background-dark: #778873;      
+$color-background-primary: #F1F0E8;   // Very light beige/cream
+$color-background-secondary: #E5E1DA; // Beige/cream
+$color-background-dark: #89A8B2;     // Blue-gray (primary accent)
 
 // Text Colors
-$color-text-primary: #333;
-$color-text-secondary: #555;
+$color-text-primary: #2c3e50;
+$color-text-secondary: #5a6c7d;
 $color-text-white: #ffffff;
-$color-text-dark: #778873;      
-$color-text-error: #dc3545;      
+$color-text-dark: #89A8B2;      
+$color-text-error: #e74c3c;      
 
 // Border Colors
-$color-border-default: #ccc;
-$color-border-focus: #889e80;
-$color-border-sage: #A1BC98;          
+$color-border-default: #d0d5d9;
+$color-border-focus: #89A8B2;
+$color-border-sage: #B3C8CF;          
 
 //Button Colors: 
-$color-background-button-danger: #ff6b6b;
-$color-background-button: #889e80; 
-$color-background-button-info:  #D2DCB6;  
+$color-background-button-danger: #e74c3c;
+$color-background-button: #89A8B2; 
+$color-background-button-info: #B3C8CF;  
 
-// Shadow Colors
-$color-shadow-default: rgba(0, 0, 0, 0.1);
-$color-shadow-focus: rgba(0, 123, 255, 0.5);
+// Material Design Elevation System
+$elevation-0: none;
+$elevation-1: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+$elevation-2: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+$elevation-4: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+$elevation-8: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);
+$elevation-12: 0px 7px 8px -4px rgba(0, 0, 0, 0.2), 0px 12px 17px 2px rgba(0, 0, 0, 0.14), 0px 5px 22px 4px rgba(0, 0, 0, 0.12);
+$elevation-16: 0px 8px 10px -5px rgba(0, 0, 0, 0.2), 0px 16px 24px 2px rgba(0, 0, 0, 0.14), 0px 6px 30px 5px rgba(0, 0, 0, 0.12);
+$elevation-24: 0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12);
 
-// Font Sizes
-$font-size-h1: 3.5rem;    // 56px
-$font-size-h2: 2.5rem;    // 40px
-$font-size-h3: 2rem;      // 32px
-$font-size-h4: 1.75rem;   // 28px
+// Shadow Colors (for custom use)
+$color-shadow-default: rgba(137, 168, 178, 0.15);
+$color-shadow-focus: rgba(137, 168, 178, 0.3);
+$color-shadow-hover: rgba(137, 168, 178, 0.25);
 
-$font-size-body: 1.5rem;  // 24px
-$font-size-small: 1.25rem; // 20px
-$font-size-xsmall: 1.125rem; // 18px
+// Material Design Transitions
+$transition-standard: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+$transition-decelerate: 150ms cubic-bezier(0.0, 0, 0.2, 1);
+$transition-accelerate: 150ms cubic-bezier(0.4, 0, 1, 1);
+$transition-sharp: 150ms cubic-bezier(0.4, 0, 0.6, 1);
+$transition-smooth: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+$transition-bounce: 400ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
-$font-size-button: 1.75rem; // 28px
+// Material Design Typography Scale
+$font-size-h1: 3.5rem;    // 56px - Display Large
+$font-size-h2: 2.5rem;    // 40px - Display Medium
+$font-size-h3: 2rem;      // 32px - Display Small / Headline Large
+$font-size-h4: 1.75rem;   // 28px - Headline Medium
+$font-size-h5: 1.5rem;    // 24px - Headline Small
+$font-size-h6: 1.25rem;   // 20px - Title Large
+
+$font-size-body: 1.125rem;    // 18px - Body Large (increased)
+$font-size-body-small: 1rem; // 16px - Body Medium (increased)
+$font-size-small: 1rem; // 16px - Body Small (increased)
+$font-size-xsmall: 0.875rem; // 14px - Label Large (increased)
+
+$font-size-button: 1rem; // 16px - Button standard (increased)
+$font-weight-button: 600; // Semi-bold weight for buttons (increased)
+
+// Material Design Spacing (8px base unit)
+$spacing-xs: 4px;
+$spacing-sm: 8px;
+$spacing-md: 16px;
+$spacing-lg: 24px;
+$spacing-xl: 32px;
+$spacing-xxl: 40px;
 

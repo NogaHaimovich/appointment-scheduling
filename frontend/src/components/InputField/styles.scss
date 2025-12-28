@@ -2,21 +2,48 @@
 
 .input-wrapper {
   width: 100%;
-  margin-bottom: 10px;
+  margin-bottom: $spacing-md;
 }
 
 .input_field {
   width: 100%;
-  padding: 18px;
+  padding: 16px 16px;
   font-size: $font-size-body;
-  border-radius: 8px;
-  border: 1px solid $color-border-default;
+  border-radius: 12px;
+  border: 2px solid rgba(137, 168, 178, 0.3);
   box-sizing: border-box;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.3) 100%);
+  backdrop-filter: blur(10px);
+  transition: all $transition-smooth;
+  color: $color-text-primary;
+  min-height: 56px;
+  box-shadow: 0 2px 8px rgba(137, 168, 178, 0.1);
+
+  &:hover:not(:disabled):not(:focus) {
+    border-color: rgba(137, 168, 178, 0.5);
+    box-shadow: 0 4px 12px rgba(137, 168, 178, 0.15);
+    transform: translateY(-1px);
+  }
 
   &:focus {
     outline: none;
     border-color: $color-border-focus;
-    box-shadow: 0 0 5px $color-shadow-focus;
+    border-width: 2px;
+    padding: 15px 15px;
+    background: rgba(255, 255, 255, 0.7);
+    box-shadow: 0 0 0 4px rgba(137, 168, 178, 0.15), 0 4px 16px rgba(137, 168, 178, 0.2);
+    transform: translateY(-2px);
+  }
+
+  &::placeholder {
+    color: rgba(0, 0, 0, 0.6);
+    opacity: 1;
+  }
+
+  &:disabled {
+    opacity: 0.38;
+    cursor: not-allowed;
+    background-color: rgba(0, 0, 0, 0.05);
   }
 
   &--error {
@@ -24,15 +51,17 @@
 
     &:focus {
       border-color: $color-text-error;
-      box-shadow: 0 0 5px rgba(220, 53, 69, 0.5);
+      border-width: 2px;
     }
   }
 }
 
 .input_field__error {
   color: $color-text-error;
-  font-size: $font-size-body;
-  margin-top: 5px;
+  font-size: $font-size-body-small;
+  margin-top: $spacing-xs;
+  margin-left: $spacing-sm;
   text-align: left;
   min-height: 20px;
+  line-height: 1.43;
 }
