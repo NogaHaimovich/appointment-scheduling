@@ -32,14 +32,20 @@ app.use(cors({
 app.use(express.json());
 app.use(cookieParser());
 
-initializeOnStartup();
-
 app.use("/", authRoutes);
 app.use("/appointments", appointmentsRoutes);
 app.use("/specialties", specialtiesRoutes);
 
+initializeOnStartup();
+
+console.log("Routes registered:");
+console.log("  - Auth routes: /getCode, /validateCode");
+console.log("  - Appointments routes: /appointments/user, /appointments/open-slots-by-doctor-id, etc.");
+console.log("  - Specialties routes: /specialties/, /specialties/doctors-by-specialty");
+
 app.use((req: Request, res: Response) => {
-  res.status(404).json({ success: false, message: "Route not found" });
+  console.log(`404 - Route not found: ${req.method} ${req.path}`);
+  res.status(404).json({ success: false, message: `Route not found: ${req.method} ${req.path}` });
 });
 
 

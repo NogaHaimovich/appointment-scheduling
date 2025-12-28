@@ -52,4 +52,4 @@ router.get("/doctors-by-specialty", async(req: Request, res: Response)=>{
     }
 })
 
-export default router
+export default router;
