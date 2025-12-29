@@ -15,13 +15,18 @@ type AppointmentsSectionProps = {
 
 const AppointmentsSection = ({ title, appointments, doctors, selectedDoctor, onDoctorChange, showButtons, emptyText}: AppointmentsSectionProps) => {
   if (appointments.length === 0) {
-    return <h3>{emptyText}</h3>;
-  }
+    return (          
+        <><div className="appointments-header">
+          <h2>{title}</h2>
+        </div>
+        <h3 className="empty-text-session">{emptyText}</h3>
+      </>
+    );}
 
   return (
     <>
       <div className="appointments-header">
-        <h3>{title}</h3>
+        <h2>{title}</h2>
 
         {doctors.length > 0 && (
           <select

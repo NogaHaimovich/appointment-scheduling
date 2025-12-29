@@ -14,58 +14,60 @@ const AppointmentBookingPage = () => {
 
   return (
     <div className="bookingPage-container">
-      <h1 className="bookingPage_title">
-        {booking.isRescheduleMode
-          ? "Reschedule Appointment"
-          : "Book a new appointment"}
-      </h1>
+      <div className="bookingPage-form-container">
+        <h1 className="bookingPage_title">
+          {booking.isRescheduleMode
+            ? "Reschedule Appointment"
+            : "Book a new appointment"}
+        </h1>
 
-      <SpecialtySelector
-        selectedSpecialty={booking.selectedSpecialty}
-        options={booking.specialtyOptions}
-        onChange={booking.handleSpecialtyChange}
-        loading={booking.loadingSpecialties}
-        disabled={booking.isRescheduleMode || isPopupOpen}
-      />
-
-      <DoctorSelector
-        selectedDoctor={booking.selectedDoctor}
-        options={booking.doctorsOptions}
-        onChange={booking.handleDoctorChange}
-        loading={booking.loadingDoctors}
-        disabled={
-          isPopupOpen ||
-          booking.isRescheduleMode ||
-          !booking.selectedSpecialty
-        }
-      />
-
-      <DateTimeSelector
-        groupedSlots={booking.groupedSlots}
-        selectedDate={booking.selectedDate}
-        selectedTime={booking.selectedTime}
-        onDateChange={booking.setSelectedDate}
-        onTimeChange={booking.setSelectedTime}
-        loadingSlots={booking.loadingSlots}
-        disable={
-          isPopupOpen ||
-          !booking.selectedDoctor
-        }
-      />
-
-      {booking.isFormComplete && (
-        <AppointmentSummary
-          specialty={booking.selectedSpecialty}
-          doctor={booking.selectedDoctor}
-          date={booking.selectedDate}
-          time={booking.selectedTime}
-          loading={booking.scheduling}
-          error={booking.error}
-          onConfirm={booking.handleSchedule}
-          isReschedule={booking.isRescheduleMode}
-          disabled={isPopupOpen}
+        <SpecialtySelector
+          selectedSpecialty={booking.selectedSpecialty}
+          options={booking.specialtyOptions}
+          onChange={booking.handleSpecialtyChange}
+          loading={booking.loadingSpecialties}
+          disabled={booking.isRescheduleMode || isPopupOpen}
         />
-      )}
+
+        <DoctorSelector
+          selectedDoctor={booking.selectedDoctor}
+          options={booking.doctorsOptions}
+          onChange={booking.handleDoctorChange}
+          loading={booking.loadingDoctors}
+          disabled={
+            isPopupOpen ||
+            booking.isRescheduleMode ||
+            !booking.selectedSpecialty
+          }
+        />
+
+        <DateTimeSelector
+          groupedSlots={booking.groupedSlots}
+          selectedDate={booking.selectedDate}
+          selectedTime={booking.selectedTime}
+          onDateChange={booking.setSelectedDate}
+          onTimeChange={booking.setSelectedTime}
+          loadingSlots={booking.loadingSlots}
+          disable={
+            isPopupOpen ||
+            !booking.selectedDoctor
+          }
+        />
+
+        {booking.isFormComplete && (
+          <AppointmentSummary
+            specialty={booking.selectedSpecialty}
+            doctor={booking.selectedDoctor}
+            date={booking.selectedDate}
+            time={booking.selectedTime}
+            loading={booking.scheduling}
+            error={booking.error}
+            onConfirm={booking.handleSchedule}
+            isReschedule={booking.isRescheduleMode}
+            disabled={isPopupOpen}
+          />
+        )}
+      </div>
 
       <SuccessPopup
         isOpen={booking.showSuccessPopup}

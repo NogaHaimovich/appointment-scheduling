@@ -1,12 +1,13 @@
     @import '../../../../styles/variables';
 
     .appointment_cube {
-        border: none;
-        border-radius: 16px;
-        padding: $spacing-lg;
-        background: linear-gradient(135deg, $color-background-secondary 0%, lighten($color-background-secondary, 1%) 100%);
-        box-shadow: 0 2px 12px rgba(137, 168, 178, 0.15);
-        min-height: 150px;
+        border: 1px solid rgba(229, 231, 235, 0.8);
+        border-radius: 24px;
+        padding: 32px;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
+        min-height: 180px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -15,7 +16,6 @@
         transform: translateY(0);
         overflow: hidden;
         
-        // Decorative accent line
         &::before {
           content: '';
           position: absolute;
@@ -23,14 +23,15 @@
           left: 0;
           width: 4px;
           height: 100%;
-          background: linear-gradient(180deg, $color-background-dark 0%, $color-background-button-info 100%);
+          background: linear-gradient(180deg, $color-background-dark 0%, $color-background-accent 100%);
           opacity: 0;
           transition: opacity $transition-smooth;
         }
         
         &:hover {
-          transform: translateY(-4px);
-          box-shadow: 0 8px 24px rgba(137, 168, 178, 0.25);
+          transform: translateY(-6px);
+          box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.04);
+          border-color: rgba(99, 102, 241, 0.3);
           
           &::before {
             opacity: 1;
@@ -38,17 +39,18 @@
         }
         
         &:active {
-          transform: translateY(-2px);
-          box-shadow: 0 4px 16px rgba(137, 168, 178, 0.2);
+          transform: translateY(-3px);
+          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
         }
 
 
 
-        h3 {
-            font-size: $font-size-h3;
-            font-weight: 500;
-            margin: 8px 0;
+        h5 {
+            font-size: $font-size-h5;
+            font-weight: $font-weight-medium;
+            margin: $spacing-sm 0;
             word-wrap: break-word;
+            color: $color-text-primary;
         }
         
         .buttons_row{

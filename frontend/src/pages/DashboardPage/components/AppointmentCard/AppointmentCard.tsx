@@ -64,9 +64,9 @@ const AppointmentCard = ({
 
     return (
         <div className="appointment_cube">
-            <h3>Date: {formattedDate}, {formattedTime}</h3>
-            <h3>Dr: {doctor_name}</h3>
-            <h3>Speciality: {specialty_name}</h3>
+            <h5>Date: {formattedDate}, {formattedTime}</h5>
+            <h5>Dr: {doctor_name}</h5>
+            <h5>Speciality: {specialty_name}</h5>
 
             {error && <div className="error-message">{error}</div>}
 

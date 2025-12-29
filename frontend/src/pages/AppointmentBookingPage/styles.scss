@@ -9,12 +9,12 @@
   align-items: center;
   gap: $spacing-xl;
 
-  padding: $spacing-xl;
+  padding: $spacing-xxl;
   box-sizing: border-box;
 
   > div {
     width: 80%;
-    max-width: 600px;
+    max-width: 700px;
   }
 
   .dropdown-container {
@@ -23,18 +23,53 @@
     .dropdown-title {
       margin-bottom: $spacing-sm;
       font-size: $font-size-h5;
-      font-weight: 500;
-      letter-spacing: 0.00938em;
+      font-weight: $font-weight-medium;
+      letter-spacing: -0.01em;
+      color: $color-text-primary;
     }
+  }
+}
+
+  .bookingPage-form-container {
+    width: 95%;
+    max-width: 1800px;
+    padding: 48px;
+    border-radius: 28px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(229, 231, 235, 0.8);
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xl;
+  transition: all $transition-smooth;
+
+  &:hover {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+    border-color: rgba(99, 102, 241, 0.2);
+  }
+
+  > div {
+    width: 100%;
+  }
+
+  .bookingPage_title {
+    margin-bottom: $spacing-md;
+    width: 100%;
+    max-width: none;
   }
 }
 
 .bookingPage_title {
   font-size: $font-size-h1;
-  font-weight: 400;
-  margin-bottom: $spacing-md;
-  width: 80%;
-  max-width: 600px;
+  font-weight: $font-weight-heading;
+  margin-bottom: $spacing-lg;
+  width: 100%;
+  max-width: none;
   text-align: center;
-  letter-spacing: -0.01562em;
+  background: linear-gradient(135deg, $color-background-dark 0%, $color-background-accent 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.02em;
 }

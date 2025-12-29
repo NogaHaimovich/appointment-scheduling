@@ -28,8 +28,6 @@ router.get("/user", async (req: Request, res: Response) => {
 });
 
 router.get("/open-slots-by-doctor-id", async (req: Request, res: Response)=>{
-        console.log("inside get avaliable")
-
     const doctorID = req.query.doctorId ? parseInt(req.query.doctorId as string) : null;
     if (!doctorID) {
         return res.status(400).json({ 

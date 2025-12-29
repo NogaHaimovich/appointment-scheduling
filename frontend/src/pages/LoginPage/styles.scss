@@ -13,17 +13,17 @@
 .signin__form {
   width: 100%;
   max-width: 600px;
-  padding: $spacing-xxl;
-  border-radius: 24px;
-  background: linear-gradient(135deg, $color-background-secondary 0%, lighten($color-background-secondary, 2%) 100%);
-  box-shadow: 0 12px 40px rgba(137, 168, 178, 0.3);
-  border: none;
+  padding: 48px;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1), 0 4px 12px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.8);
   text-align: center;
   transition: all $transition-smooth;
   position: relative;
   overflow: hidden;
   
-  // Decorative elements
   &::before {
     content: '';
     position: absolute;
@@ -31,7 +31,7 @@
     right: -50%;
     width: 200%;
     height: 200%;
-    background: radial-gradient(circle, rgba(137, 168, 178, 0.08) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.08) 0%, transparent 70%);
     pointer-events: none;
   }
   
@@ -42,25 +42,28 @@
     left: -30%;
     width: 150%;
     height: 150%;
-    background: radial-gradient(circle, rgba(179, 200, 207, 0.08) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.08) 0%, transparent 70%);
     pointer-events: none;
   }
 }
 
 .signin__title {
   font-size: $font-size-h2;
-  font-weight: 400;
+  font-weight: $font-weight-heading;
   margin-bottom: $spacing-md;
-  color: $color-text-primary;
-  letter-spacing: -0.01562em;
+  background: linear-gradient(135deg, $color-background-dark 0%, $color-background-accent 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.02em;
 }
 
 .signin__subtitle {
   font-size: $font-size-h4;
-  font-weight: 400;
+  font-weight: $font-weight-medium;
   margin-bottom: $spacing-xl;
   color: $color-text-secondary;
-  letter-spacing: 0.00735em;
+  letter-spacing: -0.01em;
 }
 
 .signin__message {

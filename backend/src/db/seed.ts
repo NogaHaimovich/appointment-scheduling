@@ -109,7 +109,7 @@ export async function seed() {
 
     const doctorRows = await allAsync<{ id: number }>("SELECT id FROM doctors");
     const startDate = new Date(Date.UTC(2025, 11, 15)); 
-    const endDate = new Date(Date.UTC(2025, 11, 31));
+    const endDate = new Date(Date.UTC(2026, 11, 31));
     const appointments = generateAppointments(startDate, endDate, doctorRows);
 
     for (const a of appointments) {

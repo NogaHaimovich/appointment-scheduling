@@ -5,21 +5,36 @@
   flex-direction: column;
   align-items: flex-start;
   margin-bottom: $spacing-xl;
-  padding: $spacing-xl;
-  border-radius: 4px;
+  padding: 48px;
+  border-radius: 28px;
   width: 90%;
-  background-color: $color-background-secondary;
-  box-shadow: $elevation-2;
-  border: none;
+  max-width: 1600px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  transition: all $transition-smooth;
+
+  &:hover {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+  }
 
   &__header {
     font-size: $font-size-h1;
-    margin-bottom: 32px;
+    margin-bottom: $spacing-xl;
+    align-self: center;
+    font-weight: $font-weight-heading;
+    background: linear-gradient(135deg, $color-background-dark 0%, $color-background-accent 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
   .dashboardPage__button {
-    width: 20%;
+    width: auto;
+    min-width: 240px;
     align-self: center;
-    margin: 30px 0;
+    margin: $spacing-xl 0;
+    padding: 18px 40px;
   }
 }

@@ -1,25 +1,26 @@
 
-// Background Colors
-$color-background-primary: #F1F0E8;   // Very light beige/cream
-$color-background-secondary: #E5E1DA; // Beige/cream
-$color-background-dark: #89A8B2;     // Blue-gray (primary accent)
+// Background Colors - Modern palette
+$color-background-primary: #FAFAFA;   // Clean white-gray
+$color-background-secondary: #FFFFFF; // Pure white for cards
+$color-background-dark: #6366F1;     // Modern indigo (primary accent)
+$color-background-accent: #8B5CF6;   // Purple accent
 
-// Text Colors
-$color-text-primary: #2c3e50;
-$color-text-secondary: #5a6c7d;
-$color-text-white: #ffffff;
-$color-text-dark: #89A8B2;      
-$color-text-error: #e74c3c;      
+// Text Colors - Better contrast
+$color-text-primary: #1F2937;        // Dark gray
+$color-text-secondary: #6B7280;      // Medium gray
+$color-text-white: #FFFFFF;
+$color-text-dark: #4B5563;      
+$color-text-error: #EF4444;          // Modern red
 
 // Border Colors
-$color-border-default: #d0d5d9;
-$color-border-focus: #89A8B2;
-$color-border-sage: #B3C8CF;          
+$color-border-default: #E5E7EB;      // Light gray
+$color-border-focus: #6366F1;        // Indigo focus
+$color-border-sage: #A5B4FC;        // Light indigo
 
-//Button Colors: 
-$color-background-button-danger: #e74c3c;
-$color-background-button: #89A8B2; 
-$color-background-button-info: #B3C8CF;  
+//Button Colors - Modern gradients
+$color-background-button-danger: #EF4444;
+$color-background-button: #6366F1;   // Indigo
+$color-background-button-info: #8B5CF6; // Purple  
 
 // Material Design Elevation System
 $elevation-0: none;
@@ -31,10 +32,11 @@ $elevation-12: 0px 7px 8px -4px rgba(0, 0, 0, 0.2), 0px 12px 17px 2px rgba(0, 0,
 $elevation-16: 0px 8px 10px -5px rgba(0, 0, 0, 0.2), 0px 16px 24px 2px rgba(0, 0, 0, 0.14), 0px 6px 30px 5px rgba(0, 0, 0, 0.12);
 $elevation-24: 0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12);
 
-// Shadow Colors (for custom use)
-$color-shadow-default: rgba(137, 168, 178, 0.15);
-$color-shadow-focus: rgba(137, 168, 178, 0.3);
-$color-shadow-hover: rgba(137, 168, 178, 0.25);
+// Shadow Colors - Modern, softer shadows
+$color-shadow-default: rgba(0, 0, 0, 0.05);
+$color-shadow-focus: rgba(99, 102, 241, 0.2);
+$color-shadow-hover: rgba(0, 0, 0, 0.1);
+$color-shadow-card: rgba(0, 0, 0, 0.08);
 
 // Material Design Transitions
 $transition-standard: 150ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -44,27 +46,29 @@ $transition-sharp: 150ms cubic-bezier(0.4, 0, 0.6, 1);
 $transition-smooth: 300ms cubic-bezier(0.4, 0, 0.2, 1);
 $transition-bounce: 400ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
-// Material Design Typography Scale
-$font-size-h1: 3.5rem;    // 56px - Display Large
-$font-size-h2: 2.5rem;    // 40px - Display Medium
-$font-size-h3: 2rem;      // 32px - Display Small / Headline Large
-$font-size-h4: 1.75rem;   // 28px - Headline Medium
-$font-size-h5: 1.5rem;    // 24px - Headline Small
-$font-size-h6: 1.25rem;   // 20px - Title Large
+// Modern Typography Scale - Larger sizes
+$font-size-h1: 3.5rem;      // 56px - Display Large
+$font-size-h2: 2.75rem;     // 44px - Display Medium
+$font-size-h3: 2.25rem;     // 36px - Headline Large
+$font-size-h4: 1.875rem;    // 30px - Headline Medium
+$font-size-h5: 1.5rem;      // 24px - Headline Small
+$font-size-h6: 1.375rem;    // 22px - Title Large
 
-$font-size-body: 1.125rem;    // 18px - Body Large (increased)
-$font-size-body-small: 1rem; // 16px - Body Medium (increased)
-$font-size-small: 1rem; // 16px - Body Small (increased)
-$font-size-xsmall: 0.875rem; // 14px - Label Large (increased)
+$font-size-body: 1.125rem;      // 18px - Body
+$font-size-body-small: 1.0625rem; // 17px - Body Small
+$font-size-small: 1rem;      // 16px - Small
+$font-size-xsmall: 0.9375rem; // 15px - XSmall
 
-$font-size-button: 1rem; // 16px - Button standard (increased)
-$font-weight-button: 600; // Semi-bold weight for buttons (increased)
+$font-size-button: 1.125rem;  // 18px - Button
+$font-weight-button: 600;     // Semi-bold
+$font-weight-heading: 700;    // Bold for headings
+$font-weight-medium: 500;     // Medium weight
 
-// Material Design Spacing (8px base unit)
-$spacing-xs: 4px;
-$spacing-sm: 8px;
-$spacing-md: 16px;
-$spacing-lg: 24px;
-$spacing-xl: 32px;
-$spacing-xxl: 40px;
+// Material Design Spacing (8px base unit) - Larger spacing
+$spacing-xs: 6px;
+$spacing-sm: 12px;
+$spacing-md: 20px;
+$spacing-lg: 32px;
+$spacing-xl: 40px;
+$spacing-xxl: 48px;
 

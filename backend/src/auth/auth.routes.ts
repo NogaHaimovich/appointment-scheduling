@@ -4,7 +4,6 @@ import { generateCode, verifyCode, findOrCreateUser, generateToken } from "./aut
 const router = Router();
 
 router.post("/getCode", async (req: Request, res: Response) => {
-  console.log("Received getCode request with body:", req.body);
   try {
     const { phone } = req.body;
     if (!phone) {
