@@ -1,0 +1,106 @@
+@import '../../../../styles/variables';
+
+.doctor-selection {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+
+  .doctor-selection-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+
+  .doctor-selection-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: $color-text-secondary;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0;
+  }
+
+  .doctor-selection-count {
+    font-size: 0.75rem;
+    color: $color-text-secondary;
+    background-color: rgba(0, 0, 0, 0.04);
+    padding: 4px 8px;
+    border-radius: 4px;
+  }
+
+  .doctor-selection-loading,
+  .doctor-selection-empty {
+    padding: 24px;
+    text-align: center;
+    color: $color-text-secondary;
+  }
+
+  .doctor-selection-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .doctor-item {
+    display: flex;
+    flex-direction: column;
+    padding: 16px 0;
+    padding-left: 24px;
+    cursor: pointer;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    transition: all $transition-standard;
+    position: relative;
+
+    &:hover:not(.selected) {
+      background-color: rgba(99, 102, 241, 0.02);
+    }
+
+    &.selected {
+      &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 3px;
+        background-color: $color-background-dark;
+      }
+    }
+
+    .doctor-item-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .doctor-info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1;
+    }
+
+    .doctor-name {
+      font-size: 1rem;
+      font-weight: 500;
+      color: $color-text-primary;
+      
+      .doctor-item.selected & {
+        color: $color-background-dark;
+      }
+    }
+
+    .doctor-specialty {
+      font-size: 0.875rem;
+      color: $color-text-secondary;
+      
+      .doctor-item.selected & {
+        color: $color-background-dark;
+      }
+    }
+
+  }
+}
+

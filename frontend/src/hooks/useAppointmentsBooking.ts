@@ -14,10 +14,10 @@ export const useAppointmentBooking = () => {
   const navigate = useNavigate();
   const { rescheduleParams, isRescheduleMode } = useRescheduleParams();
 
-  const {selectedSpecialty, selectedSpecialtyId, specialtyOptions,  loadingSpecialties,  handleSpecialtyChange,  resetSpecialty} = 
+  const {selectedSpecialty, selectedSpecialtyId, specialties,  loadingSpecialties,  handleSpecialtyChange,  resetSpecialty} = 
     useSpecialties(rescheduleParams?.specialty);
 
-  const {selectedDoctor, selectedDoctorId, doctorsOptions, loadingDoctors, handleDoctorChange, resetDoctor} = 
+  const {selectedDoctor, selectedDoctorId, doctors, loadingDoctors, handleDoctorChange, resetDoctor} = 
     useDoctors( selectedSpecialtyId,  rescheduleParams?.doctor, true);
 
   const {selectedDate,  selectedTime, setSelectedDate, setSelectedTime, groupedSlots, selectedAppointmentId, loadingSlots, resetSlots} =
@@ -93,8 +93,8 @@ export const useAppointmentBooking = () => {
     selectedDate,
     selectedTime,
 
-    specialtyOptions,
-    doctorsOptions,
+    specialties,
+    doctors,
     groupedSlots,
 
     loadingSpecialties,

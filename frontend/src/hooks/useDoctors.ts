@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
 import type { DoctorBySpecialtyResponse } from "../types/types";
 import { API_ENDPOINTS } from "../config/api";
 import { useData } from "./useData";
@@ -31,11 +31,6 @@ export const useDoctors = (
     }
   }, [selectedDoctor, data]);
 
-  const doctorsOptions = useMemo(
-    () => data?.doctors?.map(d => d.name) || [],
-    [data]
-  );
-
   const handleDoctorChange = useCallback((name: string) => {
     setSelectedDoctor(name);
     setSelectedDoctorId(null);
@@ -44,7 +39,7 @@ export const useDoctors = (
   return {
     selectedDoctor,
     selectedDoctorId,
-    doctorsOptions,
+    doctors: data?.doctors || [],
     loadingDoctors: loading,
     handleDoctorChange,
     resetDoctor: () => {

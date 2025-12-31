@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, useCallback } from "react";
+import { useEffect, useState, useCallback } from "react";
 import type { SpecialitiesResponse } from "../types/types";
 import { API_ENDPOINTS } from "../config/api";
 import { useData } from "./useData";
@@ -17,16 +17,6 @@ export const useSpecialties = (initialSpecialty?: string) => {
     }
   }, [selectedSpecialty, data]);
 
-  const specialtyOptions = useMemo(
-    () =>
-      data?.specialties?.map(s => ({
-        value: s.name,
-        label: s.name,
-        description: s.description,
-      })) || [],
-    [data]
-  );
-
   const handleSpecialtyChange = useCallback((name: string) => {
     setSelectedSpecialty(name);
     setSelectedSpecialtyId(null);
@@ -35,7 +25,7 @@ export const useSpecialties = (initialSpecialty?: string) => {
   return {
     selectedSpecialty,
     selectedSpecialtyId,
-    specialtyOptions,
+    specialties: data?.specialties || [],
     loadingSpecialties: loading,
     handleSpecialtyChange,
     resetSpecialty: () => {

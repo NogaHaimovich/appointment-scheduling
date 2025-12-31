@@ -3,331 +3,413 @@
 .date-time-container {
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  width: 100%;
 
-  .calendar-section {
-    width: 100%;
+  .availability-header {
     display: flex;
-    flex-direction: column;
-    gap: 12px;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
 
-    .section-title {
-      margin: 0;
-      font-size:  $font-size-h3;;
-      font-weight: 600;
-      color: $color-text-primary;
+  .availability-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: $color-text-secondary;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0;
+  }
+
+  .date-selection-section {
+    margin-bottom: 32px;
+  }
+
+  .date-selection-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: $color-text-secondary;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  /* ================= CALENDAR FIX ================= */
+
+  .date-calendar {
+    width: 100%;
+    background: white;
+    border-radius: 8px;
+    padding-bottom: 80px;
+
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+
+    .MuiPickersLayout-root,
+    .MuiDayCalendar-root,
+    .MuiPickersFadeTransitionGroup-root,
+    .MuiPickersSlideTransition-root,
+    .MuiDayCalendar-monthContainer {
+      height: auto !important;
+      overflow: visible !important;
     }
 
-    .custom-date-calendar {
-      width: 100%;
+    .MuiPickersDay-root {
+      font-size: 0.875rem;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      transition: all $transition-standard;
+      position: relative;
+      padding: 0 !important;
+      box-sizing: border-box;
+      overflow: hidden !important;
+      pointer-events: auto;
+      width: 40px !important;
+      height: 40px !important;
+      min-width: 40px !important;
+      max-width: 40px !important;
+      min-height: 40px !important;
+      max-height: 40px !important;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-      .MuiPickersCalendarHeader-root {
-        padding-left: 16px;
-        padding-right: 100px;
+      // Style for available dates (not disabled)
+      &:not(.Mui-disabled) {
+        border: 1px solid rgba(99, 102, 241, 0.2);
       }
+
+      &:not(.Mui-disabled):hover {
+        border-color: $color-background-dark;
+        background-color: rgba(99, 102, 241, 0.05);
+      }
+
+      &:not(.Mui-disabled):active {
+        border-color: $color-background-dark;
+        background-color: rgba(99, 102, 241, 0.1);
+      }
+
+      &.Mui-selected {
+        background-color: $color-background-dark;
+        color: white;
+        font-weight: 600;
+        border-color: $color-background-dark;
+      }
+
+      &.Mui-disabled {
+        border: none;
+        pointer-events: none;
+      }
+    }
+
+    // Ensure calendar grid cells have proper spacing and containment
+    .MuiDayCalendar-weekContainer {
+      display: flex;
+      margin: 0;
+      gap: 8px;
+      justify-content: space-between;
+    }
+    
+    // Ensure all calendar cells have equal width
+    .MuiDayCalendar-root {
+      .MuiPickersDay-root {
+        flex: 0 0 auto;
+      }
+    }
+
+    .MuiDayCalendar-monthContainer {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 1px 0;
+    }
+
+    // Calendar header styling (month/year selector and arrows)
+    .MuiPickersCalendarHeader-root {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 0;
+      margin: 0;
 
       .MuiPickersArrowSwitcher-root {
         display: flex;
         align-items: center;
-        
-        .MuiIconButton-root {
-          color: $color-text-primary !important;
-          padding: 4px;
-          min-width: 40px;
-          min-height: 40px;
-          
-        }
       }
 
-      .MuiPickersDay-root {
-        border-radius: 50% !important;
-        transition: $transition-standard !important;
-        font-size: $font-size-body !important;
-        font-weight: 500 !important;
-        
-        &.Mui-selected {
-          background-color: $color-background-button !important;
-          color: $color-text-white !important;
-          font-weight: 600 !important;
-          box-shadow: $elevation-2 !important;
-
-          &:hover,
-          &:focus {
-            background-color: darken($color-background-button, 8%) !important;
-            box-shadow: $elevation-4 !important;
-          }
-        }
-
-        &:hover:not(.Mui-disabled):not(.Mui-selected) {
-          background-color: rgba(137, 168, 178, 0.08) !important;
-        }
-      }
-
-      .MuiPickersDay-root.MuiPickersDay-today {
-        border: 1px solid $color-background-button !important;
-        font-weight: 600 !important;
-        
-        &.Mui-selected {
-          border-color: $color-background-button !important;
-        }
-      }
-
-      .MuiPickersDay-root.Mui-disabled {
-        color: rgba(0, 0, 0, 0.38) !important;
-      }
-    }
-
-    .MuiYearCalendar-root {
-      width: 100%;
-      padding: 8px;
-      max-height: 400px;
-      overflow-y: auto;
-
-      .MuiPickersYear-yearButton {
-        width: 100%;
-        height: 100%;
+      // Month/Year selector button
+      .MuiPickersCalendarHeader-labelContainer {
         display: flex;
         align-items: center;
-        justify-content: center;
-      }
+        margin: 0;
+        padding: 0;
 
-      .MuiPickersYear-root {
-        width: 100%;
-        min-height: 48px;
-        height: auto;
-        display: flex !important;
-        align-items: center;
-        justify-content: center;
-        background-color: transparent;
-        border-radius: 8px;
-        font-size: 1rem;
-        transition: all 0.2s ease;
-        margin: 4px;
-        padding: 8px 12px;
-        position: relative;
-
-        &:hover:not(.Mui-disabled):not(.Mui-selected) {
-          background-color: rgba(137, 168, 178, 0.15);
-        }
-
-        &.Mui-selected {
-          background-color: $color-background-button !important;
-          color: $color-text-white !important;
-          font-weight: 500;
-          box-shadow: $elevation-2 !important;
-          z-index: 1;
-          
-          &:hover {
-            background-color: darken($color-background-button, 8%) !important;
-            box-shadow: $elevation-4 !important;
-          }
-        }
-
-        &.Mui-disabled {
-          color: rgba(0, 0, 0, 0.26);
-          cursor: not-allowed;
-        }
-
-        span {
-          position: relative;
-          z-index: 2;
-        }
-      }
-
-      .MuiYearCalendar-button {
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        text-align: center !important;
-        width: 100%;
-        height: 100%;
-
-        span {
+        button {
+          font-size: 1rem;
+          font-weight: 600;
+          color: $color-text-primary;
+          padding: 0 2px;
+          border-radius: 6px;
+          border: none;
+          background: transparent;
+          cursor: pointer;
+          transition: all $transition-standard;
+          text-transform: capitalize;
           display: flex;
           align-items: center;
-          justify-content: center;
-          width: 100%;
-          text-align: center;
+          gap: 4px;
+
+          &:hover {
+            background-color: rgba(99, 102, 241, 0.08);
+            color: $color-background-dark;
+          }
+
+          &:focus {
+            outline: none;
+            background-color: rgba(99, 102, 241, 0.12);
+          }
+
+          // Dropdown arrow icon styling - make it much more visible
+          svg {
+            opacity: 1 !important;
+            color: $color-text-dark !important;
+            fill: $color-text-dark !important;
+            font-size: 1rem;
+            width: 1rem !important;
+            height: 1rem !important;
+            margin-left: 0;
+            flex-shrink: 0;
+          }
+
+          &:hover svg {
+            color: $color-background-dark !important;
+            fill: $color-background-dark !important;
+          }
+        }
+      }
+
+      // Switch view button (month/year dropdown button) - reduce frame and make arrow visible
+      .MuiPickersCalendarHeader-switchViewButton {
+        padding: 0 2px !important;
+        min-width: auto !important;
+        width: auto !important;
+        margin: 0 !important;
+        border: none !important;
+        box-shadow: none !important;
+        background: transparent !important;
+
+        svg {
+          opacity: 1 !important;
+          color: $color-text-dark !important;
+          fill: $color-text-dark !important;
+          font-size: 1rem !important;
+          width: 1rem !important;
+          height: 1rem !important;
         }
 
-        &.Mui-selected {
-          background-color: $color-background-button !important;
-          color: $color-text-white !important;
+        &:hover {
+          border: none !important;
+          box-shadow: none !important;
+          background: transparent !important;
+        }
+
+        &:hover svg {
+          color: $color-background-dark !important;
+          fill: $color-background-dark !important;
         }
       }
     }
-  }
 
-  .MuiYearCalendar-root {
-    width: 100%;
-    padding: 8px;
-    max-height: 400px;
-    overflow-y: auto;
-
-    .MuiPickersYear-yearButton {
-      width: 100%;
-      height: 100%;
+    .MuiDayCalendar-weekDayLabel {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      width: 40px !important;
+      min-width: 40px !important;
+      max-width: 40px !important;
       display: flex;
       align-items: center;
       justify-content: center;
+      margin: 0;
+      padding: 0;
     }
 
-    .MuiPickersYear-root {
-      width: 100%;
-      min-height: 48px;
-      height: auto;
-      display: flex !important;
+    .MuiDayCalendar-header {
+      display: flex;
+      margin: 0;
+      gap: 8px;
+      justify-content: space-between;
+      padding: 0;
+    }
+
+    .MuiPickersArrowSwitcher-button {
+      color: $color-text-dark;
+      height: auto !important;
+      width: auto !important;
+      min-width: auto !important;
+      max-width: none !important;
+      border-radius: 0;
+      border: none !important;
+      box-shadow: none !important;
+      background: transparent !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      display: flex;
       align-items: center;
       justify-content: center;
-      background-color: transparent;
-      border-radius: 8px;
-      font-size: 1rem;
-      transition: all 0.2s ease;
-      margin: 4px;
-      padding: 8px 12px;
-      position: relative;
+      transition: all $transition-standard;
+      cursor: pointer;
 
-      &:hover:not(.Mui-disabled):not(.Mui-selected) {
-        background-color: rgba(137, 168, 178, 0.15);
+      &:hover {
+        color: $color-background-dark;
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
       }
 
-      &.Mui-selected {
-        background-color: $color-background-button !important;
-        color: $color-text-white !important;
-        font-weight: 600;
-        z-index: 1;
+      &:active {
+        transform: scale(0.95);
       }
 
       &.Mui-disabled {
-        color: rgba(0, 0, 0, 0.26);
+        opacity: 0.3;
         cursor: not-allowed;
+        
+        &:hover {
+          background: transparent !important;
+          border: none !important;
+          box-shadow: none !important;
+          transform: none;
+        }
       }
 
-      span {
-        position: relative;
-        z-index: 2;
+      svg {
+        opacity: 1 !important;
+        color: $color-text-dark !important;
+        fill: $color-text-dark !important;
+        font-size: 1rem !important;
+        width: 1rem !important;
+        height: 1rem !important;
+      }
+
+      &:hover svg {
+        color: $color-background-dark !important;
+        fill: $color-background-dark !important;
       }
     }
 
+    .MuiPickersArrowSwitcher-root {
+      gap: 6px !important;
+    }
+
     .MuiYearCalendar-button {
+      border-radius: 12px !important;
+      border: none !important;
+      box-shadow: none !important;
+      background: $color-background-secondary !important;
+      color: $color-text-primary !important;
+      font-size: 1rem !important;
+      font-weight: 500 !important;
+      padding: 12px 20px !important;
+      transition: all $transition-standard !important;
+      min-width: auto !important;
+      width: auto !important;
       display: flex !important;
       align-items: center !important;
       justify-content: center !important;
       text-align: center !important;
-      width: 100%;
-      height: 100%;
+      border: 1px solid $color-text-primary !important;
 
-      span {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        text-align: center;
+      &:hover {
+        background: rgba(99, 102, 241, 0.08) !important;
+        box-shadow: none !important;
+        border: 1px solid $color-text-primary !important;
+
       }
 
       &.Mui-selected {
-        background-color: $color-background-button !important;
+        background: $color-background-dark !important;
         color: $color-text-white !important;
+        font-weight: 600 !important;
+        box-shadow: none !important;
+        border: none !important;
+
+        &:hover {
+          background: $color-background-dark !important;
+        }
       }
+
+      &.Mui-disabled {
+        opacity: 0.3 !important;
+        cursor: not-allowed !important;
+      }
+    }
+
+    // Year calendar container
+    .MuiYearCalendar-root {
+      padding: 8px !important;
     }
   }
 
+  /* ================= TIME SLOTS ================= */
 
   .time-slots-section {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+    margin-bottom: 32px;
+  }
 
-    .section-title {
-      margin: 0;
-      font-size: $font-size-h3;
-      font-weight: 600;
-      color: $color-text-primary;
-    }
+  .time-slots-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: $color-text-secondary;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
 
-    .time-slots-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-      gap: 12px;
-      width: 100%;
+  .time-slots-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 8px;
 
-      .time-slot-button {
-        padding: 10px 18px;
-        border: 2px solid rgba(137, 168, 178, 0.3);
-        border-radius: 12px;
-        background: linear-gradient(135deg, transparent 0%, rgba(137, 168, 178, 0.03) 100%);
-        color: $color-text-primary;
-        font-size: $font-size-button;
-        font-weight: $font-weight-button;
-        letter-spacing: 0.02857em;
-        cursor: pointer;
-        transition: all $transition-smooth;
-        min-height: 44px;
-        text-transform: uppercase;
-        position: relative;
-        overflow: hidden;
-        transform: scale(1);
+    .time-slot-button {
+      padding: 10px 16px;
+      border-radius: 8px;
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      background: white;
+      font-size: 0.875rem;
+      color: $color-background-dark;
+      cursor: pointer;
 
-        // Shine effect
-        &::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: -100%;
-          width: 100%;
-          height: 100%;
-          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-          transition: left 0.5s;
-        }
+      &.selected {
+        border-color: $color-background-dark;
+        color: $color-background-dark;
+        font-weight: 600;
+      }
 
-        &:hover:not(:disabled):not(.selected) {
-          border-color: $color-background-button;
-          background: linear-gradient(135deg, rgba(137, 168, 178, 0.1) 0%, rgba(137, 168, 178, 0.15) 100%);
-          transform: scale(1.05);
-          box-shadow: 0 4px 12px rgba(137, 168, 178, 0.2);
-          
-          &::before {
-            left: 100%;
-          }
-        }
-
-        &:disabled {
-          opacity: 0.3;
-          cursor: not-allowed;
-          background-color: rgba(0, 0, 0, 0.03);
-          transform: scale(1);
-        }
-
-        &.selected {
-          border-color: $color-background-button;
-          background: linear-gradient(135deg, $color-background-button 0%, darken($color-background-button, 5%) 100%);
-          color: #fff;
-          box-shadow: 0 4px 16px rgba(137, 168, 178, 0.35);
-          transform: scale(1.05);
-
-          &:hover {
-            background: linear-gradient(135deg, lighten($color-background-button, 3%) 0%, $color-background-button 100%);
-            border-color: lighten($color-background-button, 5%);
-            box-shadow: 0 6px 20px rgba(137, 168, 178, 0.4);
-            transform: scale(1.08);
-          }
-        }
+      &:disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
       }
     }
+  }
 
-    .no-slots-message {
-      padding: $spacing-md;
-      text-align: center;
-      color: $color-text-secondary;
-      font-size: $font-size-body;
-      background-color: rgba(0, 0, 0, 0.02);
-      border-radius: 4px;
-      border: 1px dashed rgba(0, 0, 0, 0.23);
-      letter-spacing: 0.01071em;
-    }
+  .no-slots-message {
+    padding: 24px;
+    text-align: center;
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.02);
+    border: 1px dashed rgba(0, 0, 0, 0.23);
+  }
+
+  .confirm-section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .booking-error {
+    color: $color-text-error;
+    background: rgba(239, 68, 68, 0.08);
+    padding: 12px;
+    border-radius: 8px;
+    border-left: 4px solid $color-text-error;
   }
 }
-
-
