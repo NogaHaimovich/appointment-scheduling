@@ -84,3 +84,15 @@ export const INPUT_NEW_USER = `
 INSERT INTO users (id, phone) VALUES (?, ?)
 `
 
+export const GET_NEXT_AVAILABLE_APPOINTMENT_DATE = `
+SELECT *
+FROM appointments
+WHERE doctor_id = ?
+  AND user_id IS NULL
+  AND (
+    date > ? 
+    OR (date = ? AND time >= ?)
+  )
+ORDER BY date ASC, time ASC
+LIMIT 1;
+`

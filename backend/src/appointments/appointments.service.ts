@@ -1,5 +1,5 @@
 import { allAsync, runAsync } from "../db/dbHelpers";
-import {GET_APPOINTMENT_HISTORY, GET_AVALIABLE_SLOTS_BY_DOCTOR_ID, GET_UPCOMING_APPOINTMENTS, UPDATE_APPOINTMENT_USER_ID} from "../db/queries";
+import {GET_APPOINTMENT_HISTORY, GET_AVALIABLE_SLOTS_BY_DOCTOR_ID, GET_NEXT_AVAILABLE_APPOINTMENT_DATE, GET_UPCOMING_APPOINTMENTS, UPDATE_APPOINTMENT_USER_ID} from "../db/queries";
 import { Appointment, AvailableSlot } from "../types/types";
 import { getCurrentDateTime } from "../utils/dateUtils";
 
@@ -36,4 +36,13 @@ export async function updateAppointmentUserID(appointmentID: number, userID: str
 export async function rescheduleAppointment(oldAppointmentID: number, newAppointmentID: number, userID: string) {
   await updateAppointmentUserID(oldAppointmentID, null);
   await updateAppointmentUserID(newAppointmentID, userID);
+}
+
+export async function getNextAvailableAppointmentDate(doctorID: number) {
+  const { today, currentTime } = getCurrentDateTime();
+  const results = await allAsync<Appointment>(
+    GET_NEXT_AVAILABLE_APPOINTMENT_DATE,
+    [doctorID, today, today, currentTime]
+  );
+  return results[0];
 }

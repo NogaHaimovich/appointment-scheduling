@@ -377,11 +377,21 @@
       font-size: 0.875rem;
       color: $color-background-dark;
       cursor: pointer;
+      width: auto !important;
+      min-height: auto !important;
+      box-shadow: none !important;
+      position: relative;
+      overflow: visible;
 
       &.selected {
         border-color: $color-background-dark;
         color: $color-background-dark;
         font-weight: 600;
+      }
+
+      &:hover:enabled {
+        transform: none;
+        box-shadow: none;
       }
 
       &:disabled {

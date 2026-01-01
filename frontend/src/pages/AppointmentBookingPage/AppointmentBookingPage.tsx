@@ -38,6 +38,7 @@ const AppointmentBookingPage = () => {
                 selectedSpecialty={booking.selectedSpecialty}
                 onChange={booking.handleDoctorChange}
                 loading={booking.loadingDoctors}
+                getNextAvailableSlot={booking.getNextAvailableSlot}
                 disabled={
                   isPopupOpen ||
                   booking.isRescheduleMode ||

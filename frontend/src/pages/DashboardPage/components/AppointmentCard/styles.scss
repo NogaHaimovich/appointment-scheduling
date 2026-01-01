@@ -43,21 +43,32 @@
           box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
         }
 
+        .specialty-name{
+          font-size: $font-size-h6;
+        }
 
 
-        h5 {
-            font-size: $font-size-h5;
+
+        h4 {
+            font-size: $font-size-h4;
             font-weight: $font-weight-medium;
             margin: $spacing-sm 0;
             word-wrap: break-word;
             color: $color-text-primary;
         }
+
+        h5 {
+            font-size: $font-size-body;
+            margin: $spacing-sm 0;
+            color: $color-text-secondary;
+        }
         
         .buttons_row{
             display: flex;
+            justify-content: center;
             gap: 10px;
             margin-top: 16px;
-            flex-wrap: wrap;
+            padding: auto;
         }
     }
 

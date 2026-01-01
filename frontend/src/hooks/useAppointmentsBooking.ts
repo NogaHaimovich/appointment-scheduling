@@ -9,6 +9,7 @@ import { useRescheduleParams } from "./useRescheduleParams";
 import { useSpecialties } from "./useSpecialties";
 import { useDoctors } from "./useDoctors";
 import { useSlots } from "./useSlots";
+import { useNextAvailableSlots } from "./useNextAvailableSlots";
 
 export const useAppointmentBooking = () => {
   const navigate = useNavigate();
@@ -19,6 +20,8 @@ export const useAppointmentBooking = () => {
 
   const {selectedDoctor, selectedDoctorId, doctors, loadingDoctors, handleDoctorChange, resetDoctor} = 
     useDoctors( selectedSpecialtyId,  rescheduleParams?.doctor, true);
+
+  const { getNextAvailableSlot, loadingNextAvailableSlots } = useNextAvailableSlots(doctors);
 
   const {selectedDate,  selectedTime, setSelectedDate, setSelectedTime, groupedSlots, selectedAppointmentId, loadingSlots, resetSlots} =
     useSlots(selectedDoctorId);
@@ -100,6 +103,7 @@ export const useAppointmentBooking = () => {
     loadingSpecialties,
     loadingDoctors,
     loadingSlots,
+    loadingNextAvailableSlots,
     scheduling: scheduling || rescheduling,
 
     isFormComplete,
@@ -110,6 +114,7 @@ export const useAppointmentBooking = () => {
     setSelectedDate,
     setSelectedTime,
     handleSchedule,
+    getNextAvailableSlot,
 
     error: localError,
     showSuccessPopup,

@@ -83,12 +83,22 @@
     }
 
     .doctor-name {
-      font-size: 1rem;
+      font-size: $font-size-body;
       font-weight: 500;
       color: $color-text-primary;
       
       .doctor-item.selected & {
         color: $color-background-dark;
+      }
+    }
+
+    .doctor-next-available {
+      font-size:$font-size-small;
+      color: $color-text-secondary;
+      margin-top: 4px;
+      
+      .doctor-item.selected & {
+        color: rgba(0, 0, 0, 0.7);
       }
     }
 

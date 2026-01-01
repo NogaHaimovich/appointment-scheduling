@@ -64,15 +64,17 @@ const AppointmentCard = ({
 
     return (
         <div className="appointment_cube">
+            <h4>
+                {doctor_name},
+                <span className="specialty-name"> {specialty_name}</span>
+            </h4>
             <h5>Date: {formattedDate}, {formattedTime}</h5>
-            <h5>Dr: {doctor_name}</h5>
-            <h5>Speciality: {specialty_name}</h5>
 
             {error && <div className="error-message">{error}</div>}
 
             {showButtons && (
                 <div className="buttons_row">
-                    <Button variant="info" onClick={handleReschedule}>Reschedule</Button>
+                    <Button variant="primary" onClick={handleReschedule}>Reschedule</Button>
                     <Button variant="danger" onClick={handleCancel} loading={canceling} disabled={canceling}>
                         Cancel
                     </Button>

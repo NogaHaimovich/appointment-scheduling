@@ -59,3 +59,7 @@ export type ValidateCodeResponse = ApiResponse<{
   message: string;
   token: string;
 }>;
+
+export type NextAvailableSlotResponse = ApiResponse<{
+  nextAvailable: AppointmentProps | null;
+}>;

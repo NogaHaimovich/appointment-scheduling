@@ -1,5 +1,5 @@
 import { Router, Request, Response } from "express";
-import { getUserAppointments, getAvailableSlotsByDoctorId, updateAppointmentUserID, rescheduleAppointment } from "./appointments.service";
+import { getUserAppointments, getAvailableSlotsByDoctorId, updateAppointmentUserID, rescheduleAppointment, getNextAvailableAppointmentDate } from "./appointments.service";
 
 const router = Router();
 
@@ -100,6 +100,29 @@ router.patch("/reschedule", async (req: Request, res: Response) => {
 
 })
 
+router.get("/next-available", async (req: Request, res: Response) => {
+    const doctorID = req.query.doctorId ? parseInt(req.query.doctorId as string) : null;
+
+    if (!doctorID) {
+        return res.status(400).json({ 
+            success: false,
+            message: "Doctor ID is required" 
+        });
+    }
+
+    try {
+        const nextAvailable = await getNextAvailableAppointmentDate(doctorID);
+        res.json({
+            success: true,
+            nextAvailable
+        });
+    } catch (error) {
+        console.error("Error getting next available appointment date:", error);
+        res.status(500).json({ 
+            success: false,
+            message: "Failed to retrieve next available appointment date" 
+        });
+    }
+});
+
 export default router;
-
-

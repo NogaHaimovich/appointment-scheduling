@@ -6,6 +6,7 @@ export const API_ENDPOINTS = {
   getUserAppointments: "/appointments/user",
   getSpecialties: "/specialties/",
   getDoctorsBySpecialty: "/specialties/doctors-by-specialty",
-  getAvailableSlots: "/appointments/open-slots-by-doctor-id"
+  getAvailableSlots: "/appointments/open-slots-by-doctor-id",
+  getNextAvailableSlot: "/appointments/next-available"
 } as const;
 

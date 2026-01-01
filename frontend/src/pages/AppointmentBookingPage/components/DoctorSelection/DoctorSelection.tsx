@@ -1,5 +1,6 @@
 import type { FC } from "react";
-import type { Doctor } from "../../../../types/types";
+import type { Doctor, AppointmentProps } from "../../../../types/types";
+import { formatDateToDisplay, formatTimeToDisplay } from "../../../../utils/dateFormat";
 import "./styles.scss";
 
 type DoctorSelectorProps = {
@@ -8,6 +9,7 @@ type DoctorSelectorProps = {
   selectedSpecialty: string;
   onChange: (doctor: string) => void;
   loading: boolean;
+  getNextAvailableSlot: (doctorId: number) => AppointmentProps | null;
   disabled: boolean;
 };
 
@@ -17,6 +19,7 @@ const DoctorSelector: FC<DoctorSelectorProps> = ({
   selectedSpecialty,
   onChange,
   loading,
+  getNextAvailableSlot,
   disabled,
 }) => {
   if (disabled || !selectedSpecialty) {
@@ -33,12 +36,7 @@ const DoctorSelector: FC<DoctorSelectorProps> = ({
   return (
     <div className="doctor-selection">
       <div className="doctor-selection-header">
-        <h3 className="doctor-selection-title">2. SPECIALIST</h3>
-        {doctors.length > 0 && (
-          <span className="doctor-selection-count">
-            {doctors.length} Found
-          </span>
-        )}
+        <h3 className="doctor-selection-title">2. Doctors</h3>
       </div>
 
       {loading ? (
@@ -47,6 +45,10 @@ const DoctorSelector: FC<DoctorSelectorProps> = ({
         <div className="doctor-selection-list">
           {doctors.map((doctor) => {
             const isSelected = selectedDoctor === doctor.name;
+            const nextAvailableSlot = getNextAvailableSlot(doctor.id);
+            const nextAvailableText = nextAvailableSlot
+              ? `Next available: ${formatDateToDisplay(nextAvailableSlot.date)} at ${formatTimeToDisplay(nextAvailableSlot.time, nextAvailableSlot.date)}`
+              : "No available slots";
 
             return (
               <div
@@ -59,6 +61,7 @@ const DoctorSelector: FC<DoctorSelectorProps> = ({
                 <div className="doctor-item-content">
                   <div className="doctor-info">
                     <div className="doctor-name">{doctor.name}</div>
+                    <div className="doctor-next-available">{nextAvailableText}</div>
                   </div>
                 </div>
               </div>
