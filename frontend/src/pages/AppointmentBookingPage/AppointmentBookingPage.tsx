@@ -53,8 +53,6 @@ const AppointmentBookingPage = () => {
                 groupedSlots={booking.groupedSlots}
                 selectedDate={booking.selectedDate}
                 selectedTime={booking.selectedTime}
-                selectedDoctor={booking.selectedDoctor}
-                selectedSpecialty={booking.selectedSpecialty}
                 onDateChange={booking.setSelectedDate}
                 onTimeChange={booking.setSelectedTime}
                 loadingSlots={booking.loadingSlots}
@@ -74,10 +72,10 @@ const AppointmentBookingPage = () => {
         <SuccessPopup
           onClose={booking.handleCloseSuccessPopup}
           isOpen
-          title=""
-          message=""
-          date=""
-          time=""
+          title="Appointment Confirmed!"
+          message="The appointment has been successfully scheduled. You can add it to your calendar."
+          date={booking.selectedDate}
+          time={booking.selectedTime}
         />
       )}
     </div>

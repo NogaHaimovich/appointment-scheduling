@@ -12,8 +12,6 @@ type DateTimeSelectorProps = {
   groupedSlots: Record<string, string[]>;
   selectedDate: string;
   selectedTime: string;
-  selectedDoctor: string;
-  selectedSpecialty: string;
   onDateChange: (date: string) => void;
   onTimeChange: (time: string) => void;
   loadingSlots: boolean;
@@ -29,8 +27,6 @@ const DateTimeSelector: FC<DateTimeSelectorProps> = ({
   groupedSlots,
   selectedDate,
   selectedTime,
-  selectedDoctor,
-  selectedSpecialty,
   onDateChange,
   onTimeChange,
   loadingSlots,
@@ -78,25 +74,6 @@ const DateTimeSelector: FC<DateTimeSelectorProps> = ({
       ? dayjs(availableDates[availableDates.length - 1])
       : undefined;
 
-  const getMonthYear = (): string => {
-    if (!availableDates.length) return "";
-    return dayjs(availableDates[0]).format("MMMM YYYY");
-  };
-
-  const getSpecialtyDescription = (specialty: string): string => {
-    const descriptions: Record<string, string> = {
-      Cardiologist: "Specializes in heart failure & preventative cardiology.",
-      Neurologist: "Specializes in neurological disorders & brain health.",
-      Pediatrician: "Specializes in child health & development.",
-      Dermatologist: "Specializes in skin conditions & dermatology.",
-      "General Practitioner":
-        "Specializes in general medicine & primary care.",
-      Orthopedist: "Specializes in bone & joint health.",
-      Psychiatrist: "Specializes in mental health & psychiatry.",
-    };
-
-    return descriptions[specialty] || `Specializes in ${specialty.toLowerCase()}.`;
-  };
 
   return (
     <div className="date-time-container">
