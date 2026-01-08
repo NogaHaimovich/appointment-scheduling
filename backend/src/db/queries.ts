@@ -130,3 +130,11 @@ WHERE doctor_id = ?
 ORDER BY date ASC, time ASC
 LIMIT 1;
 `
+
+export const  ADD_PATIENT_TO_ACCOUNT = `
+INSERT INTO patients (account_id, patient_name, id, relationship) VALUES (?, ?, ?, ?)`
+
+export const DELETE_PATIENT_BY_ID = `
+DELETE FROM patients
+WHERE id = ? AND account_id = ? AND relationship != 'self'
+`

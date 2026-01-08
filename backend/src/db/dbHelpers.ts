@@ -9,11 +9,11 @@ export function allAsync<T>(sql: string, params: any[] = []): Promise<T[]> {
   });
 }
 
-export function runAsync(sql: string, params: any[] = []): Promise<void> {
+export function runAsync(sql: string, params: any[] = []): Promise<{ changes: number; lastID: number }> {
   return new Promise((resolve, reject) => {
-    db.run(sql, params, err => {
+    db.run(sql, params, function(err) {
       if (err) reject(err);
-      else resolve();
+      else resolve({ changes: this.changes, lastID: this.lastID });
     });
   });
 }

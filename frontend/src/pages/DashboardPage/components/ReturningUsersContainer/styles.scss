@@ -38,4 +38,29 @@
     margin: $spacing-xl 0;
     padding: 18px 40px;
   }
+
+  .dashboardPage__family-button-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: $spacing-xl;
+    width: 100%;
+
+    .dashboardPage__button {
+      width: auto;
+      min-width: 280px;
+      max-width: 400px;
+      padding: 18px 40px;
+      margin: 0;
+      
+      &--secondary {
+        background: linear-gradient(135deg, $color-background-button-info 0%, #7C3AED 100%);
+        box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+        
+        &:hover:enabled {
+          background: linear-gradient(135deg, #A855F7 0%, $color-background-button-info 100%);
+          box-shadow: 0 6px 16px rgba(139, 92, 246, 0.4);
+        }
+      }
+    }
+  }
 }

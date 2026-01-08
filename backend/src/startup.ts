@@ -15,7 +15,6 @@ export function initializeOnStartup(): void {
         initializeDatabase(db);
         console.log("Database initialized");
       } else {
-        // Check if name column exists, if not add it
         db.all("PRAGMA table_info(accounts)", (err, cols: any[]) => {
           if (err) {
             console.error("Error checking columns:", err);

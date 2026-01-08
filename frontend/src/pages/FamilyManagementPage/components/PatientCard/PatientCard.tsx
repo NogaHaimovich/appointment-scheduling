@@ -4,15 +4,20 @@ import PatientBadge from "../PatientBadge/PatientBadge";
 import PatientNextAppointment from "../PatientNextAppointment/PatientNextAppointment";
 import type { Patient } from "../../types/patientTypes";
 import "./styles.scss";
+import { useNavigate } from "react-router-dom";
 
 type PatientCardProps = {
     patient: Patient;
-    onBookAppointment: (patientId: string) => void;
-    onDeletePatient: (patientId: string) => void;
 };
 
-const PatientCard = ({ patient, onBookAppointment, onDeletePatient }: PatientCardProps) => {
+const PatientCard = ({ patient }: PatientCardProps) => {
+    const navigate = useNavigate();
     const isSelf = patient.relationship.toLowerCase() === "self";
+
+    const onDeletePatient = () => {
+        //TODO: implement delete patient functionality
+        console.log("Delete patient:", patient.id);
+    }
 
     return (
         <div className="patient_box">
@@ -20,7 +25,7 @@ const PatientCard = ({ patient, onBookAppointment, onDeletePatient }: PatientCar
                 {!isSelf && (
                     <button 
                         className="patient_delete_button"
-                        onClick={() => onDeletePatient(patient.id)}
+                        onClick={onDeletePatient}
                         aria-label="Delete patient"
                     >
                         <CloseIcon />
@@ -46,7 +51,7 @@ const PatientCard = ({ patient, onBookAppointment, onDeletePatient }: PatientCar
                 <div className="patient_actions">
                     <button 
                         className="patient_action_button patient_action_button--secondary"
-                        onClick={() => onBookAppointment(patient.id)}
+                        onClick={() => navigate(`/booking?patientId=${patient.id}`)}
                     >
                         Book Appointment
                     </button>

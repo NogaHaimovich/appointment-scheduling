@@ -26,6 +26,12 @@ const ReturningUsersContainer = ({ upcomingAppointments, pastAppointments, accou
         {welcomeText}
       </h1>
 
+      <div className="dashboardPage__family-button-container">
+        <Button className="dashboardPage__button dashboardPage__button--secondary" onClick={() => navigate("/familyManagement")}>
+          Manage Family Members
+        </Button>
+      </div>
+
       <AppointmentsSection
         title="Upcoming Appointments"
         appointments={upcoming.filteredAppointments}

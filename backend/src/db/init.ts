@@ -60,7 +60,6 @@ export function initializeDatabase(db: Database): void {
         FOREIGN KEY (doctor_id) REFERENCES doctors(id),
         FOREIGN KEY (account_id) REFERENCES accounts(id),
         FOREIGN KEY (patient_id) REFERENCES patients(id),
-        FOREIGN KEY (patient_name) REFERENCES patients(patient_name),
         UNIQUE (doctor_id, date, time)
       )
     `);

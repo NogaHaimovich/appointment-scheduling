@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { authUtils } from "../utils/auth";
 import { formatDateToDisplay, formatTimeToDisplay } from "../utils/dateFormat";
 import { useMutation } from "./useMutation";
@@ -14,6 +14,7 @@ import { usePatients } from "./usePatients";
 
 export const useAppointmentBooking = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { rescheduleParams, isRescheduleMode } = useRescheduleParams();
   const { patients, loadingPatients } = usePatients();
   
@@ -34,24 +35,24 @@ export const useAppointmentBooking = () => {
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
   useEffect(() => {
-    if (patients.length > 0 && selectedPatientId === null) {
-      const selfPatient = patients.find(p => p.relationship === 'self');
-      if (selfPatient) {
-        setSelectedPatientId(selfPatient.id);
-      } else {
-        setSelectedPatientId(patients[0].id);
+    if (patients.length > 0) {
+      const patientIdFromUrl = searchParams.get("patientId");
+      
+      if (patientIdFromUrl) {
+        const patient = patients.find(p => p.id === patientIdFromUrl);
+        if (patient && selectedPatientId !== patient.id) {
+          setSelectedPatientId(patient.id);
+        }
+      } else if (selectedPatientId === null) {
+        const selfPatient = patients.find(p => p.relationship === 'self');
+        if (selfPatient) {
+          setSelectedPatientId(selfPatient.id);
+        } else {
+          setSelectedPatientId(patients[0].id);
+        }
       }
     }
-  }, [patients, selectedPatientId]);
-
-  useEffect(() => {
-    if (isRescheduleMode && rescheduleParams?.patientId && patients.length > 0) {
-      const patient = patients.find(p => p.id === rescheduleParams.patientId);
-      if (patient) {
-        setSelectedPatientId(patient.id);
-      }
-    }
-  }, [isRescheduleMode, rescheduleParams, patients]);
+  }, [patients, selectedPatientId, searchParams]);
 
   const selectedPatient = useMemo(() => {
     return patients.find(p => p.id === selectedPatientId) || null;

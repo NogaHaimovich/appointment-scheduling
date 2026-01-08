@@ -1,0 +1,110 @@
+@import '../../../../styles/variables';
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.add-family-member-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.3s ease;
+  backdrop-filter: blur(4px);
+  z-index: 10000;
+}
+
+.add-family-member-modal {
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(20px);
+  border-radius: 28px;
+  padding: 48px;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  animation: slideUp 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  pointer-events: all;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  &__title {
+    font-size: $font-size-h5;
+    font-weight: $font-weight-heading;
+    color: $color-text-primary;
+    margin: 0 0 $spacing-sm 0;
+    letter-spacing: -0.01em;
+    position: relative;
+    z-index: 1;
+    text-align: center;
+  }
+
+  &__subtitle {
+    font-size: $font-size-body;
+    color: $color-text-secondary;
+    margin: 0 0 $spacing-lg 0;
+    line-height: 1.6;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  &__form {
+    position: relative;
+    z-index: 1;
+    margin-bottom: $spacing-lg;
+  }
+
+  &__field {
+    margin-bottom: $spacing-md;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    gap: $spacing-md;
+    justify-content: flex-end;
+    position: relative;
+    z-index: 1;
+  }
+
+  &__button {
+    min-width: 120px;
+  }
+}
+

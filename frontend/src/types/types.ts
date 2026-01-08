@@ -82,3 +82,7 @@ export type NextAvailableSlotResponse = ApiResponse<{
 export type PatientsResponse = ApiResponse<{
   patients: Patient[];
 }>;
+
+export type AddPatientResponse = ApiResponse<{
+  message: string;
+}>;

@@ -40,10 +40,11 @@ const NewUserContainer = ({ specialties, accountName }: NewUserContainerProps) =
     <div className="dashboardPage__new-account">
       <h1>{welcomeText}</h1>
       <h2>You don't have any appointment yet – schedule your first one!</h2>
-      <Button className="dashboardPage__button" onClick={handleScheduleClick}>
-        Schedule appointment
-      </Button>
-
+      <div className="dashboardPage__button-container">
+        <Button className="dashboardPage__button" onClick={handleScheduleClick}>
+          Schedule appointment
+        </Button>
+      </div>
       <h2>Our specialties:</h2>
       {specialties && specialties.specialties ? (
         <div className="specialties-cards">
@@ -56,6 +57,11 @@ const NewUserContainer = ({ specialties, accountName }: NewUserContainerProps) =
           ))}
         </div>
       ) : null}
+      <div className="dashboardPage__family-button-container">
+        <Button className="dashboardPage__button dashboardPage__button--secondary" onClick={() => navigate("/familyManagement")}>
+          Manage Family Members
+        </Button>
+      </div>
     </div>
   );
 };

@@ -9,6 +9,8 @@ export const API_ENDPOINTS = {
   getDoctorsBySpecialty: "/specialties/doctors-by-specialty",
   getAvailableSlots: "/appointments/open-slots-by-doctor-id",
   getNextAvailableSlot: "/appointments/next-available",
-  getPatients: "/patients/by-account"
+  getPatients: "/patients/by-account", 
+  addPatient: "/patients/add-patient",
+  deletePatient: "/patients/delete-patient",
 } as const;
 
