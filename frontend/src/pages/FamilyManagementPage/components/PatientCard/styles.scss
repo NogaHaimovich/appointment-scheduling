@@ -1,0 +1,139 @@
+@import '../../../../styles/variables';
+
+.patient_box{
+    background-color: $color-background-secondary;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
+    transition: transform $transition-standard, box-shadow $transition-standard;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.06);
+    }
+
+    .patient_card{
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: 100%;
+        position: relative;
+
+        .patient_delete_button{
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            width: auto;
+            height: auto;
+            background: transparent !important;
+            background-color: transparent !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform $transition-standard;
+            color: $color-text-secondary;
+            z-index: 10;
+            border: none !important;
+            padding: 0;
+            box-shadow: none !important;
+            outline: none;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+
+            &:hover {
+                transform: scale(1.3);
+                background: transparent !important;
+                background-color: transparent !important;
+                box-shadow: none !important;
+            }
+
+            &:focus {
+                outline: none;
+                background: transparent !important;
+                background-color: transparent !important;
+                box-shadow: none !important;
+            }
+
+            &:active {
+                background: transparent !important;
+                background-color: transparent !important;
+                box-shadow: none !important;
+            }
+
+            svg {
+                transition: transform $transition-standard;
+            }
+        }
+
+        .patient_header{
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .patient_info{
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex: 1;
+            min-width: 0;
+
+            .patient_name{
+                font-size: $font-size-h5;
+                font-weight: $font-weight-heading;
+                color: $color-text-dark;
+                margin: 0;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+
+        .patient_details{
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .patient_actions{
+            display: flex;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .patient_action_button{
+            flex: 1;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: $font-size-small;
+            font-weight: $font-weight-medium;
+            cursor: pointer;
+            transition: all $transition-standard;
+            border: none;
+
+            &--primary {
+                background-color: #E9D5FF;
+                color: #6366F1;
+
+                &:hover {
+                    background-color: #DDD6FE;
+                }
+            }
+
+            &--secondary {
+                background-color: $color-background-secondary;
+                color: $color-text-dark;
+                border: 1px solid $color-border-default;
+
+                &:hover {
+                    background-color: #F9FAFB;
+                    border-color: $color-border-focus;
+                }
+            }
+        }
+    }
+}
+

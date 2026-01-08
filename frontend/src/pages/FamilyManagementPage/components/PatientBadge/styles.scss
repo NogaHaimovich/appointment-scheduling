@@ -1,0 +1,32 @@
+@import '../../../../styles/variables';
+
+.patient_badge{
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: $font-size-xsmall;
+    font-weight: $font-weight-medium;
+    width: fit-content;
+
+    &--self {
+        background-color: #DBEAFE; 
+        color: #1E40AF; 
+    }
+    &--child {
+        background-color: #D1FAE5; 
+        color: #065F46;
+    }
+    &--parent {
+        background-color: #FEF3C7; 
+        color: #92400E; 
+    }
+    &--spouse {
+        background-color: #FCE7F3; 
+        color: #9F1239; 
+    }
+    &--other {
+        background-color: #E5E7EB; 
+        color: #374151; 
+    }
+}
+

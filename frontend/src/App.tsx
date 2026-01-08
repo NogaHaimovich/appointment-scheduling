@@ -3,6 +3,7 @@ import DashboardPage from "./pages/DashboardPage/DashboardPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ProtectedRoute from "./routes/protectedRoutes/protectedRoute";
+import FamilyManagementPage from "./pages/FamilyManagementPage/FamilyManagementPage";
 
 function App() {
   return (
@@ -25,6 +26,15 @@ function App() {
             element={
               <ProtectedRoute>
                 <AppointmentBookingPage />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/familyManagement"
+            element={
+              <ProtectedRoute>
+                <FamilyManagementPage />
               </ProtectedRoute>
             }
           />

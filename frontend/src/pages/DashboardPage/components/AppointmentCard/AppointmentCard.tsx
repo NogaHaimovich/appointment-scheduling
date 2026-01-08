@@ -16,6 +16,7 @@ const AppointmentCard = ({
     time,
     doctor_name,
     specialty_name,
+    patient_name,
     showButtons = false,
 }: AppointmentCardProps) => {
     const navigate = useNavigate();
@@ -68,6 +69,7 @@ const AppointmentCard = ({
                 {doctor_name},
                 <span className="specialty-name"> {specialty_name}</span>
             </h4>
+            {patient_name && <h5>Patient: {patient_name}</h5>}
             <h5>Date: {formattedDate}, {formattedTime}</h5>
 
             {error && <div className="error-message">{error}</div>}

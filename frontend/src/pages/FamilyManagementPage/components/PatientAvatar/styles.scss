@@ -1,0 +1,55 @@
+@import '../../../../styles/variables';
+
+.patient_avatar{
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: $font-weight-heading;
+    font-size: $font-size-h6;
+    flex-shrink: 0;
+
+    &--color-0 {
+        background-color: #E9D5FF;
+        color: #7522cf;
+    }
+    &--color-1 {
+        background-color: #DBEAFE;
+        color: #1d64c1;
+    }
+    &--color-2 {
+        background-color: #D1FAE5;
+        color: #059669;
+    }
+    &--color-3 {
+        background-color: #FEF3C7;
+        color: #b45309;
+    }
+    &--color-4 {
+        background-color: #FCE7F3;
+        color: #be185d; 
+    }
+    &--color-5 {
+        background-color: #E0E7FF; 
+        color: #4338ca;
+    }
+    &--color-6 {
+        background-color: #FED7AA;
+        color: #b45309;
+    }
+    &--color-7 {
+        background-color: #DCFCE7; 
+        color: #047857;
+    }
+    &--color-8 {
+        background-color: #F3E8FF;
+        color: #7c3aed; 
+    }
+    &--color-9 {
+        background-color: #CCFBF1;
+        color: #0e7490; 
+    }
+}
+

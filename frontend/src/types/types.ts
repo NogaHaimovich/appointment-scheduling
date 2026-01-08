@@ -5,6 +5,7 @@ export interface AppointmentProps  {
   time: string;
   doctor_name: string;
   specialty_name: string;
+  patient_name: string | null;
 }
 
 export type Specialty ={

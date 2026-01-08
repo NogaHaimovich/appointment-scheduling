@@ -1,0 +1,23 @@
+@import '../../../../styles/variables';
+
+.patient_detail_item{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: $font-size-small;
+    color: $color-text-dark;
+
+    svg {
+        color: $color-text-secondary;
+        flex-shrink: 0;
+    }
+
+    &--next {
+        color: $color-text-dark;
+        
+        svg {
+            color: #059669;
+        }
+    }
+}
+
