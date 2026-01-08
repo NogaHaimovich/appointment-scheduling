@@ -9,18 +9,21 @@ import "./styles.scss"
 type ReturningUsersContainerProps = {
   upcomingAppointments: AppointmentProps[];
   pastAppointments: AppointmentProps[];
+  accountName: string | null;
 }
 
-const ReturningUsersContainer = ({ upcomingAppointments, pastAppointments}: ReturningUsersContainerProps) => {
+const ReturningUsersContainer = ({ upcomingAppointments, pastAppointments, accountName}: ReturningUsersContainerProps) => {
   const navigate = useNavigate();
 
   const upcoming = useDoctorFilter(upcomingAppointments);
   const past = useDoctorFilter(pastAppointments);
 
+  const welcomeText = accountName ? `Welcome Back, ${accountName}!` : "Welcome Back!";
+
   return (
     <div className="dashboardPage__returning-account">
       <h1 className="dashboardPage__returning-account__header">
-        Welcome Back!
+        {welcomeText}
       </h1>
 
       <AppointmentsSection

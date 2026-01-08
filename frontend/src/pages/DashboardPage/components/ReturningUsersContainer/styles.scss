@@ -28,6 +28,7 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    line-height:  $font-size-h1 * 1.5;
   }
 
   .dashboardPage__button {

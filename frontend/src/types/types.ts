@@ -40,6 +40,7 @@ export type SpecialitiesResponse = ApiResponse<{
 export type AppointmentsResponse = ApiResponse<{
   appointmentHistory: AppointmentProps[];
   upcomingAppointment: AppointmentProps[];
+  accountName: string | null;
 }>;
 
 export type DoctorBySpecialtyResponse = ApiResponse<{
@@ -56,6 +57,12 @@ export type GetCodeResponse = ApiResponse<{
 }>;
 
 export type ValidateCodeResponse = ApiResponse<{
+  message: string;
+  token?: string;
+  requiresName?: boolean;
+}>;
+
+export type CreateAccountResponse = ApiResponse<{
   message: string;
   token: string;
 }>;

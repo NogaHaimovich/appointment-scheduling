@@ -8,7 +8,8 @@ export function initializeDatabase(db: Database): void {
     db.run(`
       CREATE TABLE IF NOT EXISTS accounts (
         id TEXT PRIMARY KEY,
-        phone TEXT NOT NULL UNIQUE
+        phone TEXT NOT NULL UNIQUE,
+        name TEXT
       )
     `);
 

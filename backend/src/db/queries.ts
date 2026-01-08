@@ -80,8 +80,14 @@ FROM accounts
 WHERE phone = ?
 `
 
+export const GET_ACCOUNT_BY_ID =`
+SELECT id, phone, name
+FROM accounts
+WHERE id = ?
+`
+
 export const INPUT_NEW_ACCOUNT = `
-INSERT INTO accounts (id, phone) VALUES (?, ?)
+INSERT INTO accounts (id, phone, name) VALUES (?, ?, ?)
 `
 
 export const GET_NEXT_AVAILABLE_APPOINTMENT_DATE = `

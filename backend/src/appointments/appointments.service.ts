@@ -1,5 +1,5 @@
-import { allAsync, runAsync } from "../db/dbHelpers";
-import {GET_APPOINTMENT_HISTORY, GET_AVALIABLE_SLOTS_BY_DOCTOR_ID, GET_NEXT_AVAILABLE_APPOINTMENT_DATE, GET_UPCOMING_APPOINTMENTS, UPDATE_APPOINTMENT_ACCOUNT_ID} from "../db/queries";
+import { allAsync, runAsync, getAsync } from "../db/dbHelpers";
+import {GET_APPOINTMENT_HISTORY, GET_AVALIABLE_SLOTS_BY_DOCTOR_ID, GET_NEXT_AVAILABLE_APPOINTMENT_DATE, GET_UPCOMING_APPOINTMENTS, UPDATE_APPOINTMENT_ACCOUNT_ID, GET_ACCOUNT_BY_ID} from "../db/queries";
 import { Appointment, AvailableSlot } from "../types/types";
 import { getCurrentDateTime } from "../utils/dateUtils";
 
@@ -18,7 +18,9 @@ export async function getAccountAppointments(accountID: string) {
     [accountID, today, today, currentTime]
   );
 
-  return { appointmentHistory, upcomingAppointment };
+  const account = await getAsync<{ id: string; phone: string; name: string | null }>(GET_ACCOUNT_BY_ID, [accountID]);
+
+  return { appointmentHistory, upcomingAppointment, accountName: account?.name || null };
 }
 
 export async function getAvailableSlotsByDoctorId(doctorID: number) {

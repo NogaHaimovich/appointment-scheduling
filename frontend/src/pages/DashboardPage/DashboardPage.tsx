@@ -52,14 +52,17 @@ const DashboardPage = () => {
       </div>
     );
 
+  const accountName = data?.accountName || null;
+
   return (
     <div className="dashboardPage_container">
       {!hasAppointments ? (
-        <NewUserContainer specialties={specialtiesData} />
+        <NewUserContainer specialties={specialtiesData} accountName={accountName} />
       ) : (
         <ReturningUsersContainer
           upcomingAppointments={upcomingAppointments} 
           pastAppointments={pastAppointments}
+          accountName={accountName}
         />
       )}
     </div>

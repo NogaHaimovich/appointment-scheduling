@@ -10,11 +10,12 @@ export async function getAccountAppointmentsHandler(req: Request, res: Response)
         });
     }
     try {
-        const { appointmentHistory, upcomingAppointment } = await getAccountAppointments(accountID);
+        const { appointmentHistory, upcomingAppointment, accountName } = await getAccountAppointments(accountID);
         res.json({
             success: true,
             appointmentHistory,
-            upcomingAppointment
+            upcomingAppointment,
+            accountName
         });
     } catch (error) {
         console.error("Error getting account appointments:", error);

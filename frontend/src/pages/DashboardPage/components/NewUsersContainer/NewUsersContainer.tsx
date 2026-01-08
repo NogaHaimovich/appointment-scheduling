@@ -25,17 +25,20 @@ const getSpecialtyImage = (specialtyName: string): string => {
 
 type NewUserContainerProps = {
   specialties: SpecialitiesResponse | null;
+  accountName: string | null;
 };
 
-const NewUserContainer = ({ specialties }: NewUserContainerProps) => {
+const NewUserContainer = ({ specialties, accountName }: NewUserContainerProps) => {
   const navigate = useNavigate();
   const handleScheduleClick = () => {
     navigate("/booking");
   };
 
+  const welcomeText = accountName ? `Welcome, ${accountName}!` : "Welcome!";
+
   return (
     <div className="dashboardPage__new-account">
-      <h1>Welcome!</h1>
+      <h1>{welcomeText}</h1>
       <h2>You don't have any appointment yet – schedule your first one!</h2>
       <Button className="dashboardPage__button" onClick={handleScheduleClick}>
         Schedule appointment

@@ -46,15 +46,14 @@ export function getCode(phone: string): CodeEntry | undefined {
   return codes.get(phone);
 }
 
-export async function findOrCreateAccount(phone: string): Promise<string> {
-  const row = await getAsync<{ id: string }>(GET_ACCOUNT_BY_PHONE, [phone]);
-  
-  if (row) {
-    return row.id; 
-  }
+export async function findAccount(phone: string): Promise<{ id: string; name: string | null } | null> {
+  const row = await getAsync<{ id: string; name: string | null }>(GET_ACCOUNT_BY_PHONE, [phone]);
+  return row || null;
+}
 
+export async function createAccount(phone: string, name: string): Promise<string> {
   const accountId = randomUUID();
-  await runAsync(INPUT_NEW_ACCOUNT, [accountId, phone]);
+  await runAsync(INPUT_NEW_ACCOUNT, [accountId, phone, name]);
   return accountId;
 }
 
