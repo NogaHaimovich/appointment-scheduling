@@ -54,11 +54,9 @@ const LoginPage = () => {
       setMessage(validationData.message);
       if (validationData.success) {
         if (validationData.requiresName) {
-          // User doesn't exist, need to get name
           setIsNameMode(true);
           setIsVerificationMode(false);
         } else if (validationData.token) {
-          // User exists, login successful
           authUtils.saveToken(validationData.token);
           navigate("/dashboard");
         }
@@ -118,7 +116,7 @@ const LoginPage = () => {
   };
 
   const getSubtitle = () => {
-    if (isNameMode) return "Enter your name";
+    if (isNameMode) return <>Hey you are new here! <br /> Enter your name</>;
     if (isVerificationMode) return "Enter verification code";
     return "Enter your phone number";
   };

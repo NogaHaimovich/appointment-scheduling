@@ -1,7 +1,7 @@
 import { randomUUID } from "crypto";
 import jwt, { SignOptions } from "jsonwebtoken";
 import { getAsync, runAsync } from "../db/dbHelpers";
-import { GET_ACCOUNT_BY_PHONE, INPUT_NEW_ACCOUNT } from "../db/queries";
+import { GET_ACCOUNT_BY_PHONE, INPUT_NEW_ACCOUNT, INPUT_NEW_PATIENT } from "../db/queries";
 
 export type CodeEntry = {
   code: string;
@@ -54,6 +54,7 @@ export async function findAccount(phone: string): Promise<{ id: string; name: st
 export async function createAccount(phone: string, name: string): Promise<string> {
   const accountId = randomUUID();
   await runAsync(INPUT_NEW_ACCOUNT, [accountId, phone, name]);
+  await runAsync(INPUT_NEW_PATIENT, [accountId, name, "self"]);
   return accountId;
 }
 

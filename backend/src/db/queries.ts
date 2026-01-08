@@ -57,7 +57,7 @@ ORDER BY a.date, a.time;
 
 export const UPDATE_APPOINTMENT_ACCOUNT_ID = `
 UPDATE appointments
-SET account_id = ?
+SET account_id = ?, patient_id = ?
 WHERE id=?;
 `
 
@@ -88,6 +88,10 @@ WHERE id = ?
 
 export const INPUT_NEW_ACCOUNT = `
 INSERT INTO accounts (id, phone, name) VALUES (?, ?, ?)
+`
+
+export const INPUT_NEW_PATIENT = `
+INSERT INTO patients (account_id, patient_name, relationship) VALUES (?, ?, ?)
 `
 
 export const GET_NEXT_AVAILABLE_APPOINTMENT_DATE = `

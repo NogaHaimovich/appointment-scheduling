@@ -32,7 +32,7 @@ export async function getAvailableSlotsByDoctorId(doctorID: number) {
 }
 
 export async function updateAppointmentAccountID(appointmentID: number, accountID: string | null) {
-  await runAsync(UPDATE_APPOINTMENT_ACCOUNT_ID, [accountID, appointmentID]);
+  await runAsync(UPDATE_APPOINTMENT_ACCOUNT_ID, [accountID, accountID, appointmentID]);
 }
 
 export async function rescheduleAppointment(oldAppointmentID: number, newAppointmentID: number, accountID: string) {

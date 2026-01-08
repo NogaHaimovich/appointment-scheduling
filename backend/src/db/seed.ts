@@ -99,17 +99,10 @@ export async function seed() {
       });
     }
     console.log(`Inserted ${doctors.length} doctors`);
-
-    const accounts = ["0501111111", "0502222222", "0503333333"];
-    for (const phone of accounts) {
-      const accountId = randomUUID();
-      await runAsync("INSERT INTO accounts (id, phone) VALUES (?, ?)", [accountId, phone]);
-    }
-    console.log(`Inserted ${accounts.length} accounts`);
-
+    
     const doctorRows = await allAsync<{ id: number }>("SELECT id FROM doctors");
-    const startDate = new Date(Date.UTC(2025, 11, 15)); 
-    const endDate = new Date(Date.UTC(2026, 11, 31));
+    const startDate = new Date(Date.UTC(2025, 1, 8)); 
+    const endDate = new Date(Date.UTC(2026, 6, 30));
     const appointments = generateAppointments(startDate, endDate, doctorRows);
 
     for (const a of appointments) {
