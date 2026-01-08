@@ -36,10 +36,12 @@ export const useDoctors = (
     setSelectedDoctorId(null);
   }, []);
 
+  const doctors = useMemo(() => data?.doctors || [], [data?.doctors]);
+
   return {
     selectedDoctor,
     selectedDoctorId,
-    doctors: data?.doctors || [],
+    doctors,
     loadingDoctors: loading,
     handleDoctorChange,
     resetDoctor: () => {
