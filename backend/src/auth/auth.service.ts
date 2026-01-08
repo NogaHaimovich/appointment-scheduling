@@ -1,7 +1,7 @@
 import { randomUUID } from "crypto";
 import jwt, { SignOptions } from "jsonwebtoken";
 import { getAsync, runAsync } from "../db/dbHelpers";
-import { GET_USER_BY_PHONE, INPUT_NEW_USER } from "../db/queries";
+import { GET_ACCOUNT_BY_PHONE, INPUT_NEW_ACCOUNT } from "../db/queries";
 
 export type CodeEntry = {
   code: string;
@@ -46,19 +46,19 @@ export function getCode(phone: string): CodeEntry | undefined {
   return codes.get(phone);
 }
 
-export async function findOrCreateUser(phone: string): Promise<string> {
-  const row = await getAsync<{ id: string }>(GET_USER_BY_PHONE, [phone]);
+export async function findOrCreateAccount(phone: string): Promise<string> {
+  const row = await getAsync<{ id: string }>(GET_ACCOUNT_BY_PHONE, [phone]);
   
   if (row) {
     return row.id; 
   }
 
-  const userId = randomUUID();
-  await runAsync(INPUT_NEW_USER, [userId, phone]);
-  return userId;
+  const accountId = randomUUID();
+  await runAsync(INPUT_NEW_ACCOUNT, [accountId, phone]);
+  return accountId;
 }
 
-export function generateToken(userId: string): string {
+export function generateToken(accountId: string): string {
   const secret = process.env.JWT_SECRET;
   const expiresIn = process.env.JWT_EXPIRES_IN as SignOptions["expiresIn"];
 
@@ -71,7 +71,7 @@ export function generateToken(userId: string): string {
   }
 
   return jwt.sign(
-    { userId },
+    { accountId },
     secret,
     { expiresIn }
   );

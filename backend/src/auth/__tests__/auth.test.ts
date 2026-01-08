@@ -1,7 +1,7 @@
 import { randomUUID } from "crypto";
 import jwt from "jsonwebtoken";
 import * as dbHelpers from "../../db/dbHelpers";
-import { generateCode, verifyCode, findOrCreateUser, generateToken } from "../auth.service";
+import { generateCode, verifyCode, findOrCreateAccount, generateToken } from "../auth.service";
 
 jest.mock("crypto", () => ({ randomUUID: jest.fn() }));
 jest.mock("jsonwebtoken", () => ({ sign: jest.fn() }));
@@ -24,14 +24,14 @@ describe("Minimal Auth tests", () => {
     expect(verifyCode(phone, "99999")).toBe(false);
   });
 
-  it("should return existing user or create new", async () => {
-    (dbHelpers.getAsync as jest.Mock).mockResolvedValueOnce({ id: "user123" });
-    const existing = await findOrCreateUser("111");
-    expect(existing).toBe("user123");
+  it("should return existing account or create new", async () => {
+    (dbHelpers.getAsync as jest.Mock).mockResolvedValueOnce({ id: "account123" });
+    const existing = await findOrCreateAccount("111");
+    expect(existing).toBe("account123");
 
     (dbHelpers.getAsync as jest.Mock).mockResolvedValueOnce(null);
     (randomUUID as jest.Mock).mockReturnValue("new-uuid");
-    const created = await findOrCreateUser("222");
+    const created = await findOrCreateAccount("222");
     expect(created).toBe("new-uuid");
     expect(dbHelpers.runAsync).toHaveBeenCalledWith(expect.any(String), ["new-uuid", "222"]);
   });
@@ -41,9 +41,9 @@ describe("Minimal Auth tests", () => {
     process.env.JWT_EXPIRES_IN = "1h";
     (jwt.sign as jest.Mock).mockReturnValue("token123");
 
-    const token = generateToken("user1");
+    const token = generateToken("account1");
     expect(token).toBe("token123");
-    expect(jwt.sign).toHaveBeenCalledWith({ userId: "user1" }, "secret", { expiresIn: "1h" });
+    expect(jwt.sign).toHaveBeenCalledWith({ accountId: "account1" }, "secret", { expiresIn: "1h" });
   });
 
   it("should throw if JWT_SECRET missing", () => {

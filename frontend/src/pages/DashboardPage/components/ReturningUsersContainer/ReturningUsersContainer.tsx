@@ -18,8 +18,8 @@ const ReturningUsersContainer = ({ upcomingAppointments, pastAppointments}: Retu
   const past = useDoctorFilter(pastAppointments);
 
   return (
-    <div className="dashboardPage__returning-user">
-      <h1 className="dashboardPage__returning-user__header">
+    <div className="dashboardPage__returning-account">
+      <h1 className="dashboardPage__returning-account__header">
         Welcome Back!
       </h1>
 

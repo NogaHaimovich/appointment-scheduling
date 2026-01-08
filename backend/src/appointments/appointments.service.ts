@@ -1,21 +1,21 @@
 import { allAsync, runAsync } from "../db/dbHelpers";
-import {GET_APPOINTMENT_HISTORY, GET_AVALIABLE_SLOTS_BY_DOCTOR_ID, GET_NEXT_AVAILABLE_APPOINTMENT_DATE, GET_UPCOMING_APPOINTMENTS, UPDATE_APPOINTMENT_USER_ID} from "../db/queries";
+import {GET_APPOINTMENT_HISTORY, GET_AVALIABLE_SLOTS_BY_DOCTOR_ID, GET_NEXT_AVAILABLE_APPOINTMENT_DATE, GET_UPCOMING_APPOINTMENTS, UPDATE_APPOINTMENT_ACCOUNT_ID} from "../db/queries";
 import { Appointment, AvailableSlot } from "../types/types";
 import { getCurrentDateTime } from "../utils/dateUtils";
 
 
 
-export async function getUserAppointments(userID: string) {
+export async function getAccountAppointments(accountID: string) {
   const { today, currentTime } = getCurrentDateTime();
 
   const upcomingAppointment = await allAsync<Appointment>(
     GET_UPCOMING_APPOINTMENTS,
-    [userID, today, today, currentTime]
+    [accountID, today, today, currentTime]
   );
 
   const appointmentHistory = await allAsync<Appointment>(
     GET_APPOINTMENT_HISTORY,
-    [userID, today, today, currentTime]
+    [accountID, today, today, currentTime]
   );
 
   return { appointmentHistory, upcomingAppointment };
@@ -29,13 +29,13 @@ export async function getAvailableSlotsByDoctorId(doctorID: number) {
   );
 }
 
-export async function updateAppointmentUserID(appointmentID: number, userID: string | null) {
-  await runAsync(UPDATE_APPOINTMENT_USER_ID, [userID, appointmentID]);
+export async function updateAppointmentAccountID(appointmentID: number, accountID: string | null) {
+  await runAsync(UPDATE_APPOINTMENT_ACCOUNT_ID, [accountID, appointmentID]);
 }
 
-export async function rescheduleAppointment(oldAppointmentID: number, newAppointmentID: number, userID: string) {
-  await updateAppointmentUserID(oldAppointmentID, null);
-  await updateAppointmentUserID(newAppointmentID, userID);
+export async function rescheduleAppointment(oldAppointmentID: number, newAppointmentID: number, accountID: string) {
+  await updateAppointmentAccountID(oldAppointmentID, null);
+  await updateAppointmentAccountID(newAppointmentID, accountID);
 }
 
 export async function getNextAvailableAppointmentDate(doctorID: number) {

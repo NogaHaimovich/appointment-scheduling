@@ -3,7 +3,7 @@ export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localho
 export const API_ENDPOINTS = {
   getCode: "/getCode",
   validateCode: "/validateCode",
-  getUserAppointments: "/appointments/user",
+  getAccountAppointments: "/appointments/account",
   getSpecialties: "/specialties/",
   getDoctorsBySpecialty: "/specialties/doctors-by-specialty",
   getAvailableSlots: "/appointments/open-slots-by-doctor-id",

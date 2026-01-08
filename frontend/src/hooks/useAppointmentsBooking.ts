@@ -35,16 +35,16 @@ export const useAppointmentBooking = () => {
   );
 
   const { mutate: scheduleAppointment, loading: scheduling } =
-    useMutation<ApiMessageResponse, { userId: string; appointmentId: number }>( "/appointments/assign", "patch");
+    useMutation<ApiMessageResponse, { accountId: string; appointmentId: number }>( "/appointments/assign", "patch");
 
   const { mutate: rescheduleAppointment, loading: rescheduling } =
-    useMutation<ApiMessageResponse, { oldAppointmentId: number; newAppointmentId: number; userId: string }>( "/appointments/reschedule", "patch");
+    useMutation<ApiMessageResponse, { oldAppointmentId: number; newAppointmentId: number; accountId: string }>( "/appointments/reschedule", "patch");
 
   const handleSchedule = useCallback(async () => {
     setLocalError(null);
 
-    const userId = authUtils.getUserIdFromToken();
-    if (!userId || !selectedAppointmentId) {
+    const accountId = authUtils.getAccountIdFromToken();
+    if (!accountId || !selectedAppointmentId) {
       setLocalError("Please select a valid appointment.");
       return;
     }
@@ -62,9 +62,9 @@ export const useAppointmentBooking = () => {
       ? await rescheduleAppointment({
           oldAppointmentId: rescheduleParams.appointmentId,
           newAppointmentId: selectedAppointmentId,
-          userId,
+          accountId,
         })
-      : await scheduleAppointment({ userId, appointmentId: selectedAppointmentId });
+      : await scheduleAppointment({ accountId, appointmentId: selectedAppointmentId });
 
     if ((response as any)?.success) {
       setShowSuccessPopup(true);

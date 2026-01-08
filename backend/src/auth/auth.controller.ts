@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { generateCode, verifyCode, findOrCreateUser, generateToken } from "./auth.service";
+import { generateCode, verifyCode, findOrCreateAccount, generateToken } from "./auth.service";
 
 export async function getCodeHandler(req: Request, res: Response) {
   try {
@@ -39,8 +39,8 @@ export async function validateCodeHandler(req: Request, res: Response) {
   }
 
   try {
-    const userId = await findOrCreateUser(phone);
-    const token = generateToken(userId);
+    const accountId = await findOrCreateAccount(phone);
+    const token = generateToken(accountId);
 
     res.json({
       success: true,

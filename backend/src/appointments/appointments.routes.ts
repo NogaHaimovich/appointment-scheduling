@@ -1,6 +1,6 @@
 import { Router } from "express";
 import {
-    getUserAppointmentsHandler,
+    getAccountAppointmentsHandler,
     getAvailableSlotsByDoctorIdHandler,
     assignAppointmentHandler,
     rescheduleAppointmentHandler,
@@ -9,7 +9,7 @@ import {
 
 const router = Router();
 
-router.get("/user", getUserAppointmentsHandler);
+router.get("/account", getAccountAppointmentsHandler);
 router.get("/open-slots-by-doctor-id", getAvailableSlotsByDoctorIdHandler);
 router.patch("/assign", assignAppointmentHandler);
 router.patch("/reschedule", rescheduleAppointmentHandler);

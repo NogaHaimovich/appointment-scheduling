@@ -10,9 +10,9 @@ import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 import type { AppointmentsResponse, SpecialitiesResponse } from "../../types/types";
 
 const DashboardPage = () => {
-  const userId = authUtils.getUserIdFromToken();
-  const requestBody = useMemo(() => ({ userId }), [userId]);
-  const { data, loading, error } = useData<AppointmentsResponse>( API_ENDPOINTS.getUserAppointments, 0, requestBody );
+  const accountId = authUtils.getAccountIdFromToken();
+  const requestBody = useMemo(() => ({ accountId }), [accountId]);
+  const { data, loading, error } = useData<AppointmentsResponse>( API_ENDPOINTS.getAccountAppointments, 0, requestBody );
 
   const { upcomingAppointments, pastAppointments } = useMemo(
     () => ({

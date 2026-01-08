@@ -1,32 +1,32 @@
 
 
 const TOKEN_KEY = "auth_token";
-const USER_ID_KEY = "user_id";
+const ACCOUNT_ID_KEY = "account_id";
 
 export const authUtils = {
   saveToken: (token: string) => {
     localStorage.setItem(TOKEN_KEY, token);
   },
 
-  saveUserId: (userId: string) => {
-    localStorage.setItem(USER_ID_KEY, userId);
+  saveAccountId: (accountId: string) => {
+    localStorage.setItem(ACCOUNT_ID_KEY, accountId);
   },
 
   getToken: (): string | null => {
     return localStorage.getItem(TOKEN_KEY);
   },
 
-  getUserId: (): string | null => {
-    return localStorage.getItem(USER_ID_KEY);
+  getAccountId: (): string | null => {
+    return localStorage.getItem(ACCOUNT_ID_KEY);
   },
 
-  getUserIdFromToken: (): string | null => {
+  getAccountIdFromToken: (): string | null => {
     const token = localStorage.getItem(TOKEN_KEY);
     if (!token) return null;
 
     try {
       const payload = JSON.parse(atob(token.split(".")[1]));
-      return payload.userId || null;
+      return payload.accountId || null;
     } catch (error) {
       console.error("Error decoding token:", error);
       return null;
@@ -39,7 +39,7 @@ export const authUtils = {
 
   clearToken: () => {
     localStorage.removeItem(TOKEN_KEY);
-    localStorage.removeItem(USER_ID_KEY);
+    localStorage.removeItem(ACCOUNT_ID_KEY);
   },
 };
 

@@ -12,7 +12,7 @@ export const GET_UPCOMING_APPOINTMENTS = `
   JOIN doctors d ON a.doctor_id = d.id
   JOIN doctor_specialties ds ON d.id = ds.doctor_id
   JOIN specialties s ON ds.specialty_id = s.id
-  WHERE a.user_id = ?
+  WHERE a.account_id = ?
     AND(
       a.date > ? 
       OR (a.date = ? AND a.time >= ?)
@@ -32,7 +32,7 @@ export const GET_APPOINTMENT_HISTORY = `
   JOIN doctors d ON a.doctor_id = d.id
   JOIN doctor_specialties ds ON d.id = ds.doctor_id
   JOIN specialties s ON ds.specialty_id = s.id
-  WHERE a.user_id = ?
+  WHERE a.account_id = ?
     AND (
       a.date < ? OR 
       (a.date = ? AND a.time < ?)
@@ -47,7 +47,7 @@ SELECT
     a.time
 FROM appointments a
 WHERE a.doctor_id = ?
-  AND a.user_id IS NULL
+  AND a.account_id IS NULL
   AND (
     a.date > ? 
     OR (a.date = ? AND a.time >= ?)
@@ -55,9 +55,9 @@ WHERE a.doctor_id = ?
 ORDER BY a.date, a.time;
 `
 
-export const UPDATE_APPOINTMENT_USER_ID = `
+export const UPDATE_APPOINTMENT_ACCOUNT_ID = `
 UPDATE appointments
-SET user_id = ?
+SET account_id = ?
 WHERE id=?;
 `
 
@@ -74,21 +74,21 @@ JOIN doctors AS b
 WHERE a.specialty_id = ?;
 `
 
-export const GET_USER_BY_PHONE =`
+export const GET_ACCOUNT_BY_PHONE =`
 SELECT *
-FROM users
+FROM accounts
 WHERE phone = ?
 `
 
-export const INPUT_NEW_USER = `
-INSERT INTO users (id, phone) VALUES (?, ?)
+export const INPUT_NEW_ACCOUNT = `
+INSERT INTO accounts (id, phone) VALUES (?, ?)
 `
 
 export const GET_NEXT_AVAILABLE_APPOINTMENT_DATE = `
 SELECT *
 FROM appointments
 WHERE doctor_id = ?
-  AND user_id IS NULL
+  AND account_id IS NULL
   AND (
     date > ? 
     OR (date = ? AND time >= ?)

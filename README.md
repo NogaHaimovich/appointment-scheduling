@@ -1,6 +1,6 @@
 # Appointment Manager
 
-A full-stack web application for managing medical appointments. Users can book, view, and reschedule appointments with doctors across different medical specialties.
+A full-stack web application for managing medical appointments. Accounts can book, view, and reschedule appointments with doctors across different medical specialties.
 
 ## 🌐 Live Demo
 
@@ -192,23 +192,23 @@ The application follows a **monorepo structure** with separate `backend` and `fr
   - Google Calendar API integration with OAuth 2.0 authentication
   - Server-side API calls to create calendar events programmatically
   - Event management (create, update, delete) synchronized with appointment changes
-  - Proper error handling and user consent flows
+  - Proper error handling and account consent flows
 
 ### Database Schema
 
 **Relational Design:**
-- **users**: Stores user information (id as UUID, phone as unique identifier)
+- **accounts**: Stores account information (id as UUID, phone as unique identifier)
 - **doctors**: Stores doctor information (id as auto-increment integer, name)
 - **specialties**: Stores medical specialties (id as auto-increment integer, name as unique, description)
 - **doctor_specialties**: Junction table for many-to-many relationship between doctors and specialties
-- **appointments**: Stores appointment slots (id, doctor_id, date, time, user_id nullable)
+- **appointments**: Stores appointment slots (id, doctor_id, date, time, account_id nullable)
   - Unique constraint on (doctor_id, date, time) prevents double-booking
-  - user_id is nullable to represent available slots vs booked appointments
+  - account_id is nullable to represent available slots vs booked appointments
 
 **Design Rationale:**
 - Normalized schema prevents data duplication
 - Junction table allows doctors to have multiple specialties
-- Appointment slots are pre-created and assigned to users, simplifying availability queries
+- Appointment slots are pre-created and assigned to accounts, simplifying availability queries
 
 ## 📝 Assumptions
 
@@ -228,7 +228,7 @@ The project includes a few example tests to demonstrate testing approaches:
 - **`frontend/src/utils/__tests__/dateFormat.test.ts`**: Tests for date formatting utilities including date conversion, Google Calendar UTC conversion, and edge cases
 
 #### Backend Tests
-- **`backend/src/services/__tests__/auth.test.ts`**: Tests for authentication service including OTP code generation/verification, user creation/retrieval, JWT token generation, and error handling
+- **`backend/src/services/__tests__/auth.test.ts`**: Tests for authentication service including OTP code generation/verification, account creation/retrieval, JWT token generation, and error handling
 
 ### Running Tests
 
@@ -250,7 +250,7 @@ To achieve comprehensive test coverage, the following areas should be tested:
 
 #### Backend Tests
 
-- **Appointment Service**: Booking appointments, retrieving user appointments (upcoming vs history), getting available time slots by doctor, rescheduling logic, and cancellation
+- **Appointment Service**: Booking appointments, retrieving account appointments (upcoming vs history), getting available time slots by doctor, rescheduling logic, and cancellation
 - **Specialty Service**: Retrieving medical specialties and filtering doctors by specialty
 - **Appointment Routes**: Endpoints for booking, rescheduling, canceling, and viewing appointments with proper authentication
 - **Specialty Routes**: Endpoints for fetching specialties and doctors with proper error handling

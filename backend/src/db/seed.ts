@@ -52,7 +52,7 @@ export async function seed() {
     await runAsync("DELETE FROM doctor_specialties");
     await runAsync("DELETE FROM doctors");
     await runAsync("DELETE FROM specialties");
-    await runAsync("DELETE FROM users");
+    await runAsync("DELETE FROM accounts");
     console.log("Cleared existing data");
 
     const specialties = [
@@ -100,12 +100,12 @@ export async function seed() {
     }
     console.log(`Inserted ${doctors.length} doctors`);
 
-    const users = ["0501111111", "0502222222", "0503333333"];
-    for (const phone of users) {
-      const userId = randomUUID();
-      await runAsync("INSERT INTO users (id, phone) VALUES (?, ?)", [userId, phone]);
+    const accounts = ["0501111111", "0502222222", "0503333333"];
+    for (const phone of accounts) {
+      const accountId = randomUUID();
+      await runAsync("INSERT INTO accounts (id, phone) VALUES (?, ?)", [accountId, phone]);
     }
-    console.log(`Inserted ${users.length} users`);
+    console.log(`Inserted ${accounts.length} accounts`);
 
     const doctorRows = await allAsync<{ id: number }>("SELECT id FROM doctors");
     const startDate = new Date(Date.UTC(2025, 11, 15)); 

@@ -3,7 +3,7 @@ import { initializeDatabase } from "./db/init";
 
 export function initializeOnStartup(): void {
   db.get(
-    "SELECT name FROM sqlite_master WHERE type='table' AND name='users'",
+    "SELECT name FROM sqlite_master WHERE type='table' AND name='accounts'",
     (err, row) => {
       if (err) {
         console.error("Error checking database:", err);

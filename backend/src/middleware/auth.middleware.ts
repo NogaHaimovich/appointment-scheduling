@@ -2,7 +2,7 @@ import { Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
 export interface AuthRequest extends Request {
-  userId?: string;
+  accountId?: string;
 }
 
 
@@ -32,8 +32,8 @@ export const authenticateToken = (
       });
     }
     
-    const decoded = jwt.verify(token, secret) as { userId: string };
-    req.userId = decoded.userId;
+    const decoded = jwt.verify(token, secret) as { accountId: string };
+    req.accountId = decoded.accountId;
     next();
   } catch (error) {
     if (error instanceof jwt.TokenExpiredError) {

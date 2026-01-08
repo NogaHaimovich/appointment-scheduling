@@ -21,7 +21,7 @@ const AppointmentCard = ({
     const navigate = useNavigate();
   
     const { mutate: cancelAppointment, loading: canceling, error } =
-    useMutation<ApiMessageResponse, { userId: string | null; appointmentId: number }>(
+    useMutation<ApiMessageResponse, { accountId: string | null; appointmentId: number }>(
       "/appointments/assign",
       "patch"
     );
@@ -50,7 +50,7 @@ const AppointmentCard = ({
         }
 
         try {
-            const result = await cancelAppointment({ userId: null, appointmentId: id });
+            const result = await cancelAppointment({ accountId: null, appointmentId: id });
             if ((result as any)?.success) {
                 window.location.reload();
             }

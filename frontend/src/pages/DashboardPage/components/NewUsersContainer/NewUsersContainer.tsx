@@ -34,7 +34,7 @@ const NewUserContainer = ({ specialties }: NewUserContainerProps) => {
   };
 
   return (
-    <div className="dashboardPage__new-user">
+    <div className="dashboardPage__new-account">
       <h1>Welcome!</h1>
       <h2>You don't have any appointment yet – schedule your first one!</h2>
       <Button className="dashboardPage__button" onClick={handleScheduleClick}>

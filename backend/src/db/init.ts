@@ -6,7 +6,7 @@ export function initializeDatabase(db: Database): void {
     console.log("Creating tables...");
 
     db.run(`
-      CREATE TABLE IF NOT EXISTS users (
+      CREATE TABLE IF NOT EXISTS accounts (
         id TEXT PRIMARY KEY,
         phone TEXT NOT NULL UNIQUE
       )
@@ -43,9 +43,9 @@ export function initializeDatabase(db: Database): void {
         doctor_id INTEGER NOT NULL,
         date TEXT NOT NULL,
         time TEXT NOT NULL,
-        user_id TEXT,
+        account_id TEXT,
         FOREIGN KEY (doctor_id) REFERENCES doctors(id),
-        FOREIGN KEY (user_id) REFERENCES users(id),
+        FOREIGN KEY (account_id) REFERENCES accounts(id),
         UNIQUE (doctor_id, date, time)
       )
     `);

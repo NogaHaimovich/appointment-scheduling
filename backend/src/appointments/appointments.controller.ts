@@ -1,23 +1,23 @@
 import { Request, Response } from "express";
-import { getUserAppointments, getAvailableSlotsByDoctorId, updateAppointmentUserID, rescheduleAppointment, getNextAvailableAppointmentDate } from "./appointments.service";
+import { getAccountAppointments, getAvailableSlotsByDoctorId, updateAppointmentAccountID, rescheduleAppointment, getNextAvailableAppointmentDate } from "./appointments.service";
 
-export async function getUserAppointmentsHandler(req: Request, res: Response) {
-    const userID = req.query.userId as string;
-    if (!userID) {
+export async function getAccountAppointmentsHandler(req: Request, res: Response) {
+    const accountID = req.query.accountId as string;
+    if (!accountID) {
         return res.status(400).json({ 
             success: false,
-            message: "User ID is required" 
+            message: "Account ID is required" 
         });
     }
     try {
-        const { appointmentHistory, upcomingAppointment } = await getUserAppointments(userID);
+        const { appointmentHistory, upcomingAppointment } = await getAccountAppointments(accountID);
         res.json({
             success: true,
             appointmentHistory,
             upcomingAppointment
         });
     } catch (error) {
-        console.error("Error getting user appointments:", error);
+        console.error("Error getting account appointments:", error);
         res.status(500).json({ 
             success: false,
             message: "Failed to retrieve appointments" 
@@ -49,7 +49,7 @@ export async function getAvailableSlotsByDoctorIdHandler(req: Request, res: Resp
 }
 
 export async function assignAppointmentHandler(req: Request, res: Response) {
-    const { userId, appointmentId } = req.body;
+    const { accountId, appointmentId } = req.body;
     
     if (appointmentId === undefined || appointmentId === null) {
         return res.status(400).json({ 
@@ -58,16 +58,16 @@ export async function assignAppointmentHandler(req: Request, res: Response) {
         });
     }
     
-    if (userId === undefined) {
+    if (accountId === undefined) {
         return res.status(400).json({ 
             success: false, 
-            message: "User ID is required" 
+            message: "Account ID is required" 
         });
     }
     
     try {
-        await updateAppointmentUserID(appointmentId, userId); 
-        const message = userId === null 
+        await updateAppointmentAccountID(appointmentId, accountId); 
+        const message = accountId === null 
             ? "Appointment canceled successfully" 
             : "Appointment assigned successfully";
         res.json({ success: true, message });
@@ -78,17 +78,17 @@ export async function assignAppointmentHandler(req: Request, res: Response) {
 }
 
 export async function rescheduleAppointmentHandler(req: Request, res: Response) {
-    const { oldAppointmentId, newAppointmentId, userId } = req.body;
+    const { oldAppointmentId, newAppointmentId, accountId } = req.body;
     
-    if (!oldAppointmentId || !newAppointmentId || !userId) {
+    if (!oldAppointmentId || !newAppointmentId || !accountId) {
         return res.status(400).json({ 
             success: false, 
-            message: "Old Appointment ID, New Appointment ID, and User ID are required" 
+            message: "Old Appointment ID, New Appointment ID, and Account ID are required" 
         });
     }
 
     try {
-        await rescheduleAppointment(oldAppointmentId, newAppointmentId, userId);
+        await rescheduleAppointment(oldAppointmentId, newAppointmentId, accountId);
         res.json({ success: true, message: "Appointment rescheduled successfully" });
     } catch (error) {
         console.error("Error updating appointment:", error);

@@ -40,7 +40,7 @@ initializeOnStartup();
 
 console.log("Routes registered:");
 console.log("  - Auth routes: /getCode, /validateCode");
-console.log("  - Appointments routes: /appointments/user, /appointments/open-slots-by-doctor-id, etc.");
+console.log("  - Appointments routes: /appointments/account, /appointments/open-slots-by-doctor-id, etc.");
 console.log("  - Specialties routes: /specialties/, /specialties/doctors-by-specialty");
 
 app.use((req: Request, res: Response) => {
