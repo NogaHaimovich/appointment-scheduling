@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { authUtils } from "../utils/auth";
 import { formatDateToDisplay, formatTimeToDisplay } from "../utils/dateFormat";
@@ -10,10 +10,14 @@ import { useSpecialties } from "./useSpecialties";
 import { useDoctors } from "./useDoctors";
 import { useSlots } from "./useSlots";
 import { useNextAvailableSlots } from "./useNextAvailableSlots";
+import { usePatients } from "./usePatients";
 
 export const useAppointmentBooking = () => {
   const navigate = useNavigate();
   const { rescheduleParams, isRescheduleMode } = useRescheduleParams();
+  const { patients, loadingPatients } = usePatients();
+  
+  const [selectedPatientId, setSelectedPatientId] = useState<string | null>(null);
 
   const {selectedSpecialty, selectedSpecialtyId, specialties,  loadingSpecialties,  handleSpecialtyChange,  resetSpecialty} = 
     useSpecialties(rescheduleParams?.specialty);
@@ -29,16 +33,40 @@ export const useAppointmentBooking = () => {
   const [localError, setLocalError] = useState<string | null>(null);
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
+  useEffect(() => {
+    if (patients.length > 0 && selectedPatientId === null) {
+      const selfPatient = patients.find(p => p.relationship === 'self');
+      if (selfPatient) {
+        setSelectedPatientId(selfPatient.id);
+      } else {
+        setSelectedPatientId(patients[0].id);
+      }
+    }
+  }, [patients, selectedPatientId]);
+
+  useEffect(() => {
+    if (isRescheduleMode && rescheduleParams?.patientId && patients.length > 0) {
+      const patient = patients.find(p => p.id === rescheduleParams.patientId);
+      if (patient) {
+        setSelectedPatientId(patient.id);
+      }
+    }
+  }, [isRescheduleMode, rescheduleParams, patients]);
+
+  const selectedPatient = useMemo(() => {
+    return patients.find(p => p.id === selectedPatientId) || null;
+  }, [patients, selectedPatientId]);
+
   const isFormComplete = useMemo(
-    () => !!(selectedSpecialty && selectedDoctor && selectedDate && selectedTime),
-    [selectedSpecialty, selectedDoctor, selectedDate, selectedTime]
+    () => !!(selectedSpecialty && selectedDoctor && selectedDate && selectedTime && selectedPatientId),
+    [selectedSpecialty, selectedDoctor, selectedDate, selectedTime, selectedPatientId]
   );
 
   const { mutate: scheduleAppointment, loading: scheduling } =
-    useMutation<ApiMessageResponse, { accountId: string; appointmentId: number }>( "/appointments/assign", "patch");
+    useMutation<ApiMessageResponse, { accountId: string; appointmentId: number; patientId?: string | null; patientName?: string | null }>( "/appointments/assign", "patch");
 
   const { mutate: rescheduleAppointment, loading: rescheduling } =
-    useMutation<ApiMessageResponse, { oldAppointmentId: number; newAppointmentId: number; accountId: string }>( "/appointments/reschedule", "patch");
+    useMutation<ApiMessageResponse, { oldAppointmentId: number; newAppointmentId: number; accountId: string; patientId?: string | null; patientName?: string | null }>( "/appointments/reschedule", "patch");
 
   const handleSchedule = useCallback(async () => {
     setLocalError(null);
@@ -58,13 +86,23 @@ export const useAppointmentBooking = () => {
       if (!confirmed) return;
     }
 
+    const patientId = selectedPatientId;
+    const patientName = selectedPatient?.patient_name || null;
+
     const response = isRescheduleMode && rescheduleParams
       ? await rescheduleAppointment({
           oldAppointmentId: rescheduleParams.appointmentId,
           newAppointmentId: selectedAppointmentId,
           accountId,
+          patientId,
+          patientName,
         })
-      : await scheduleAppointment({ accountId, appointmentId: selectedAppointmentId });
+      : await scheduleAppointment({ 
+          accountId, 
+          appointmentId: selectedAppointmentId,
+          patientId,
+          patientName,
+        });
 
     if ((response as any)?.success) {
       setShowSuccessPopup(true);
@@ -95,13 +133,17 @@ export const useAppointmentBooking = () => {
     selectedDoctor,
     selectedDate,
     selectedTime,
+    selectedPatientId,
+    selectedPatient,
 
     specialties,
     doctors,
+    patients,
     groupedSlots,
 
     loadingSpecialties,
     loadingDoctors,
+    loadingPatients,
     loadingSlots,
     loadingNextAvailableSlots,
     scheduling: scheduling || rescheduling,
@@ -111,6 +153,7 @@ export const useAppointmentBooking = () => {
 
     handleSpecialtyChange,
     handleDoctorChange,
+    setSelectedPatientId,
     setSelectedDate,
     setSelectedTime,
     handleSchedule,

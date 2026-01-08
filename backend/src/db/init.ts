@@ -15,7 +15,7 @@ export function initializeDatabase(db: Database): void {
 
     db.run(`
       CREATE TABLE IF NOT EXISTS patients (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        id TEXT PRIMARY KEY,
         account_id TEXT NOT NULL,
         patient_name TEXT NOT NULL,
         relationship TEXT NOT NULL, -- self | child | parent | spouse | other
@@ -55,10 +55,12 @@ export function initializeDatabase(db: Database): void {
         date TEXT NOT NULL,
         time TEXT NOT NULL,
         account_id TEXT,
-        patient_id INTEGER,
+        patient_id TEXT,
+        patient_name TEXT,
         FOREIGN KEY (doctor_id) REFERENCES doctors(id),
         FOREIGN KEY (account_id) REFERENCES accounts(id),
         FOREIGN KEY (patient_id) REFERENCES patients(id),
+        FOREIGN KEY (patient_name) REFERENCES patients(patient_name),
         UNIQUE (doctor_id, date, time)
       )
     `);

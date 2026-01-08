@@ -101,8 +101,8 @@ export async function seed() {
     console.log(`Inserted ${doctors.length} doctors`);
     
     const doctorRows = await allAsync<{ id: number }>("SELECT id FROM doctors");
-    const startDate = new Date(Date.UTC(2025, 1, 8)); 
-    const endDate = new Date(Date.UTC(2026, 6, 30));
+    const startDate = new Date(Date.UTC(2026, 0, 8)); 
+    const endDate = new Date(Date.UTC(2026, 1, 30));
     const appointments = generateAppointments(startDate, endDate, doctorRows);
 
     for (const a of appointments) {

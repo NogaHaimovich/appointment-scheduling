@@ -53,8 +53,9 @@ export async function findAccount(phone: string): Promise<{ id: string; name: st
 
 export async function createAccount(phone: string, name: string): Promise<string> {
   const accountId = randomUUID();
+  const patientId = randomUUID();
   await runAsync(INPUT_NEW_ACCOUNT, [accountId, phone, name]);
-  await runAsync(INPUT_NEW_PATIENT, [accountId, name, "self"]);
+  await runAsync(INPUT_NEW_PATIENT, [patientId, accountId, name, "self"]);
   return accountId;
 }
 

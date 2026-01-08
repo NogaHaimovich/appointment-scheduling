@@ -1,6 +1,7 @@
 import SpecialtySelector from "./components/SpecialtySelection/SpecialtySelection";
 import DoctorSelector from "./components/DoctorSelection/DoctorSelection";
 import DateTimeSelector from "./components/DateAndTimeSelection/DateAndTimeSelection";
+import PatientSelector from "./components/PatientSelection/PatientSelection";
 import SuccessPopup from "../../components/SuccessPopup/SuccessPopup";
 import { useAppointmentBooking } from "../../hooks/useAppointmentsBooking";
 
@@ -20,6 +21,16 @@ const AppointmentBookingPage = () => {
 
       <div className="bookingPage-content">
         <div className="bookingPage-main">
+          <div className="bookingPage-column">
+            <PatientSelector
+              selectedPatientId={booking.selectedPatientId}
+              patients={booking.patients}
+              onChange={booking.setSelectedPatientId}
+              loading={booking.loadingPatients}
+              disabled={isPopupOpen}
+            />
+          </div>
+
           <div className="bookingPage-column">
             <SpecialtySelector
               selectedSpecialty={booking.selectedSpecialty}

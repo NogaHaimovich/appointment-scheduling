@@ -1,5 +1,11 @@
-export const getAvatarColorClass = (patientId: number): string => {
-    const colorIndex = patientId % 10; 
+export const getAvatarColorClass = (patientId: string): string => {
+    let hash = 0;
+    for (let i = 0; i < patientId.length; i++) {
+        const char = patientId.charCodeAt(i);
+        hash = ((hash << 5) - hash) + char;
+        hash = hash & hash; 
+    }
+    const colorIndex = Math.abs(hash) % 10; 
     return `patient_avatar--color-${colorIndex}`;
 };
 

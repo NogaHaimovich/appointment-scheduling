@@ -37,5 +37,5 @@ export function initializeOnStartup(): void {
       }
     }
   );
-}
 
+}

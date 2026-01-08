@@ -36,7 +36,7 @@ const DoctorSelector: FC<DoctorSelectorProps> = ({
   return (
     <div className="doctor-selection">
       <div className="doctor-selection-header">
-        <h3 className="doctor-selection-title">2. Doctors</h3>
+        <h3 className="doctor-selection-title">3. Doctors</h3>
       </div>
 
       {loading ? (

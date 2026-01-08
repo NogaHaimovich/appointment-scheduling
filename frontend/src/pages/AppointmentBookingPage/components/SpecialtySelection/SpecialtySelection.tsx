@@ -13,7 +13,7 @@ type SpecialtySelectorProps = {
 const SpecialtySelector: FC<SpecialtySelectorProps> = ({ selectedSpecialty, specialties, onChange, loading, disabled }) => {
   return (
     <div className="specialty-selection">
-      <h3 className="specialty-selection-title">1. SPECIALTY</h3>
+      <h3 className="specialty-selection-title">2. SPECIALTY</h3>
       {loading ? (
         <div className="specialty-selection-loading">Loading specialties...</div>
       ) : (

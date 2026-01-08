@@ -7,8 +7,8 @@ import "./styles.scss";
 
 type PatientCardProps = {
     patient: Patient;
-    onBookAppointment: (patientId: number) => void;
-    onDeletePatient: (patientId: number) => void;
+    onBookAppointment: (patientId: string) => void;
+    onDeletePatient: (patientId: string) => void;
 };
 
 const PatientCard = ({ patient, onBookAppointment, onDeletePatient }: PatientCardProps) => {

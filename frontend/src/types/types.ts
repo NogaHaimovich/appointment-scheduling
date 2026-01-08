@@ -5,7 +5,14 @@ export interface AppointmentProps  {
   time: string;
   doctor_name: string;
   specialty_name: string;
+  patient_id: string | null;
   patient_name: string | null;
+}
+
+export type Patient = {
+  id: string;
+  patient_name: string;
+  relationship: string;
 }
 
 export type Specialty ={
@@ -70,4 +77,8 @@ export type CreateAccountResponse = ApiResponse<{
 
 export type NextAvailableSlotResponse = ApiResponse<{
   nextAvailable: AppointmentProps | null;
+}>;
+
+export type PatientsResponse = ApiResponse<{
+  patients: Patient[];
 }>;

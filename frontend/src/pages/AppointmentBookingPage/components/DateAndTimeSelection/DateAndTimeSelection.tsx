@@ -78,7 +78,7 @@ const DateTimeSelector: FC<DateTimeSelectorProps> = ({
   return (
     <div className="date-time-container">
       <div className="availability-header">
-        <h3 className="availability-title">3. AVAILABILITY</h3>
+        <h3 className="availability-title">4. AVAILABILITY</h3>
       </div>
       {availableDates.length > 0 && (
         <div className="date-selection-section">

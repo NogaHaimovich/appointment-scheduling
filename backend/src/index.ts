@@ -6,6 +6,7 @@ import cors from "cors";
 
 import appointmentsRoutes from "./appointments/appointments.routes";
 import authRoutes from "./auth/auth.routes";
+import patientsRoutes from "./patients/patients.routes";
 
 import { validateEnvVariables } from "./utils/envValidation";
 import specialtiesRoutes from "./specialties/specialties.routes";
@@ -35,6 +36,7 @@ app.use(cookieParser());
 app.use("/", authRoutes);
 app.use("/appointments", appointmentsRoutes);
 app.use("/specialties", specialtiesRoutes);
+app.use("/patients", patientsRoutes);
 
 initializeOnStartup();
 
@@ -42,6 +44,7 @@ console.log("Routes registered:");
 console.log("  - Auth routes: /getCode, /validateCode");
 console.log("  - Appointments routes: /appointments/account, /appointments/open-slots-by-doctor-id, etc.");
 console.log("  - Specialties routes: /specialties/, /specialties/doctors-by-specialty");
+console.log("  - Patients routes: /patients/by-account");
 
 app.use((req: Request, res: Response) => {
   console.log(`404 - Route not found: ${req.method} ${req.path}`);

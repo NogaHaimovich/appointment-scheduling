@@ -7,7 +7,9 @@ export const GET_UPCOMING_APPOINTMENTS = `
     a.date,
     a.time,
     d.name as doctor_name,
-    s.name as specialty_name
+    s.name as specialty_name,
+    a.patient_id,
+    a.patient_name
   FROM appointments a
   JOIN doctors d ON a.doctor_id = d.id
   JOIN doctor_specialties ds ON d.id = ds.doctor_id
@@ -27,7 +29,9 @@ export const GET_APPOINTMENT_HISTORY = `
     a.date,
     a.time,
     d.name AS doctor_name,
-    s.name AS specialty_name
+    s.name AS specialty_name,
+    a.patient_id,
+    a.patient_name
   FROM appointments a
   JOIN doctors d ON a.doctor_id = d.id
   JOIN doctor_specialties ds ON d.id = ds.doctor_id
@@ -57,7 +61,7 @@ ORDER BY a.date, a.time;
 
 export const UPDATE_APPOINTMENT_ACCOUNT_ID = `
 UPDATE appointments
-SET account_id = ?, patient_id = ?
+SET account_id = ?, patient_id = ?, patient_name = ?
 WHERE id=?;
 `
 
@@ -91,7 +95,27 @@ INSERT INTO accounts (id, phone, name) VALUES (?, ?, ?)
 `
 
 export const INPUT_NEW_PATIENT = `
-INSERT INTO patients (account_id, patient_name, relationship) VALUES (?, ?, ?)
+INSERT INTO patients (id, account_id, patient_name, relationship) VALUES (?, ?, ?, ?)
+`
+
+export const GET_APPOINTMENT_BY_ID = `
+SELECT patient_name, patient_id, account_id
+FROM appointments
+WHERE id = ?
+`
+
+export const GET_PATIENT_BY_ACCOUNT_ID = `
+SELECT id, patient_name, relationship
+FROM patients
+WHERE account_id = ? AND relationship = 'self'
+LIMIT 1
+`
+
+export const GET_PATIENTS_BY_ACCOUNT_ID = `
+SELECT id, patient_name, relationship
+FROM patients
+WHERE account_id = ?
+ORDER BY relationship = 'self' DESC, patient_name ASC
 `
 
 export const GET_NEXT_AVAILABLE_APPOINTMENT_DATE = `

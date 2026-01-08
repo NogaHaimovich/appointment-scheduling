@@ -6,7 +6,7 @@ import type { Patient } from "./types/patientTypes";
 const FamilyManagementPage = () => {
     const patients: Patient[] = [
         { 
-            id: 1, 
+            id: "550e8400-e29b-41d4-a716-446655440000", 
             name: "Noga Shapiro", 
             relationship: "self", 
             isAdmin: true,
@@ -16,7 +16,7 @@ const FamilyManagementPage = () => {
             }
         },
         {
-            id: 2, 
+            id: "550e8400-e29b-41d4-a716-446655440001", 
             name: "David Shapiro", 
             relationship: "parent",
             isAdmin: false,
@@ -29,11 +29,11 @@ const FamilyManagementPage = () => {
 
 
 
-    const handleBookAppointment = (patientId: number) => {
+    const handleBookAppointment = (patientId: string) => {
         console.log("Book appointment for patient:", patientId);
     };
 
-    const handleDeletePatient = (patientId: number) => {
+    const handleDeletePatient = (patientId: string) => {
         console.log("Delete patient:", patientId);
     };
 

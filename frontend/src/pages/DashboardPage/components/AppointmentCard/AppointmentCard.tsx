@@ -16,6 +16,7 @@ const AppointmentCard = ({
     time,
     doctor_name,
     specialty_name,
+    patient_id,
     patient_name,
     showButtons = false,
 }: AppointmentCardProps) => {
@@ -36,6 +37,7 @@ const AppointmentCard = ({
         if (doctor_name) params.append("doctor", doctor_name);
         if (date) params.append("date", date);
         if (time) params.append("time", time);
+        if (patient_id) params.append("patientId", patient_id.toString());
         
         navigate(`/booking?${params.toString()}`);
     };

@@ -16,6 +16,14 @@ export type Appointment = {
   time: string;
   doctor_name: string;
   specialty_name: string;
+  patient_id: string | null;
+  patient_name: string | null;
+};
+
+export type Patient = {
+  id: string;
+  patient_name: string;
+  relationship: string;
 };
 
 export type AvailableSlot = {

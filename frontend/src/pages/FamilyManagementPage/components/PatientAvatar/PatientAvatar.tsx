@@ -2,7 +2,7 @@ import { getAvatarColorClass, getInitials } from "../../utils/patientUtils";
 import "./styles.scss";
 
 type PatientAvatarProps = {
-    patientId: number;
+    patientId: string;
     name: string;
 };
 

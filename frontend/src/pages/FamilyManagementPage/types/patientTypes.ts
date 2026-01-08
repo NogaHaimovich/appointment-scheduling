@@ -1,5 +1,5 @@
 export type Patient = {
-    id: number;
+    id: string;
     name: string;
     relationship: string;
     isAdmin?: boolean;

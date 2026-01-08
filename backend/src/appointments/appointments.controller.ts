@@ -50,7 +50,7 @@ export async function getAvailableSlotsByDoctorIdHandler(req: Request, res: Resp
 }
 
 export async function assignAppointmentHandler(req: Request, res: Response) {
-    const { accountId, appointmentId } = req.body;
+    const { accountId, appointmentId, patientId, patientName } = req.body;
     
     if (appointmentId === undefined || appointmentId === null) {
         return res.status(400).json({ 
@@ -67,7 +67,10 @@ export async function assignAppointmentHandler(req: Request, res: Response) {
     }
     
     try {
-        await updateAppointmentAccountID(appointmentId, accountId); 
+        const finalPatientId = accountId === null ? null : (patientId || null);
+        const finalPatientName = accountId === null ? null : (patientName || null);
+        
+        await updateAppointmentAccountID(appointmentId, accountId, finalPatientId, finalPatientName); 
         const message = accountId === null 
             ? "Appointment canceled successfully" 
             : "Appointment assigned successfully";
@@ -79,7 +82,7 @@ export async function assignAppointmentHandler(req: Request, res: Response) {
 }
 
 export async function rescheduleAppointmentHandler(req: Request, res: Response) {
-    const { oldAppointmentId, newAppointmentId, accountId } = req.body;
+    const { oldAppointmentId, newAppointmentId, accountId, patientId, patientName } = req.body;
     
     if (!oldAppointmentId || !newAppointmentId || !accountId) {
         return res.status(400).json({ 
@@ -89,7 +92,13 @@ export async function rescheduleAppointmentHandler(req: Request, res: Response) 
     }
 
     try {
-        await rescheduleAppointment(oldAppointmentId, newAppointmentId, accountId);
+        await rescheduleAppointment(
+            oldAppointmentId, 
+            newAppointmentId, 
+            accountId,
+            patientId || null,
+            patientName || null
+        );
         res.json({ success: true, message: "Appointment rescheduled successfully" });
     } catch (error) {
         console.error("Error updating appointment:", error);
