@@ -26,6 +26,7 @@ const FamilyManagementPage = () => {
             name: patient.patient_name,
             relationship: patient.relationship,
             isAdmin: patient.relationship === "self",
+            nextAppointment: patient.nextAppointment,
         }));
     }, [backendPatients]);
 

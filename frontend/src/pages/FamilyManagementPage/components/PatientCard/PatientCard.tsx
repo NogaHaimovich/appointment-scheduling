@@ -1,5 +1,6 @@
 import { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
+import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import PatientBadge from "../PatientBadge/PatientBadge";
 import PatientNextAppointment from "../PatientNextAppointment/PatientNextAppointment";
 import DeleteConfirmationModal from "../DeleteConfirmationModal/DeleteConfirmationModal";
@@ -60,11 +61,17 @@ const PatientCard = ({ patient, onDelete, deleting = false }: PatientCardProps) 
                 </div>
                 
                 <div className="patient_details">
-                    {patient.nextAppointment && (
+                    {patient.nextAppointment ? (
                         <PatientNextAppointment 
                             doctorName={patient.nextAppointment.doctorName}
                             date={patient.nextAppointment.date}
+                            time={patient.nextAppointment.time}
                         />
+                    ) : (
+                        <div className="patient_detail_item patient_detail_item--no-appointment">
+                            <CalendarTodayIcon sx={{ fontSize: 16 }} />
+                            <span>No upcoming appointments</span>
+                        </div>
                     )}
                 </div>
 

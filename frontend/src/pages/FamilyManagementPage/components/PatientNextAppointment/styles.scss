@@ -19,5 +19,10 @@
             color: #059669;
         }
     }
+
+    &--no-appointment {
+        color: $color-text-secondary;
+        font-style: italic;
+    }
 }
 

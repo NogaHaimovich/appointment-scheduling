@@ -6,6 +6,7 @@ export type Patient = {
     nextAppointment?: {
         doctorName: string;
         date: string;
+        time: string;
     };
 };
 

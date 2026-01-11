@@ -24,6 +24,11 @@ export type Patient = {
   id: string;
   patient_name: string;
   relationship: string;
+  nextAppointment?: {
+    doctorName: string;
+    date: string;
+    time: string;
+  };
 };
 
 export type AvailableSlot = {

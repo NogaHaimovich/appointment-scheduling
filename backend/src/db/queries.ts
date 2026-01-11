@@ -162,3 +162,21 @@ export const DELETE_PATIENT_BY_ID = `
 DELETE FROM patients
 WHERE id = ? AND account_id = ? AND relationship != 'self'
 `
+
+export const GET_NEXT_APPOINTMENT_BY_PATIENT_ID = `
+  SELECT 
+    a.id,
+    a.date,
+    a.time,
+    d.name as doctor_name
+  FROM appointments a
+  JOIN doctors d ON a.doctor_id = d.id
+  WHERE a.patient_id = ?
+    AND a.account_id IS NOT NULL
+    AND (
+      a.date > ? 
+      OR (a.date = ? AND a.time >= ?)
+    )
+  ORDER BY a.date ASC, a.time ASC
+  LIMIT 1
+`
