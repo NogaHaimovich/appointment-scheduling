@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { useData } from "../../hooks/useData";
+import { usePatientsContext } from "../../contexts/PatientsContext";
 import { API_ENDPOINTS } from "../../config/api";
 import { authUtils } from "../../utils/auth";
 
@@ -13,6 +14,7 @@ const DashboardPage = () => {
   const accountId = authUtils.getAccountIdFromToken();
   const requestBody = useMemo(() => ({ accountId }), [accountId]);
   const { data, loading, error } = useData<AppointmentsResponse>( API_ENDPOINTS.getAccountAppointments, 0, requestBody );
+  const { patients } = usePatientsContext();
 
   const { upcomingAppointments, pastAppointments } = useMemo(
     () => ({
@@ -63,6 +65,7 @@ const DashboardPage = () => {
           upcomingAppointments={upcomingAppointments} 
           pastAppointments={pastAppointments}
           accountName={accountName}
+          patients={patients}
         />
       )}
     </div>

@@ -175,7 +175,7 @@
     }
 
     &__detail-label {
-        font-size: 0.6875rem;
+        font-size: $font-size-body-small;
         font-weight: $font-weight-medium;
         color: rgba(107, 114, 128, 0.7);
         text-transform: uppercase;
@@ -183,7 +183,7 @@
     }
 
     &__detail-value {
-        font-size: 1rem;
+        font-size: $font-size-body-small;
         font-weight: $font-weight-medium;
         color: $color-text-primary;
         line-height: 1.4;

@@ -10,13 +10,13 @@ import { useSpecialties } from "./useSpecialties";
 import { useDoctors } from "./useDoctors";
 import { useSlots } from "./useSlots";
 import { useNextAvailableSlots } from "./useNextAvailableSlots";
-import { usePatients } from "./usePatients";
+import { usePatientsContext } from "../contexts/PatientsContext";
 
 export const useAppointmentBooking = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { rescheduleParams, isRescheduleMode } = useRescheduleParams();
-  const { patients, loadingPatients } = usePatients();
+  const { patients, loadingPatients } = usePatientsContext();
   
   const [selectedPatientId, setSelectedPatientId] = useState<string | null>(null);
 

@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import type { AppointmentProps } from "../../../../types/types";
+import type { AppointmentProps, Patient } from "../../../../types/types";
 import Button from "../../../../components/Button/Button";
 import AppointmentsSection from "../AppointmentsSection/AppointmentsSection";
+import HighlightsSection from "../HighlightsSection/HighlightsSection";
 import { useAppointmentFilters } from "../../../../hooks/useAppointmentFilters";
 
 import "./styles.scss"
@@ -10,9 +11,10 @@ type ReturningUsersContainerProps = {
   upcomingAppointments: AppointmentProps[];
   pastAppointments: AppointmentProps[];
   accountName: string | null;
+  patients: Patient[];
 }
 
-const ReturningUsersContainer = ({ upcomingAppointments, pastAppointments, accountName}: ReturningUsersContainerProps) => {
+const ReturningUsersContainer = ({ upcomingAppointments, pastAppointments, accountName, patients}: ReturningUsersContainerProps) => {
   const navigate = useNavigate();
 
   const upcoming = useAppointmentFilters(upcomingAppointments);
@@ -26,7 +28,16 @@ const ReturningUsersContainer = ({ upcomingAppointments, pastAppointments, accou
         {welcomeText}
       </h1>
 
-      <div className="dashboardPage__family-button-container">
+      <HighlightsSection
+        upcomingCount={upcoming.filteredAppointments.length}
+        historyCount={past.filteredAppointments.length}
+        familyMembersCount={patients.length}
+      />
+
+      <div className="dashboardPage__actions-buttons-container">
+        <Button className="dashboardPage__button" onClick={() => navigate("/booking")}>
+          Schedule New appointment
+        </Button>
         <Button className="dashboardPage__button dashboardPage__button--secondary" onClick={() => navigate("/familyManagement")}>
           Manage Family Members
         </Button>
@@ -45,12 +56,6 @@ const ReturningUsersContainer = ({ upcomingAppointments, pastAppointments, accou
         onPatientChange={upcoming.setSelectedPatient}
       />
 
-      <Button
-        className="dashboardPage__button"
-        onClick={() => navigate("/booking")}
-      >
-        Schedule New appointment
-      </Button>
 
       <AppointmentsSection
         title="Past Appointment History"

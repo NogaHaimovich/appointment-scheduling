@@ -3,7 +3,7 @@ import "./styles.scss"
 import PatientCard from "./components/PatientCard/PatientCard";
 import AddFamilyMemberCard from "./components/AddFamilyMemberCard/AddFamilyMemberCard";
 import AddFamilyMemberModal from "./components/AddFamilyMemberModal/AddFamilyMemberModal";
-import { usePatients } from "../../hooks/usePatients";
+import { usePatientsContext } from "../../contexts/PatientsContext";
 import type { Patient } from "./types/patientTypes";
 
 const FamilyManagementPage = () => {
@@ -18,7 +18,7 @@ const FamilyManagementPage = () => {
         deletePatient,
         deletingPatient,
         deletePatientError
-    } = usePatients();
+    } = usePatientsContext();
 
     const patients: Patient[] = useMemo(() => {
         return backendPatients.map(patient => ({

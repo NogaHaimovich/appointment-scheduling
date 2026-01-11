@@ -39,11 +39,12 @@
     padding: 18px 40px;
   }
 
-  .dashboardPage__family-button-container {
+  .dashboardPage__actions-buttons-container {
     display: flex;
     justify-content: center;
     margin-bottom: $spacing-xl;
     width: 100%;
+    gap: 20px;
 
     .dashboardPage__button {
       width: auto;
