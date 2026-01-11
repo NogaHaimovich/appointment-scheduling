@@ -11,43 +11,62 @@ type AppointmentsSectionProps = {
   onDoctorChange: (value: string | null) => void;
   showButtons: boolean;
   emptyText: string;
+  patients: string[];
+  selectedPatient: string | null;
+  onPatientChange: (value: string | null) => void;
 }
 
-const AppointmentsSection = ({ title, appointments, doctors, selectedDoctor, onDoctorChange, showButtons, emptyText}: AppointmentsSectionProps) => {
-  if (appointments.length === 0) {
-    return (          
-        <><div className="appointments-header">
-          <h2>{title}</h2>
-        </div>
-        <h3 className="empty-text-session">{emptyText}</h3>
-      </>
-    );}
+const AppointmentsSection = ({ title, appointments, doctors, selectedDoctor, onDoctorChange, showButtons, emptyText, patients, selectedPatient, onPatientChange}: AppointmentsSectionProps) => {
+  const hasAppointments = appointments.length > 0;
 
   return (
     <>
       <div className="appointments-header">
         <h2>{title}</h2>
 
-        {doctors.length > 0 && (
-          <select
-            className="dashboardPage__doctor-filter"
-            value={selectedDoctor ?? ""}
-            onChange={(e) => onDoctorChange(e.target.value || null)}
-          >
-            <option value="">All doctors</option>
-            {doctors.map((name) => (
-              <option key={name} value={name}>
-                {name}
-              </option>
-            ))}
-          </select>
+        {(doctors.length > 0 || patients.length > 0) && (
+          <div className="appointments-header__filters">
+            {doctors.length > 0 && (
+              <select
+                className="dashboardPage__doctor-filter"
+                value={selectedDoctor ?? ""}
+                onChange={(e) => onDoctorChange(e.target.value || null)}
+              >
+                <option value="">All Doctors</option>
+                {doctors.map((name) => (
+                  <option key={name} value={name}>
+                    {name}
+                  </option>
+                ))}
+              </select>
+            )}
+
+            {patients.length > 0 && (
+              <select
+                className="dashboardPage__doctor-filter"
+                value={selectedPatient ?? ""}
+                onChange={(e) => onPatientChange(e.target.value || null)}
+              >
+                <option value="">All Patients</option>
+                {patients.map((name) => (
+                  <option key={name} value={name}>
+                    {name}
+                  </option>
+                ))}
+              </select>
+            )}
+          </div>
         )}
       </div>
 
-      <AppointmentGrid
-        appointmentsList={appointments}
-        showButtons={showButtons}
-      />
+      {hasAppointments ? (
+        <AppointmentGrid
+          appointmentsList={appointments}
+          showButtons={showButtons}
+        />
+      ) : (
+        <h3 className="empty-text-session">{emptyText}</h3>
+      )}
     </>
   );
 };

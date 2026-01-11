@@ -6,6 +6,7 @@
   align-items: center;
   width: 100%;
   margin: $spacing-xl 0;
+  gap: $spacing-lg;
 
   h2 {
     margin: 0;
@@ -13,6 +14,14 @@
     font-weight: $font-weight-heading;
     color: $color-text-primary;
     letter-spacing: -0.01em;
+    flex-shrink: 0;
+  }
+
+  &__filters {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    flex-wrap: wrap;
   }
 
   .dashboardPage__doctor-filter {
@@ -27,6 +36,7 @@
     transition: all $transition-smooth;
     color: $color-text-primary;
     min-height: 52px;
+    min-width: 160px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 
     &:hover:not(:disabled) {
@@ -43,6 +53,23 @@
     &:disabled {
       opacity: 0.5;
       cursor: not-allowed;
+    }
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $spacing-md;
+
+    &__filters {
+      width: 100%;
+      flex-direction: column;
+      gap: $spacing-sm;
+
+      .dashboardPage__doctor-filter {
+        width: 100%;
+        min-width: unset;
+      }
     }
   }
 }
