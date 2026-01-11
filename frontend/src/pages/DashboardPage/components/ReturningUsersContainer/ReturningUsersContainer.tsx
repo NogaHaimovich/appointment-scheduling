@@ -29,8 +29,8 @@ const ReturningUsersContainer = ({ upcomingAppointments, pastAppointments, accou
       </h1>
 
       <HighlightsSection
-        upcomingCount={upcoming.filteredAppointments.length}
-        historyCount={past.filteredAppointments.length}
+        upcomingCount={upcomingAppointments.length}
+        historyCount={pastAppointments.length}
         familyMembersCount={patients.length}
       />
 
