@@ -1,5 +1,5 @@
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
-import { formatAppointmentDate } from "../../utils/patientUtils";
+import { formatAppointmentDate } from "../../../../components/PatientAvatar/patientUtils";
 import "./styles.scss";
 
 type PatientNextAppointmentProps = {

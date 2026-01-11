@@ -105,10 +105,10 @@ export const useAppointmentBooking = () => {
           patientName,
         });
 
-    if ((response as any)?.success) {
+    if (response?.success) {
       setShowSuccessPopup(true);
     } else {
-      setLocalError((response as any)?.message || "Operation failed.");
+      setLocalError(response?.message || "Operation failed.");
     }
   }, [
     selectedAppointmentId,

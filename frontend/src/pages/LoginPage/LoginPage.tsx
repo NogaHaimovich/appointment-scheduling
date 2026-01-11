@@ -82,7 +82,7 @@ const LoginPage = () => {
       setLocalError("");
       setMessage("");
       await getCode({ phone });
-    } catch (err: any) {
+    } catch (err) {
       if (err instanceof z.ZodError) {
         setLocalError(err.issues[0].message);
       }
@@ -95,7 +95,7 @@ const LoginPage = () => {
       setLocalError("");
       setMessage("");
       await validateCode({ phone, code: inputCode });
-    } catch (err: any) {
+    } catch (err) {
       if (err instanceof z.ZodError) {
         setLocalError(err.issues[0].message);
       }
@@ -108,7 +108,7 @@ const LoginPage = () => {
       setLocalError("");
       setMessage("");
       await createAccount({ phone, name });
-    } catch (err: any) {
+    } catch (err) {
       if (err instanceof z.ZodError) {
         setLocalError(err.issues[0].message);
       }

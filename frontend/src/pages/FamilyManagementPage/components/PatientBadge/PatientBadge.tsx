@@ -1,4 +1,4 @@
-import { getBadgeColorClass, formatRelationship } from "../../utils/patientUtils";
+import { getBadgeColorClass, formatRelationship } from "../../../../components/PatientAvatar/patientUtils";
 import "./styles.scss";
 
 type PatientBadgeProps = {

@@ -1,18 +1,19 @@
 import { useState, useCallback } from "react";
 import axios, { AxiosError } from "axios";
+import type { AxiosRequestConfig } from "axios";
 import { API_BASE_URL } from "../config/api";
 
 export interface UseMutationReturn<TData, TVariables> {
   data: TData | null;
   loading: boolean;
   error: string | null;
-  mutate: (variables: TVariables, config?: Record<string, any>) => Promise<TData | undefined>;
+  mutate: (variables: TVariables, config?: AxiosRequestConfig) => Promise<TData | undefined>;
   reset: () => void;
 }
 
 export type HttpMethod = "post" | "put" | "patch" | "delete";
 
-export function useMutation<TData = any, TVariables = any>(
+export function useMutation<TData, TVariables>(
   endpoint: string,
   method: HttpMethod = "post"
 ): UseMutationReturn<TData, TVariables> {
@@ -21,7 +22,7 @@ export function useMutation<TData = any, TVariables = any>(
   const [error, setError] = useState<string | null>(null);
 
   const mutate = useCallback(
-    async (variables: TVariables, config?: Record<string, any>): Promise<TData | undefined> => {
+    async (variables: TVariables, config?: AxiosRequestConfig): Promise<TData | undefined> => {
       if (!endpoint) {
         setError("Endpoint is required");
         return;

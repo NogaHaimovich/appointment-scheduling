@@ -4,7 +4,8 @@ import { formatDateToDisplay, formatTimeToDisplay } from "../../../../utils/date
 import Button from "../../../../components/Button/Button";
 import type { AppointmentProps, ApiMessageResponse } from "../../../../types/types";
 
-import "./styles.scss"
+import "./styles.scss";
+import PatientAvatar from "../../../../components/PatientAvatar/PatientAvatar";
 
 export interface AppointmentCardProps extends AppointmentProps {
     showButtons: boolean;
@@ -54,7 +55,7 @@ const AppointmentCard = ({
 
         try {
             const result = await cancelAppointment({ accountId: null, appointmentId: id });
-            if ((result as any)?.success) {
+            if (result?.success) {
                 window.location.reload();
             }
         } catch (err) {
@@ -67,11 +68,11 @@ const AppointmentCard = ({
 
     return (
         <div className="appointment_cube">
+            <PatientAvatar patientId={patient_id?.toString() || ""} name={patient_name || ""} />
             <h4>
                 {doctor_name},
                 <span className="specialty-name"> {specialty_name}</span>
             </h4>
-            {patient_name && <h5>Patient: {patient_name}</h5>}
             <h5>Date: {formattedDate}, {formattedTime}</h5>
 
             {error && <div className="error-message">{error}</div>}
@@ -85,8 +86,8 @@ const AppointmentCard = ({
                 </div>
             )}
         </div>
-    )
-}
+    );
+};
 
-export default AppointmentCard
+export default AppointmentCard;
 

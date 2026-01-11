@@ -9,10 +9,10 @@ export interface UseDataReturn<T> {
   refetch: () => void;
 }
 
-export function useData<T = any>(
+export function useData<T>(
   endpoint: string,
   delay: number = 0,
-  body?: any,
+  body?: Record<string, string | number | boolean | null | undefined>,
   enabled: boolean = true   
 ): UseDataReturn<T> {
   const [data, setData] = useState<T | null>(null);

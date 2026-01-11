@@ -1,12 +1,12 @@
 import { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
-import PatientAvatar from "../PatientAvatar/PatientAvatar";
 import PatientBadge from "../PatientBadge/PatientBadge";
 import PatientNextAppointment from "../PatientNextAppointment/PatientNextAppointment";
 import DeleteConfirmationModal from "../DeleteConfirmationModal/DeleteConfirmationModal";
 import type { Patient } from "../../types/patientTypes";
 import "./styles.scss";
 import { useNavigate } from "react-router-dom";
+import PatientAvatar from "../../../../components/PatientAvatar/PatientAvatar";
 
 type PatientCardProps = {
     patient: Patient;
