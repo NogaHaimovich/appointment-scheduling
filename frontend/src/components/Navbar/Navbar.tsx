@@ -45,7 +45,7 @@ const Navbar = () => {
             className={`navbar__link ${isActive("/booking") ? "active" : ""}`}
             onClick={() => navigate("/booking")}
           >
-            Appointments
+            Book New Appoitment
           </button>
           <button
             className={`navbar__link ${isActive("/familyManagement") ? "active" : ""}`}
