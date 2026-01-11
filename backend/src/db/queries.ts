@@ -134,19 +134,6 @@ LIMIT 1;
 export const  ADD_PATIENT_TO_ACCOUNT = `
 INSERT INTO patients (account_id, patient_name, id, relationship) VALUES (?, ?, ?, ?)`
 
-export const GET_UPCOMING_APPOINTMENTS_BY_PATIENT_ID = `
-  SELECT 
-    a.id,
-    a.account_id
-  FROM appointments a
-  WHERE a.patient_id = ?
-    AND a.account_id IS NOT NULL
-    AND (
-      a.date > ? 
-      OR (a.date = ? AND a.time >= ?)
-    )
-`
-
 export const REMOVE_PATIENT_FROM_UPCOMING_APPOINTMENTS = `
 UPDATE appointments
 SET patient_id = NULL, patient_name = NULL, account_id=NULL

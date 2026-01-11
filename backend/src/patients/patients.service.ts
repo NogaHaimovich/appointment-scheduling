@@ -1,6 +1,6 @@
 import { randomUUID } from "crypto";
 import { allAsync, runAsync, getAsync } from "../db/dbHelpers";
-import { GET_PATIENTS_BY_ACCOUNT_ID, ADD_PATIENT_TO_ACCOUNT, DELETE_PATIENT_BY_ID, GET_UPCOMING_APPOINTMENTS_BY_PATIENT_ID, REMOVE_PATIENT_FROM_UPCOMING_APPOINTMENTS, GET_NEXT_APPOINTMENT_BY_PATIENT_ID } from "../db/queries";
+import { GET_PATIENTS_BY_ACCOUNT_ID, ADD_PATIENT_TO_ACCOUNT, DELETE_PATIENT_BY_ID, REMOVE_PATIENT_FROM_UPCOMING_APPOINTMENTS, GET_NEXT_APPOINTMENT_BY_PATIENT_ID } from "../db/queries";
 import { Patient } from "../types/types";
 import { getCurrentDateTime } from "../utils/dateUtils";
 
@@ -8,7 +8,6 @@ export async function getPatientsByAccountId(accountId: string): Promise<Patient
   const patients = await allAsync<Patient>(GET_PATIENTS_BY_ACCOUNT_ID, [accountId]);
   const { today, currentTime } = getCurrentDateTime();
 
-  // Fetch next appointment for each patient
   const patientsWithNextAppointments = await Promise.all(
     patients.map(async (patient) => {
       const nextAppointment = await getAsync<{ doctor_name: string; date: string; time: string } | null>(
@@ -18,13 +17,13 @@ export async function getPatientsByAccountId(accountId: string): Promise<Patient
 
       return {
         ...patient,
-        nextAppointment: nextAppointment
-          ? {
-              doctorName: nextAppointment.doctor_name,
-              date: nextAppointment.date,
-              time: nextAppointment.time,
-            }
-          : undefined,
+        ...(nextAppointment && {
+          nextAppointment: {
+            doctorName: nextAppointment.doctor_name,
+            date: nextAppointment.date,
+            time: nextAppointment.time,
+          },
+        }),
       };
     })
   );
