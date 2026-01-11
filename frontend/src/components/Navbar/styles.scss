@@ -1,0 +1,103 @@
+@import '../../styles/variables';
+
+.navbar {
+  background: $color-background-secondary;
+  box-shadow: $elevation-1;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+
+  &__container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 16px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $spacing-lg;
+  }
+
+  &__logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: opacity $transition-standard;
+    white-space: nowrap;
+
+    &:hover {
+      opacity: 0.8;
+    }
+
+    &-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      svg {
+        width: 24px;
+        height: 24px;
+      }
+    }
+
+    &-rect {
+      fill: $color-background-dark;
+    }
+
+    &-plus {
+      stroke: white;
+      stroke-width: 2;
+      stroke-linecap: round;
+    }
+
+    &-text {
+      font-size: $font-size-h6;
+      font-weight: $font-weight-heading;
+      color: $color-text-primary;
+      letter-spacing: -0.02em;
+    }
+  }
+
+  &__links {
+    display: flex;
+    gap: 8px;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+
+  }
+
+  &__link {
+    background: none;
+    padding: 8px 16px;
+    box-shadow: none;
+    font-size: $font-size-body-small;
+    font-weight: $font-weight-medium;
+    color: $color-text-primary;
+    cursor: pointer;
+    transition: all $transition-standard;
+    position: relative;
+    white-space: nowrap;
+
+    &:hover {
+      background: rgba(99, 102, 241, 0.05);
+      box-shadow: none;
+      border: none;
+    }
+
+    &.active {
+      color: $color-background-dark;
+      font-weight: $font-weight-button;
+      box-shadow: none;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+}
+
+  

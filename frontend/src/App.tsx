@@ -1,13 +1,20 @@
 import AppointmentBookingPage from "./pages/AppointmentBookingPage/AppointmentBookingPage";
 import DashboardPage from "./pages/DashboardPage/DashboardPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import ProtectedRoute from "./routes/protectedRoutes/protectedRoute";
 import FamilyManagementPage from "./pages/FamilyManagementPage/FamilyManagementPage";
+import Navbar from "./components/Navbar/Navbar";
+import { authUtils } from "./utils/auth";
 
-function App() {
+function AppContent() {
+  const location = useLocation();
+  const isAuthenticated = authUtils.isAuthenticated();
+  const showNavbar = isAuthenticated && location.pathname !== "/";
+
   return (
-    <BrowserRouter>
+    <>
+      {showNavbar && <Navbar />}
       <main>
         <Routes>
           <Route path="/" element={<LoginPage />} />
@@ -40,6 +47,14 @@ function App() {
           />
         </Routes>
       </main>
+    </>
+  );
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <AppContent />
     </BrowserRouter>
   );
 }
