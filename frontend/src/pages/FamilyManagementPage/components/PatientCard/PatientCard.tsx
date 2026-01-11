@@ -1,23 +1,42 @@
+import { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import PatientAvatar from "../PatientAvatar/PatientAvatar";
 import PatientBadge from "../PatientBadge/PatientBadge";
 import PatientNextAppointment from "../PatientNextAppointment/PatientNextAppointment";
+import DeleteConfirmationModal from "../DeleteConfirmationModal/DeleteConfirmationModal";
 import type { Patient } from "../../types/patientTypes";
 import "./styles.scss";
 import { useNavigate } from "react-router-dom";
 
 type PatientCardProps = {
     patient: Patient;
+    onDelete: (patientId: string) => Promise<void>;
+    deleting?: boolean;
 };
 
-const PatientCard = ({ patient }: PatientCardProps) => {
+const PatientCard = ({ patient, onDelete, deleting = false }: PatientCardProps) => {
     const navigate = useNavigate();
     const isSelf = patient.relationship.toLowerCase() === "self";
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-    const onDeletePatient = () => {
-        //TODO: implement delete patient functionality
-        console.log("Delete patient:", patient.id);
-    }
+    const handleDeleteClick = () => {
+        setShowDeleteModal(true);
+    };
+
+    const handleConfirmDelete = async () => {
+        try {
+            await onDelete(patient.id);
+            setShowDeleteModal(false);
+        } catch (error) {
+            console.error("Error deleting patient:", error);
+        }
+    };
+
+    const handleCloseModal = () => {
+        if (!deleting) {
+            setShowDeleteModal(false);
+        }
+    };
 
     return (
         <div className="patient_box">
@@ -25,8 +44,9 @@ const PatientCard = ({ patient }: PatientCardProps) => {
                 {!isSelf && (
                     <button 
                         className="patient_delete_button"
-                        onClick={onDeletePatient}
+                        onClick={handleDeleteClick}
                         aria-label="Delete patient"
+                        disabled={deleting}
                     >
                         <CloseIcon />
                     </button>
@@ -57,6 +77,13 @@ const PatientCard = ({ patient }: PatientCardProps) => {
                     </button>
                 </div>
             </div>
+            <DeleteConfirmationModal
+                isOpen={showDeleteModal}
+                onClose={handleCloseModal}
+                onConfirm={handleConfirmDelete}
+                patientName={patient.name}
+                loading={deleting}
+            />
         </div>
     );
 };

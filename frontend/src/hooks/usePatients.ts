@@ -28,6 +28,15 @@ export const usePatients = () => {
     "post"
   );
 
+  const { 
+    mutate: deletePatient, 
+    loading: deletingPatient, 
+    error: deletePatientError 
+  } = useMutation<{ success: boolean; message: string }, { accountId: string; patientId: string }>(
+    API_ENDPOINTS.deletePatient,
+    "delete"
+  );
+
   const patients = useMemo(() => data?.patients || [], [data?.patients]);
 
   const handleAddPatient = async (patientName: string, relationship: string) => {
@@ -48,12 +57,32 @@ export const usePatients = () => {
     return result;
   };
 
+  const handleDeletePatient = async (patientId: string) => {
+    if (!accountId) {
+      throw new Error("Account ID is required");
+    }
+    
+    const result = await deletePatient({
+      accountId,
+      patientId,
+    });
+    
+    if (result?.success) {
+      refetch();
+    }
+    
+    return result;
+  };
+
   return {
     patients,
     loadingPatients: loading,
     addPatient: handleAddPatient,
     addingPatient,
     addPatientError,
+    deletePatient: handleDeletePatient,
+    deletingPatient,
+    deletePatientError,
   };
 };
 

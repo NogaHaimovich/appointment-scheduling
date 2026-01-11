@@ -9,7 +9,16 @@ import type { Patient } from "./types/patientTypes";
 const FamilyManagementPage = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const { patients: backendPatients, loadingPatients, addPatient, addingPatient, addPatientError } = usePatients();
+    const { 
+        patients: backendPatients, 
+        loadingPatients, 
+        addPatient, 
+        addingPatient, 
+        addPatientError,
+        deletePatient,
+        deletingPatient,
+        deletePatientError
+    } = usePatients();
 
     const patients: Patient[] = useMemo(() => {
         return backendPatients.map(patient => ({
@@ -44,6 +53,20 @@ const FamilyManagementPage = () => {
         }
     };
 
+    const handleDeletePatient = async (patientId: string) => {
+        try {
+            setError(null);
+            const result = await deletePatient(patientId);
+            if (result?.success) {
+                setError(null); 
+            } else {
+                setError(deletePatientError || "Failed to delete family member");
+            }
+        } catch (err) {
+            setError(err instanceof Error ? err.message : "Failed to delete family member");
+        }
+    };
+
     return (
         <div className="familyManagemntPage_wrapper">
             <div className="familyManagemntPage_container">
@@ -53,10 +76,17 @@ const FamilyManagementPage = () => {
                     <div>Loading patients...</div>
                 ) : (
                     <div className="patients_grid">
+                        {error && (
+                            <div className="familyManagemntPage_error">
+                                {error}
+                            </div>
+                        )}
                         {patients.map((patient) => (
                             <PatientCard
                                 key={patient.id}
                                 patient={patient}
+                                onDelete={handleDeletePatient}
+                                deleting={deletingPatient}
                             />
                         ))}
                         <AddFamilyMemberCard onClick={handleAddFamilyMember} />

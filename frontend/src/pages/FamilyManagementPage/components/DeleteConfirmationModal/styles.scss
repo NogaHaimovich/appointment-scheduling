@@ -1,0 +1,89 @@
+@import '../../../../styles/variables';
+
+
+.delete-confirmation-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.3s ease;
+  z-index: 99999;
+  will-change: opacity;
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  isolation: isolate;
+}
+
+.delete-confirmation-modal {
+  background: rgba(255, 255, 255, 0.98);
+  border-radius: 28px;
+  padding: 48px;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  animation: slideUp 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  pointer-events: all;
+  position: relative;
+  overflow: hidden;
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+
+
+  &__title {
+    font-size: $font-size-h5;
+    font-weight: $font-weight-heading;
+    color: $color-text-primary;
+    margin: 0 0 $spacing-md 0;
+    letter-spacing: -0.01em;
+    position: relative;
+    z-index: 1;
+    text-align: center;
+  }
+
+  &__message {
+    font-size: $font-size-body;
+    color: $color-text-primary;
+    margin: 0 0 $spacing-md 0;
+    line-height: 1.6;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+
+    strong {
+      font-weight: $font-weight-heading;
+      color: $color-text-primary;
+    }
+  }
+
+  &__warning {
+    font-size: $font-size-small;
+    color: $color-text-secondary;
+    margin: 0 0 $spacing-lg 0;
+    line-height: 1.5;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  &__buttons {
+    display: flex;
+    gap: $spacing-md;
+    justify-content: flex-end;
+    position: relative;
+    z-index: 1;
+  }
+
+  &__button {
+    min-width: 120px;
+  }
+}
+
