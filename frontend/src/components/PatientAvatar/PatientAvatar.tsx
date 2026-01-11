@@ -1,4 +1,4 @@
-import { getAvatarColorClass, getInitials } from "./patientUtils";
+import { getAvatarColorClass, getInitials } from "../../utils/avatarUtils";
 import "./styles.scss";
 
 type PatientAvatarProps = {
