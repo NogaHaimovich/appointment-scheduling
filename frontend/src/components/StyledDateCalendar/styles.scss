@@ -1,0 +1,327 @@
+@import '../../styles/variables';
+
+.styled-date-calendar {
+  width: 100%;
+  background: white;
+  border-radius: 8px;
+  padding-bottom: 80px;
+
+  height: auto !important;
+  max-height: none !important;
+  overflow: hidden !important;
+
+  .MuiPickersLayout-root,
+  .MuiDayCalendar-root,
+  .MuiPickersFadeTransitionGroup-root,
+  .MuiPickersSlideTransition-root,
+  .MuiDayCalendar-monthContainer {
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  .MuiPickersDay-root {
+    font-size: 0.75rem;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    transition: all $transition-standard;
+    position: relative;
+    padding: 0 !important;
+    box-sizing: border-box;
+    overflow: hidden !important;
+    pointer-events: auto;
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    max-width: 32px !important;
+    min-height: 32px !important;
+    max-height: 32px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: none !important;
+
+
+    // Style for available dates (not disabled and not selected)
+    &:not(.Mui-disabled):not(.Mui-selected) {
+      border: 1px solid rgba(139, 92, 246, 0.2);
+    }
+
+    &:not(.Mui-disabled):not(.Mui-selected):hover {
+      border-color: $color-background-button-info;
+      background-color: rgba(139, 92, 246, 0.05);
+    }
+
+    &:not(.Mui-disabled):not(.Mui-selected):active {
+      border-color: $color-background-button-info;
+      background-color: rgba(139, 92, 246, 0.1);
+    }
+
+    &.Mui-selected {
+      background: $gradient-button-primary !important;
+      color: white !important;
+      font-weight: 600 !important;
+      border-color: $color-background-button !important;
+
+      &:hover {
+        background: $gradient-button-primary-hover !important;
+        color: white !important;
+        border-color: $color-background-button !important;
+      }
+    }
+
+    &.Mui-disabled {
+      border: none;
+      pointer-events: none;
+    }
+  }
+
+  // Ensure calendar grid cells have proper spacing and containment
+  .MuiDayCalendar-weekContainer {
+    display: flex;
+    margin: 0;
+    gap: 8px;
+    justify-content: space-between;
+  }
+  
+  // Ensure all calendar cells have equal width
+  .MuiDayCalendar-root {
+    .MuiPickersDay-root {
+      flex: 0 0 auto;
+    }
+  }
+
+  .MuiDayCalendar-monthContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 1px 0;
+  }
+
+  // Calendar header styling (month/year selector and arrows)
+  .MuiPickersCalendarHeader-root {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 0;
+    margin: 0;
+
+    .MuiPickersArrowSwitcher-root {
+      display: flex;
+      align-items: center;
+    }
+
+    // Month/Year selector button
+    .MuiPickersCalendarHeader-labelContainer {
+      display: flex;
+      align-items: center;
+      margin: 0;
+      padding: 0;
+
+      button {
+        font-size: 1rem;
+        font-weight: 600;
+        color: $color-text-primary;
+        padding: 0 2px;
+        border-radius: 6px;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        transition: all $transition-standard;
+        text-transform: capitalize;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+
+        &:hover {
+          background-color: rgba(99, 102, 241, 0.08);
+          color: $color-background-dark;
+        }
+
+        &:focus {
+          outline: none;
+          background-color: rgba(99, 102, 241, 0.12);
+        }
+
+        // Dropdown arrow icon styling - make it much more visible
+        svg {
+          opacity: 1 !important;
+          color: $color-text-dark !important;
+          fill: $color-text-dark !important;
+          font-size: 1rem;
+          width: 1rem !important;
+          height: 1rem !important;
+          margin-left: 0;
+          flex-shrink: 0;
+        }
+
+        &:hover svg {
+          color: $color-background-dark !important;
+          fill: $color-background-dark !important;
+        }
+      }
+    }
+
+    // Switch view button (month/year dropdown button) - reduce frame and make arrow visible
+    .MuiPickersCalendarHeader-switchViewButton {
+      padding: 0 2px !important;
+      min-width: auto !important;
+      width: auto !important;
+      margin: 0 !important;
+      border: none !important;
+      box-shadow: none !important;
+      background: transparent !important;
+
+      svg {
+        opacity: 1 !important;
+        color: $color-text-dark !important;
+        fill: $color-text-dark !important;
+        font-size: 1rem !important;
+        width: 1rem !important;
+        height: 1rem !important;
+      }
+
+      &:hover {
+        border: none !important;
+        box-shadow: none !important;
+        background: transparent !important;
+      }
+
+      &:hover svg {
+        color: $color-background-dark !important;
+        fill: $color-background-dark !important;
+      }
+    }
+  }
+
+  .MuiDayCalendar-weekDayLabel {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    width: 32px !important;
+    min-width: 32px !important;
+    max-width: 32px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+  }
+
+  .MuiDayCalendar-header {
+    display: flex;
+    margin: 0;
+    gap: 8px;
+    justify-content: space-between;
+    padding: 0;
+  }
+
+  .MuiPickersArrowSwitcher-button {
+    color: $color-text-dark;
+    height: auto !important;
+    width: auto !important;
+    min-width: auto !important;
+    max-width: none !important;
+    border-radius: 0;
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all $transition-standard;
+    cursor: pointer;
+
+    &:hover {
+      color: $color-background-dark;
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+
+    &.Mui-disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+      
+      &:hover {
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        transform: none;
+      }
+    }
+
+    svg {
+      opacity: 1 !important;
+      color: $color-text-dark !important;
+      fill: $color-text-dark !important;
+      font-size: 1rem !important;
+      width: 1rem !important;
+      height: 1rem !important;
+    }
+
+    &:hover svg {
+      color: $color-background-dark !important;
+      fill: $color-background-dark !important;
+    }
+  }
+
+  .MuiPickersArrowSwitcher-root {
+    gap: 6px !important;
+  }
+
+  .MuiYearCalendar-button {
+    border-radius: 12px !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: $color-background-secondary !important;
+    color: $color-text-primary !important;
+    font-size: 1rem !important;
+    font-weight: 500 !important;
+    padding: 12px 20px !important;
+    transition: all $transition-standard !important;
+    min-width: auto !important;
+    width: auto !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    border: 1px solid $color-text-primary !important;
+
+    &:hover {
+      background: $color-background-button-info !important;
+      box-shadow: none !important;
+      border: 1px solid $color-text-primary !important;
+
+    }
+
+    &.Mui-selected {
+      background: $color-background-button-info !important;
+      color: $color-text-white !important;
+      font-weight: 600 !important;
+      box-shadow: none !important;
+      border: none !important;
+
+      &:hover {
+        background: $color-background-button-info !important;
+      }
+    }
+
+    &.Mui-disabled {
+      opacity: 0.3 !important;
+      cursor: not-allowed !important;
+    }
+  }
+
+  // Year calendar container
+  .MuiYearCalendar-root {
+    padding: 8px !important;
+  }
+
+}
+

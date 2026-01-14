@@ -24,6 +24,7 @@
     gap: 12px;
     transition: opacity $transition-standard;
     white-space: nowrap;
+    cursor: pointer;
 
     &:hover {
       opacity: 0.8;

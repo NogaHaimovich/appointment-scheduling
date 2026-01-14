@@ -1,10 +1,8 @@
 import dayjs from "dayjs";
 import type { FC } from "react";
-import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { formatTimeToDisplay } from "../../../../utils/dateFormat";
 import Button from "../../../../components/Button/Button";
+import StyledDateCalendar from "../../../../components/StyledDateCalendar/StyledDateCalendar";
 
 import "./styles.scss";
 
@@ -83,17 +81,14 @@ const DateTimeSelector: FC<DateTimeSelectorProps> = ({
       {availableDates.length > 0 && (
         <div className="date-selection-section">
           <div className="date-selection-label">SELECT DATE:</div>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DateCalendar
-              value={selectedDate ? dayjs(selectedDate) : null}
-              onChange={handleCalendarDateChange}
-              minDate={minDate}
-              maxDate={maxDate}
-              shouldDisableDate={(date) => !isDateAvailable(date)}
-              disabled={disable || loadingSlots}
-              className="date-calendar"
-            />
-          </LocalizationProvider>
+          <StyledDateCalendar
+            value={selectedDate ? dayjs(selectedDate) : null}
+            onChange={handleCalendarDateChange}
+            minDate={minDate}
+            maxDate={maxDate}
+            shouldDisableDate={(date) => !isDateAvailable(date)}
+            disabled={disable || loadingSlots}
+          />
         </div>
       )}
 

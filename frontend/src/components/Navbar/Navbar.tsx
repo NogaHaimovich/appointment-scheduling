@@ -24,7 +24,7 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="navbar__container">
-        <div className="navbar__logo">
+        <div className="navbar__logo" onClick={()=>navigate("/dashboard")}>
           <div className="navbar__logo-icon">
             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <rect className="navbar__logo-rect" width="24" height="24" rx="4"/>
@@ -36,10 +36,10 @@ const Navbar = () => {
         
         <div className="navbar__links">
           <button
-            className={`navbar__link ${isActive("/dashboard") ? "active" : ""}`}
-            onClick={() => navigate("/dashboard")}
+            className={`navbar__link ${isActive("/calendar") ? "active" : ""}`}
+            onClick={() => navigate("/calendar")}
           >
-            Dashboard
+            Calendar
           </button>
           <button
             className={`navbar__link ${isActive("/booking") ? "active" : ""}`}

@@ -41,10 +41,10 @@ button {
   }
 
   &.primary {
-    background: linear-gradient(135deg, $color-background-button 0%, #4F46E5 100%);
+    background: $gradient-button-primary;
     
     &:hover:enabled {
-      background: linear-gradient(135deg, #7C3AED 0%, $color-background-button 100%);
+      background: $gradient-button-primary-hover;
     }
   }
 

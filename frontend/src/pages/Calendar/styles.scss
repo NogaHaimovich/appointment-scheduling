@@ -1,0 +1,92 @@
+@import '../../styles/variables';
+
+
+.calendarPage{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100vw;
+    min-height: 100vh;
+    padding-top: 20px; // Add some top padding instead of centering 
+
+    &__container{
+        background-color: $color-background-secondary;
+        width:90%;
+        min-height:1000px;
+        border-radius: 20px;
+        display: flex;
+
+    }
+
+    &__left {
+        width:20%;
+        border-right: 1px solid $color-text-primary;
+        padding: 30px;
+        gap: 40px;
+        display: flex;
+        flex-direction: column;
+        margin-top: 40px;
+
+        .styled-date-calendar {
+            padding-bottom: 10px !important;
+            
+            .MuiPickersCalendarHeader-root {
+                padding: 8px 0 !important;
+            }
+
+            .MuiDayCalendar-monthContainer {
+                gap: 4px !important;
+                padding: 0 !important;
+            }
+
+            .MuiDayCalendar-weekContainer {
+                gap: 4px !important;
+            }
+
+            .MuiDayCalendar-header {
+                gap: 4px !important;
+                margin-bottom: 4px !important;
+            }
+        }
+
+        .patientLabel {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+
+            &__color {
+                width: 18px;
+                height: 18px;
+                border-radius: 50%; 
+                flex-shrink: 0;
+
+                &--blue {
+                background-color: #3f51b5;
+                }
+
+                &--green {
+                background-color: #4caf50;
+                }
+
+                &--orange {
+                background-color: #ff9800;
+                }
+            }
+
+            &__name {
+                font-size: 16px;
+            }
+        }
+
+    }
+
+    &__right {
+        flex: 1;
+        padding: 30px;
+        margin-top: 40px;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+}

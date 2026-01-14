@@ -56,22 +56,7 @@
     }
   }
 
-  @media (max-width: 768px) {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: $spacing-md;
-
-    &__filters {
-      width: 100%;
-      flex-direction: column;
-      gap: $spacing-sm;
-
-      .dashboardPage__doctor-filter {
-        width: 100%;
-        min-width: unset;
-      }
-    }
-  }
+  
 }
 
 .empty-text-session {
