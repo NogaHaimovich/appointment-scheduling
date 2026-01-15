@@ -22,7 +22,7 @@ export const useSlots = (doctorId: number | null) => {
 
   const groupedSlots = useMemo(() => {
     if (!data) return {};
-    return data.avaliableSlots.reduce((acc: Record<string, string[]>, slot) => {
+    return data.availableSlots.reduce((acc: Record<string, string[]>, slot) => {
       acc[slot.date] = acc[slot.date] || [];
       acc[slot.date].push(slot.time);
       return acc;
@@ -32,7 +32,7 @@ export const useSlots = (doctorId: number | null) => {
   const selectedAppointmentId = useMemo(() => {
     if (!data) return null;
     return (
-      data.avaliableSlots.find(
+      data.availableSlots.find(
         s => s.date === selectedDate && s.time === selectedTime
       )?.id ?? null
     );

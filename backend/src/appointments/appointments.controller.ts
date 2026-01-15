@@ -36,10 +36,10 @@ export async function getAvailableSlotsByDoctorIdHandler(req: Request, res: Resp
         });
     }
     try {
-        const avaliableSlots  = await getAvailableSlotsByDoctorId(doctorID);
+        const availableSlots  = await getAvailableSlotsByDoctorId(doctorID);
         res.json({
             success: true,
-            avaliableSlots
+            availableSlots
         });
     } catch (error) {
         console.error("Error getting available slots:", error);

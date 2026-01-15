@@ -61,7 +61,7 @@ export type DoctorBySpecialtyResponse = ApiResponse<{
 }>;
 
 export type SlotsResponse = ApiResponse<{
-  avaliableSlots: AppointmentProps[];
+  availableSlots: AppointmentProps[];
 }>;
 
 export type GetCodeResponse = ApiResponse<{

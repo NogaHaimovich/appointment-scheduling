@@ -44,7 +44,7 @@ export const GET_APPOINTMENT_HISTORY = `
   ORDER BY a.date DESC, a.time DESC
 `;
 
-export const GET_AVALIABLE_SLOTS_BY_DOCTOR_ID = ` 
+export const GET_AVAILABLE_SLOTS_BY_DOCTOR_ID = ` 
 SELECT
     a.id,
     a.date,
