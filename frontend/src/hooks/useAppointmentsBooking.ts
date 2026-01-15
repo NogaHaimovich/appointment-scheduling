@@ -17,7 +17,7 @@ export const useAppointmentBooking = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { rescheduleParams, isRescheduleMode } = useRescheduleParams();
-  const { patients, loadingPatients } = usePatientsContext();
+  const { patients, loadingPatients, refetchPatients } = usePatientsContext();
   const { refetchAppointments } = useAppointmentsContext();
   
   const [selectedPatientId, setSelectedPatientId] = useState<string | null>(null);
@@ -108,6 +108,8 @@ export const useAppointmentBooking = () => {
       setShowSuccessPopup(true);
       // Refetch appointments to update the list immediately
       refetchAppointments();
+      // Refetch patients to update next appointment information
+      refetchPatients();
     } else {
       setLocalError(response?.message || "Operation failed.");
     }
@@ -120,6 +122,7 @@ export const useAppointmentBooking = () => {
     scheduleAppointment,
     rescheduleAppointment,
     refetchAppointments,
+    refetchPatients,
     selectedPatientId,
     selectedPatient,
   ]);

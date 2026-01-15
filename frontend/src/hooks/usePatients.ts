@@ -77,6 +77,7 @@ export const usePatients = () => {
     deletePatient: handleDeletePatient,
     deletingPatient,
     deletePatientError,
+    refetchPatients: refetch,
   };
 };
 

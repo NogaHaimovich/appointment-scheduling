@@ -2,6 +2,8 @@ import { useMutation } from "../../../../hooks/useMutation";
 import { useNavigate } from "react-router-dom";
 import { formatDateToDisplay, formatTimeToDisplay } from "../../../../utils/dateFormat";
 import type { AppointmentProps, ApiMessageResponse } from "../../../../types/types";
+import { useAppointmentsContext } from "../../../../contexts/AppointmentsContext";
+import { usePatientsContext } from "../../../../contexts/PatientsContext";
 import CloseIcon from "@mui/icons-material/Close";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import EditIcon from "@mui/icons-material/Edit";
@@ -31,6 +33,8 @@ const AppointmentCard = ({
     showButtons = false,
 }: AppointmentCardProps) => {
     const navigate = useNavigate();
+    const { refetchAppointments } = useAppointmentsContext();
+    const { refetchPatients } = usePatientsContext();
 
     const getSpecialtyImage = (specialtyName: string): string => {
   const imageMap: Record<string, string> = {
@@ -77,7 +81,8 @@ const AppointmentCard = ({
         try {
             const result = await cancelAppointment({ accountId: null, appointmentId: id });
             if (result?.success) {
-                window.location.reload();
+                refetchAppointments();
+                refetchPatients();
             }
         } catch (err) {
             console.error("Failed to cancel appointment:", err);

@@ -15,12 +15,12 @@ export const useAppointments = () => {
   );
 
   const upcomingAppointments = useMemo(
-    () => data?.upcomingAppointment || [],
+    () => (data?.upcomingAppointment || []).filter((appointment) => appointment.patient_name),
     [data?.upcomingAppointment]
   );
 
   const pastAppointments = useMemo(
-    () => data?.appointmentHistory || [],
+    () => (data?.appointmentHistory || []).filter((appointment) => appointment.patient_name),
     [data?.appointmentHistory]
   );
 
