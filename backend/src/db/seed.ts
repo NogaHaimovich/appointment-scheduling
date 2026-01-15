@@ -1,6 +1,13 @@
 import { db } from "./index";
 import { randomUUID } from "crypto";
 
+type SqliteParam = string | number | null | Buffer;
+type SqliteParams = SqliteParam[];
+
+interface SqliteRunContext {
+  lastID: number;
+  changes: number;
+}
 
 function formatDate(date: Date): string {
   const year = date.getUTCFullYear();
@@ -32,12 +39,12 @@ function generateAppointments(
 }
 
 
-function runAsync(sql: string, params: any[] = []): Promise<void> {
+function runAsync(sql: string, params: SqliteParams = []): Promise<void> {
   return new Promise((resolve, reject) =>
     db.run(sql, params, (err) => (err ? reject(err) : resolve()))
   );
 }
-function allAsync<T>(sql: string, params: any[] = []): Promise<T[]> {
+function allAsync<T>(sql: string, params: SqliteParams = []): Promise<T[]> {
   return new Promise((resolve, reject) =>
     db.all(sql, params, (err, rows) => (err ? reject(err) : resolve(rows as T[])))
   );
@@ -88,7 +95,7 @@ export async function seed() {
 
     for (const doc of doctors) {
       await new Promise<void>((resolve, reject) => {
-        db.run("INSERT INTO doctors (name) VALUES (?)", [doc.name], function (this: any, err) {
+        db.run("INSERT INTO doctors (name) VALUES (?)", [doc.name], function (this: SqliteRunContext, err) {
           if (err) return reject(err);
           db.run(
             "INSERT INTO doctor_specialties (doctor_id, specialty_id) VALUES (?, ?)",

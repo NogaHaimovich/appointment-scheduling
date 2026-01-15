@@ -1,6 +1,9 @@
 import { db } from "./index";
 
-export function allAsync<T>(sql: string, params: any[] = []): Promise<T[]> {
+type SqliteParam = string | number | null | Buffer;
+type SqliteParams = SqliteParam[];
+
+export function allAsync<T>(sql: string, params: SqliteParams = []): Promise<T[]> {
   return new Promise((resolve, reject) => {
     db.all(sql, params, (err, rows) => {
       if (err) reject(err);
@@ -9,7 +12,7 @@ export function allAsync<T>(sql: string, params: any[] = []): Promise<T[]> {
   });
 }
 
-export function runAsync(sql: string, params: any[] = []): Promise<{ changes: number; lastID: number }> {
+export function runAsync(sql: string, params: SqliteParams = []): Promise<{ changes: number; lastID: number }> {
   return new Promise((resolve, reject) => {
     db.run(sql, params, function(err) {
       if (err) reject(err);
@@ -18,7 +21,7 @@ export function runAsync(sql: string, params: any[] = []): Promise<{ changes: nu
   });
 }
 
-export function getAsync<T>(sql: string, params: any[] = []): Promise<T | undefined> {
+export function getAsync<T>(sql: string, params: SqliteParams = []): Promise<T | undefined> {
   return new Promise((resolve, reject) => {
     db.get(sql, params, (err, row) => {
       if (err) reject(err);
@@ -28,7 +31,7 @@ export function getAsync<T>(sql: string, params: any[] = []): Promise<T | undefi
 }
 
 export function transactionAsync<T>(
-  operations: Array<{ sql: string; params?: any[] }>
+  operations: Array<{ sql: string; params?: SqliteParams }>
 ): Promise<T[]> {
   return new Promise((resolve, reject) => {
     db.serialize(() => {

@@ -5,15 +5,14 @@ export interface AuthRequest extends Request {
   accountId?: string;
 }
 
-
 export const authenticateToken = (
   req: AuthRequest,
   res: Response,
   next: NextFunction
 ) => {
   const token = 
-    (req as any).cookies?.token || 
-    (req as any).headers?.authorization?.split(" ")[1];
+    req.cookies?.token || 
+    req.headers.authorization?.split(" ")[1];
   
   if (!token) {
     return res.status(401).json({ 
