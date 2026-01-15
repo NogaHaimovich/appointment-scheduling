@@ -5,17 +5,13 @@ import { useData } from "./useData";
 import { authUtils } from "../utils/auth";
 
 export const useAppointments = () => {
-  const accountId = authUtils.getAccountIdFromToken();
-  const requestBody = useMemo(
-    () => (accountId ? { accountId } : undefined),
-    [accountId]
-  );
+  const isAuthenticated = authUtils.isAuthenticated();
 
   const { data, loading, error, refetch } = useData<AppointmentsResponse>(
     API_ENDPOINTS.getAccountAppointments,
     0,
-    requestBody,
-    !!accountId
+    undefined, 
+    isAuthenticated
   );
 
   const upcomingAppointments = useMemo(

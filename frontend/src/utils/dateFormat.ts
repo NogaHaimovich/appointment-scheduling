@@ -7,7 +7,7 @@ export const formatDateToDisplay = (dateString: string): string => {
     if (parts.length >= 3) {
       const [year, month, day] = parts;
       if (year && month && day) {
-        return `${day}-${month}-${year}`;
+        return `${day}.${month}.${year}`;
       }
     }
   }

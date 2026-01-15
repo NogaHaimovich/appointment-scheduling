@@ -1,13 +1,14 @@
-import { Request, Response } from "express";
+import { Response } from "express";
+import { AuthRequest } from "../middleware/auth.middleware";
 import { addPatientToAccount, getPatientsByAccountId, deletePatientById } from "./patients.service";
 
-export async function getPatientsByAccountIdHandler(req: Request, res: Response) {
-    const accountId = req.query.accountId as string;
+export async function getPatientsByAccountIdHandler(req: AuthRequest, res: Response) {
+    const accountId = req.accountId;
     
     if (!accountId) {
-        return res.status(400).json({ 
+        return res.status(401).json({ 
             success: false,
-            message: "Account ID is required" 
+            message: "Authentication required" 
         });
     }
     
@@ -26,13 +27,14 @@ export async function getPatientsByAccountIdHandler(req: Request, res: Response)
     }
 }
 
-export async function addPatientToAccountHandler(req: Request, res: Response){
-    const { accountId, patientName, relationship } = req.body;
+export async function addPatientToAccountHandler(req: AuthRequest, res: Response){
+    const accountId = req.accountId;
+    const { patientName, relationship } = req.body;
 
     if(!accountId){
-        return res.status(400).json({
+        return res.status(401).json({
             success: false,
-            message: "Account ID is required" 
+            message: "Authentication required" 
         });
     }
 
@@ -65,13 +67,14 @@ export async function addPatientToAccountHandler(req: Request, res: Response){
     }
 }
 
-export async function deletePatientByIdHandler(req: Request, res: Response) {
-    const { accountId, patientId } = req.body;
+export async function deletePatientByIdHandler(req: AuthRequest, res: Response) {
+    const accountId = req.accountId;
+    const { patientId } = req.body;
 
     if (!accountId) {
-        return res.status(400).json({
+        return res.status(401).json({
             success: false,
-            message: "Account ID is required"
+            message: "Authentication required"
         });
     }
 

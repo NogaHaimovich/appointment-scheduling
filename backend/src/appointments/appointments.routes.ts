@@ -6,13 +6,15 @@ import {
     rescheduleAppointmentHandler,
     getNextAvailableAppointmentHandler
 } from "./appointments.controller";
+import { authenticateToken } from "../middleware/auth.middleware";
 
 const router = Router();
 
-router.get("/account", getAccountAppointmentsHandler);
 router.get("/open-slots-by-doctor-id", getAvailableSlotsByDoctorIdHandler);
-router.patch("/assign", assignAppointmentHandler);
-router.patch("/reschedule", rescheduleAppointmentHandler);
 router.get("/next-available", getNextAvailableAppointmentHandler);
+
+router.get("/account", authenticateToken, getAccountAppointmentsHandler);
+router.patch("/assign", authenticateToken, assignAppointmentHandler);
+router.patch("/reschedule", authenticateToken, rescheduleAppointmentHandler);
 
 export default router;

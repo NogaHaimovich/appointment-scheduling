@@ -1,12 +1,13 @@
 import { Request, Response } from "express";
+import { AuthRequest } from "../middleware/auth.middleware";
 import { getAccountAppointments, getAvailableSlotsByDoctorId, updateAppointmentAccountID, rescheduleAppointment, getNextAvailableAppointmentDate } from "./appointments.service";
 
-export async function getAccountAppointmentsHandler(req: Request, res: Response) {
-    const accountID = req.query.accountId as string;
+export async function getAccountAppointmentsHandler(req: AuthRequest, res: Response) {
+    const accountID = req.accountId;
     if (!accountID) {
-        return res.status(400).json({ 
+        return res.status(401).json({ 
             success: false,
-            message: "Account ID is required" 
+            message: "Authentication required" 
         });
     }
     try {
@@ -49,8 +50,16 @@ export async function getAvailableSlotsByDoctorIdHandler(req: Request, res: Resp
     }
 }
 
-export async function assignAppointmentHandler(req: Request, res: Response) {
-    const { accountId, appointmentId, patientId, patientName } = req.body;
+export async function assignAppointmentHandler(req: AuthRequest, res: Response) {
+    const accountId = req.accountId;
+    const { appointmentId, patientId, patientName } = req.body;
+    
+    if (!accountId) {
+        return res.status(401).json({ 
+            success: false, 
+            message: "Authentication required" 
+        });
+    }
     
     if (appointmentId === undefined || appointmentId === null) {
         return res.status(400).json({ 
@@ -59,35 +68,33 @@ export async function assignAppointmentHandler(req: Request, res: Response) {
         });
     }
     
-    if (accountId === undefined) {
-        return res.status(400).json({ 
-            success: false, 
-            message: "Account ID is required" 
-        });
-    }
-    
     try {
-        const finalPatientId = accountId === null ? null : (patientId || null);
-        const finalPatientName = accountId === null ? null : (patientName || null);
+        const finalPatientId = patientId || null;
+        const finalPatientName = patientName || null;
         
         await updateAppointmentAccountID(appointmentId, accountId, finalPatientId, finalPatientName); 
-        const message = accountId === null 
-            ? "Appointment canceled successfully" 
-            : "Appointment assigned successfully";
-        res.json({ success: true, message });
+        res.json({ success: true, message: "Appointment assigned successfully" });
     } catch (error) {
         console.error("Error updating appointment:", error);
         res.status(500).json({ success: false, message: "Failed to update appointment" });
     }
 }
 
-export async function rescheduleAppointmentHandler(req: Request, res: Response) {
-    const { oldAppointmentId, newAppointmentId, accountId, patientId, patientName } = req.body;
+export async function rescheduleAppointmentHandler(req: AuthRequest, res: Response) {
+    const accountId = req.accountId;
+    const { oldAppointmentId, newAppointmentId, patientId, patientName } = req.body;
     
-    if (!oldAppointmentId || !newAppointmentId || !accountId) {
+    if (!accountId) {
+        return res.status(401).json({ 
+            success: false, 
+            message: "Authentication required" 
+        });
+    }
+    
+    if (!oldAppointmentId || !newAppointmentId) {
         return res.status(400).json({ 
             success: false, 
-            message: "Old Appointment ID, New Appointment ID, and Account ID are required" 
+            message: "Old Appointment ID and New Appointment ID are required" 
         });
     }
 

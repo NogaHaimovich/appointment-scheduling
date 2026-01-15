@@ -11,12 +11,14 @@ import { useDoctors } from "./useDoctors";
 import { useSlots } from "./useSlots";
 import { useNextAvailableSlots } from "./useNextAvailableSlots";
 import { usePatientsContext } from "../contexts/PatientsContext";
+import { useAppointmentsContext } from "../contexts/AppointmentsContext";
 
 export const useAppointmentBooking = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { rescheduleParams, isRescheduleMode } = useRescheduleParams();
   const { patients, loadingPatients } = usePatientsContext();
+  const { refetchAppointments } = useAppointmentsContext();
   
   const [selectedPatientId, setSelectedPatientId] = useState<string | null>(null);
 
@@ -64,16 +66,15 @@ export const useAppointmentBooking = () => {
   );
 
   const { mutate: scheduleAppointment, loading: scheduling } =
-    useMutation<ApiMessageResponse, { accountId: string; appointmentId: number; patientId?: string | null; patientName?: string | null }>( "/appointments/assign", "patch");
+    useMutation<ApiMessageResponse, { appointmentId: number; patientId?: string | null; patientName?: string | null }>( "/appointments/assign", "patch");
 
   const { mutate: rescheduleAppointment, loading: rescheduling } =
-    useMutation<ApiMessageResponse, { oldAppointmentId: number; newAppointmentId: number; accountId: string; patientId?: string | null; patientName?: string | null }>( "/appointments/reschedule", "patch");
+    useMutation<ApiMessageResponse, { oldAppointmentId: number; newAppointmentId: number; patientId?: string | null; patientName?: string | null }>( "/appointments/reschedule", "patch");
 
   const handleSchedule = useCallback(async () => {
     setLocalError(null);
 
-    const accountId = authUtils.getAccountIdFromToken();
-    if (!accountId || !selectedAppointmentId) {
+    if (!authUtils.isAuthenticated() || !selectedAppointmentId) {
       setLocalError("Please select a valid appointment.");
       return;
     }
@@ -94,12 +95,10 @@ export const useAppointmentBooking = () => {
       ? await rescheduleAppointment({
           oldAppointmentId: rescheduleParams.appointmentId,
           newAppointmentId: selectedAppointmentId,
-          accountId,
           patientId,
           patientName,
         })
       : await scheduleAppointment({ 
-          accountId, 
           appointmentId: selectedAppointmentId,
           patientId,
           patientName,
@@ -107,6 +106,8 @@ export const useAppointmentBooking = () => {
 
     if (response?.success) {
       setShowSuccessPopup(true);
+      // Refetch appointments to update the list immediately
+      refetchAppointments();
     } else {
       setLocalError(response?.message || "Operation failed.");
     }
@@ -118,6 +119,9 @@ export const useAppointmentBooking = () => {
     rescheduleParams,
     scheduleAppointment,
     rescheduleAppointment,
+    refetchAppointments,
+    selectedPatientId,
+    selectedPatient,
   ]);
 
   const handleCloseSuccessPopup = useCallback(() => {

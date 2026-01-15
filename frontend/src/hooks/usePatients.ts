@@ -6,24 +6,20 @@ import { useMutation } from "./useMutation";
 import { authUtils } from "../utils/auth";
 
 export const usePatients = () => {
-  const accountId = authUtils.getAccountIdFromToken();
-  const queryParams = useMemo(
-    () => (accountId ? { accountId } : undefined),
-    [accountId]
-  );
+  const isAuthenticated = authUtils.isAuthenticated();
 
   const { data, loading, refetch } = useData<PatientsResponse>(
     API_ENDPOINTS.getPatients,
     0,
-    queryParams,
-    !!accountId
+    undefined,
+    isAuthenticated
   );
 
   const { 
     mutate: addPatient, 
     loading: addingPatient, 
     error: addPatientError 
-  } = useMutation<AddPatientResponse, { accountId: string; patientName: string; relationship: string }>(
+  } = useMutation<AddPatientResponse, { patientName: string; relationship: string }>(
     API_ENDPOINTS.addPatient,
     "post"
   );
@@ -32,7 +28,7 @@ export const usePatients = () => {
     mutate: deletePatient, 
     loading: deletingPatient, 
     error: deletePatientError 
-  } = useMutation<{ success: boolean; message: string }, { accountId: string; patientId: string }>(
+  } = useMutation<{ success: boolean; message: string }, { patientId: string }>(
     API_ENDPOINTS.deletePatient,
     "delete"
   );
@@ -40,12 +36,11 @@ export const usePatients = () => {
   const patients = useMemo(() => data?.patients || [], [data?.patients]);
 
   const handleAddPatient = async (patientName: string, relationship: string) => {
-    if (!accountId) {
-      throw new Error("Account ID is required");
+    if (!isAuthenticated) {
+      throw new Error("Authentication required");
     }
     
     const result = await addPatient({
-      accountId,
       patientName,
       relationship,
     });
@@ -58,12 +53,11 @@ export const usePatients = () => {
   };
 
   const handleDeletePatient = async (patientId: string) => {
-    if (!accountId) {
-      throw new Error("Account ID is required");
+    if (!isAuthenticated) {
+      throw new Error("Authentication required");
     }
     
     const result = await deletePatient({
-      accountId,
       patientId,
     });
     

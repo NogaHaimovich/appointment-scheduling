@@ -16,14 +16,7 @@ function AppContent() {
       <main>
         <Routes>
           <Route path="/" element={<LoginPage />} />
-          <Route
-            path="/*"
-            element={
-              <ProtectedRoute>
-                <ProtectedRoutesWrapper />
-              </ProtectedRoute>
-            }
-          />
+          <Route path="/*" element={<ProtectedRoutesWrapper />} />
         </Routes>
       </main>
     </>

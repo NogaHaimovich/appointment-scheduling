@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
 import type { AxiosRequestConfig } from "axios";
-import { API_BASE_URL } from "../config/api";
+import axiosInstance from "../config/axios";
 
 export interface UseMutationReturn<TData, TVariables> {
   data: TData | null;
@@ -33,23 +33,22 @@ export function useMutation<TData, TVariables>(
         setError(null);
 
         let response;
-        const url = `${API_BASE_URL}${endpoint}`;
         const requestConfig = {
           ...config,
         };
 
         switch (method) {
           case "post":
-            response = await axios.post<TData>(url, variables, requestConfig);
+            response = await axiosInstance.post<TData>(endpoint, variables, requestConfig);
             break;
           case "put":
-            response = await axios.put<TData>(url, variables, requestConfig);
+            response = await axiosInstance.put<TData>(endpoint, variables, requestConfig);
             break;
           case "patch":
-            response = await axios.patch<TData>(url, variables, requestConfig);
+            response = await axiosInstance.patch<TData>(endpoint, variables, requestConfig);
             break;
           case "delete":
-            response = await axios.delete<TData>(url, {
+            response = await axiosInstance.delete<TData>(endpoint, {
               ...requestConfig,
               data: variables,
             });

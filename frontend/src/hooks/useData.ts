@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import axios, { AxiosError } from "axios";
-import { API_BASE_URL } from "../config/api";
+import axiosInstance from "../config/axios";
 
 export interface UseDataReturn<T> {
   data: T | null;
@@ -32,8 +32,8 @@ export function useData<T>(
       setLoading(true);
       setError(null);
 
-      const response = await axios.get<T>(
-        `${API_BASE_URL}${endpoint}`,
+      const response = await axiosInstance.get<T>(
+        endpoint,
         {
           params: body,
           signal: abortRef.current.signal,
