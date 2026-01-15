@@ -1,35 +1,31 @@
 import { useMemo } from "react";
 import { useData } from "../../hooks/useData";
 import { usePatientsContext } from "../../contexts/PatientsContext";
+import { useAppointmentsContext } from "../../contexts/AppointmentsContext";
 import { API_ENDPOINTS } from "../../config/api";
-import { authUtils } from "../../utils/auth";
 
 import "./styles.scss";
 import NewUserContainer from "./components/NewUsersContainer/NewUsersContainer";
 import ReturningUsersContainer from "./components/ReturningUsersContainer/ReturningUsersContainer";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
-import type { AppointmentsResponse, SpecialitiesResponse } from "../../types/types";
+import type { SpecialitiesResponse } from "../../types/types";
 
 const DashboardPage = () => {
-  const accountId = authUtils.getAccountIdFromToken();
-  const requestBody = useMemo(() => ({ accountId }), [accountId]);
-  const { data, loading, error } = useData<AppointmentsResponse>( API_ENDPOINTS.getAccountAppointments, 0, requestBody );
+  const { 
+    upcomingAppointments, 
+    pastAppointments, 
+    accountName, 
+    loadingAppointments, 
+    error 
+  } = useAppointmentsContext();
   const { patients } = usePatientsContext();
-
-  const { upcomingAppointments, pastAppointments } = useMemo(
-    () => ({
-      upcomingAppointments: data?.upcomingAppointment ?? [],
-      pastAppointments: data?.appointmentHistory ?? [],
-    }),
-    [data]
-  );
 
   const hasAppointments = useMemo(
     () => upcomingAppointments.length > 0 || pastAppointments.length > 0,
     [upcomingAppointments, pastAppointments]
   );
 
-  const shouldLoadSpecialties = !loading && !!data && !hasAppointments;
+  const shouldLoadSpecialties = !loadingAppointments && !hasAppointments;
   const { data: specialtiesData, loading: loadingSpecialties } = useData<SpecialitiesResponse>(
     API_ENDPOINTS.getSpecialties,
     0,
@@ -37,7 +33,7 @@ const DashboardPage = () => {
     shouldLoadSpecialties
   );
 
-  if (loading || !data)
+  if (loadingAppointments)
     return (
       <div className="dashboardPage_container">
         <LoadingSpinner />
@@ -53,8 +49,6 @@ const DashboardPage = () => {
         <LoadingSpinner />
       </div>
     );
-
-  const accountName = data?.accountName || null;
 
   return (
     <div className="dashboardPage_container">

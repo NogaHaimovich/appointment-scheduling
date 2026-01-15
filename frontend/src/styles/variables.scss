@@ -23,6 +23,15 @@ $color-background-button-danger: #BF2600;
 $color-background-button: #6366F1;   // Indigo
 $color-background-button-info: #8B5CF6; // Purple
 
+// Patient Colors - Calendar (CSS Custom Properties)
+:root {
+  --color-patient-red: #ff9aa2;
+  --color-patient-blue: #89cff0;
+  --color-patient-green: #c5e1a5;
+  --color-patient-orange: #f7c59f;
+  --color-patient-purple: #c3a2e2;
+}
+
 // Button Gradient Values
 $gradient-button-primary: linear-gradient(135deg, $color-background-button 0%, #4F46E5 100%);
 $gradient-button-primary-hover: linear-gradient(135deg, #7C3AED 0%, $color-background-button 100%);  

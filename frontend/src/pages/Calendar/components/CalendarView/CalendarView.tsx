@@ -1,87 +1,147 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import dayjs, { type Dayjs } from "dayjs";
+import { useState, useMemo, useRef, useEffect } from "react";
+import { type Dayjs } from "dayjs";
+import dayjs from "dayjs";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
-import interactionPlugin, {
-  type DateClickArg,
-} from "@fullcalendar/interaction";
-import type { EventClickArg, EventInput } from "@fullcalendar/core";
+import interactionPlugin from "@fullcalendar/interaction";
+import type { EventClickArg, DatesSetArg } from "@fullcalendar/core";
+import type { DateClickArg } from "@fullcalendar/interaction";
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
+import { useAppointmentsContext } from "../../../../contexts/AppointmentsContext";
+import type { AppointmentProps, Patient } from "../../../../types/types";
 
-import type { AppointmentProps } from "../../../../types/types";
 import "./styles.scss";
 
 type CalendarViewType = "dayGridMonth" | "timeGridWeek" | "timeGridDay";
+type PatientWithColor = Patient & { color: string };
+
+const getPatientColor = (colorName: string): string => {
+  const cssVar = `--color-patient-${colorName}`;
+  return (
+    getComputedStyle(document.documentElement)
+      .getPropertyValue(cssVar)
+      .trim() || "#89cff0"
+  );
+};
 
 interface CalendarViewProps {
   selectedDate: Dayjs | null;
   onDateChange: (date: Dayjs | null) => void;
-  appointments?: AppointmentProps[];
+  patientsWithColors: PatientWithColor[];
 }
-
-
-const COLORS = ["#3f51b5", "#4caf50", "#ff9800", "#9c27b0"];
-
-const getEventColor = (apt: AppointmentProps): string => {
-  if (apt.patient_id) {
-    return COLORS[apt.patient_id.charCodeAt(0) % COLORS.length];
-  }
-  return COLORS[apt.id % COLORS.length];
-};
-
-const buildEvent = (apt: AppointmentProps): EventInput | null => {
-  if (!apt.date || !apt.time) return null;
-
-  const start = dayjs(`${apt.date} ${apt.time}`);
-  if (!start.isValid()) return null;
-
-  return {
-    id: apt.id.toString(),
-    title: `${start.format("h:mm A")} ${
-      apt.patient_name ?? apt.doctor_name ?? "Appointment"
-    }`,
-    start: start.toISOString(),
-    backgroundColor: getEventColor(apt),
-    borderColor: getEventColor(apt),
-    extendedProps: {
-      appointment: apt,
-    },
-  };
-};
-
-
 
 const CalendarView: React.FC<CalendarViewProps> = ({
   selectedDate,
   onDateChange,
-  appointments = [],
+  patientsWithColors,
 }) => {
+  const { upcomingAppointments, pastAppointments } =
+    useAppointmentsContext();
+
+  const appointments = useMemo(
+    () => [...upcomingAppointments, ...pastAppointments],
+    [upcomingAppointments, pastAppointments]
+  );
+
   const [view, setView] = useState<CalendarViewType>("dayGridMonth");
   const calendarRef = useRef<FullCalendar>(null);
+  const isViewChangingRef = useRef(false);
+  const isUpdatingFromParentRef = useRef(false);
+  const previousDateRangeRef = useRef<{
+    start: string;
+    end: string;
+    view: string;
+  } | null>(null);
+
+  const currentDate = selectedDate || dayjs();
+
+  const visiblePatientIds = useMemo(() => {
+    return new Set(patientsWithColors.map((p) => p.id));
+  }, [patientsWithColors]);
 
 
-  const events = useMemo<EventInput[]>(
-    () =>
-      appointments
-        .map(buildEvent)
-        .filter((event): event is EventInput => event !== null),
-    [appointments]
-  );
+  const patientColorMap = useMemo(() => {
+    const map = new Map<string, string>();
+    patientsWithColors.forEach((patient) => {
+      map.set(patient.id, getPatientColor(patient.color));
+    });
+    return map;
+  }, [patientsWithColors]);
+
+  const events = useMemo(() => {
+    return appointments
+      .filter(
+        (apt) =>
+          apt.date &&
+          apt.time &&
+          apt.patient_id &&
+          visiblePatientIds.has(apt.patient_id)
+      )
+      .map((apt) => {
+        const appointmentDate = dayjs(apt.date);
+        if (!appointmentDate.isValid()) return null;
+
+        const [hourStr, minuteStr] = apt.time.split(":");
+        const hour = parseInt(hourStr, 10) || 0;
+        const minute = parseInt(minuteStr || "0", 10) || 0;
+
+        const startDateTime = appointmentDate
+          .hour(hour)
+          .minute(minute)
+          .second(0);
+
+        if (!startDateTime.isValid()) return null;
+
+        const color =
+          patientColorMap.get(apt.patient_id!) ||
+          getPatientColor("blue");
+
+        const displayName =
+          apt.patient_name || apt.doctor_name || "Appointment";
+
+        return {
+          id: apt.id.toString(),
+          title: `${startDateTime.format("h:mm A")} ${displayName}`,
+          start: startDateTime.toISOString(),
+          backgroundColor: color,
+          borderColor: color,
+          extendedProps: {
+            appointment: apt,
+          },
+        };
+      })
+      .filter(Boolean) as {
+      id: string;
+      title: string;
+      start: string;
+      backgroundColor: string;
+      borderColor: string;
+      extendedProps: { appointment: AppointmentProps };
+    }[];
+  }, [appointments, visiblePatientIds, patientColorMap]);
 
 
   const handleViewChange = (
-    _: React.MouseEvent<HTMLElement>,
+    _event: React.MouseEvent<HTMLElement>,
     newView: CalendarViewType | null
   ) => {
-    if (!newView || !calendarRef.current) return;
-
-    setView(newView);
-    calendarRef.current.getApi().changeView(newView);
+    if (newView && calendarRef.current && selectedDate) {
+      const api = calendarRef.current.getApi();
+      isViewChangingRef.current = true;
+      api.changeView(newView);
+      setTimeout(() => {
+        api.gotoDate(selectedDate.toDate());
+        setView(newView);
+        setTimeout(() => {
+          isViewChangingRef.current = false;
+        }, 50);
+      }, 10);
+    }
   };
 
   const handleDateClick = (info: DateClickArg) => {
-    onDateChange(dayjs(info.date));
+    onDateChange(dayjs(info.dateStr));
   };
 
   const handleEventClick = (info: EventClickArg) => {
@@ -90,12 +150,45 @@ const CalendarView: React.FC<CalendarViewProps> = ({
     }
   };
 
+  const handleDatesSet = (dateInfo: DatesSetArg) => {
+    const currentView = dateInfo.view.type as CalendarViewType;
+
+    if (currentView !== view) setView(currentView);
+    
+    if (!isUpdatingFromParentRef.current && calendarRef.current) {
+      const api = calendarRef.current.getApi();
+      const calendarCurrentDate = dayjs(api.getDate());
+      
+      if (!selectedDate || !calendarCurrentDate.isSame(selectedDate, 'day')) {
+        onDateChange(calendarCurrentDate);
+      }
+    }
+    
+    previousDateRangeRef.current = {
+      start: dateInfo.startStr,
+      end: dateInfo.endStr,
+      view: currentView,
+    };
+  };
 
   useEffect(() => {
     if (!calendarRef.current || !selectedDate) return;
-    calendarRef.current.getApi().gotoDate(selectedDate.toDate());
-  }, [selectedDate]);
 
+    const api = calendarRef.current.getApi();
+    const viewStart = dayjs(api.view.activeStart);
+    const viewEnd = dayjs(api.view.activeEnd);
+
+    if (
+      selectedDate.isBefore(viewStart) ||
+      selectedDate.isAfter(viewEnd)
+    ) {
+      isUpdatingFromParentRef.current = true;
+      api.gotoDate(selectedDate.toDate());
+      setTimeout(() => {
+        isUpdatingFromParentRef.current = false;
+      }, 100);
+    }
+  }, [selectedDate]);
 
   return (
     <div className="calendar-view">
@@ -105,8 +198,8 @@ const CalendarView: React.FC<CalendarViewProps> = ({
         <ToggleButtonGroup
           value={view}
           exclusive
-          size="small"
           onChange={handleViewChange}
+          size="small"
           className="calendar-view__toggle"
         >
           <ToggleButton value="dayGridMonth">Month</ToggleButton>
@@ -115,31 +208,24 @@ const CalendarView: React.FC<CalendarViewProps> = ({
         </ToggleButtonGroup>
       </div>
 
-      <div className="calendar-view__content">
-        <FullCalendar
-          ref={calendarRef}
-          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-          initialView={view}
-          initialDate={selectedDate?.toDate()}
-          events={events}
-          height="auto"
-          dayMaxEvents={3}
-          moreLinkClick="popover"
-          eventDisplay="block"
-          headerToolbar={{
-            left: "prev,next today",
-            center: "title",
-            right: "",
-          }}
-          dateClick={handleDateClick}
-          eventClick={handleEventClick}
-          eventTimeFormat={{
-            hour: "numeric",
-            minute: "2-digit",
-            meridiem: "short",
-          }}
-        />
-      </div>
+      <FullCalendar
+        ref={calendarRef}
+        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+        initialView={view}
+        initialDate={currentDate.toDate()}
+        events={events}
+        headerToolbar={{
+          left: "prev,next today",
+          center: "title",
+          right: "",
+        }}
+        dateClick={handleDateClick}
+        eventClick={handleEventClick}
+        datesSet={handleDatesSet}
+        height="auto"
+        dayMaxEvents={3}
+        moreLinkClick="popover"
+      />
     </div>
   );
 };
