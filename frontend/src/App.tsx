@@ -1,6 +1,5 @@
 import LoginPage from "./pages/LoginPage/LoginPage";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
-import ProtectedRoute from "./routes/protectedRoutes/protectedRoute";
 import ProtectedRoutesWrapper from "./routes/protectedRoutes/ProtectedRoutesWrapper";
 import Navbar from "./components/Navbar/Navbar";
 import { authUtils } from "./utils/auth";
