@@ -10,11 +10,22 @@ export const authenticateToken = (
   res: Response,
   next: NextFunction
 ) => {
-  const token = 
-    req.cookies?.token || 
-    req.headers.authorization?.split(" ")[1];
+  const authHeader = req.headers.authorization || req.headers.Authorization;
+  let token = req.cookies?.token;
+  
+  if (!token && authHeader) {
+    const headerValue = Array.isArray(authHeader) ? authHeader[0] : authHeader;
+    if (headerValue && headerValue.startsWith("Bearer ")) {
+      token = headerValue.split(" ")[1];
+    }
+  }
   
   if (!token) {
+    console.log("No token found. Headers:", {
+      authorization: req.headers.authorization,
+      Authorization: req.headers.Authorization,
+      cookies: req.cookies
+    });
     return res.status(401).json({ 
       success: false, 
       message: "Authentication required" 

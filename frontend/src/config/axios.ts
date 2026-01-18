@@ -7,6 +7,7 @@ const axiosInstance = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
+  withCredentials: true, // Required for CORS with credentials
 });
 
 axiosInstance.interceptors.request.use(
@@ -14,6 +15,8 @@ axiosInstance.interceptors.request.use(
     const token = authUtils.getToken();
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
+    } else {
+      console.warn("No token available for request to:", config.url);
     }
     return config;
   },
@@ -28,6 +31,11 @@ axiosInstance.interceptors.response.use(
   },
   (error) => {
     if (error.response?.status === 401) {
+      console.error("401 Unauthorized error:", {
+        url: error.config?.url,
+        message: error.response?.data?.message,
+        hasToken: !!authUtils.getToken()
+      });
       authUtils.clearToken();
       
       if (window.location.pathname !== "/") {
