@@ -56,3 +56,17 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: -0.02em;
 }
 
+.fab-button {
+  position: fixed !important;
+  bottom: 60px !important;
+  right: 60px !important;
+  left: auto !important;
+  z-index: 1000 !important;
+  background: $gradient-button-primary !important;
+  background-color: transparent !important;
+  color: white !important;
+  
+  &:hover {
+    background: $gradient-button-primary-hover !important;
+  }
+}

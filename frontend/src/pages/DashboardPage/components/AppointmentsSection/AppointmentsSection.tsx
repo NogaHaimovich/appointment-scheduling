@@ -28,7 +28,7 @@ const AppointmentsSection = ({ title, appointments, doctors, selectedDoctor, onD
           <div className="appointments-header__filters">
             {doctors.length > 0 && (
               <select
-                className="dashboardPage__doctor-filter"
+                className="dashboardPage__filter"
                 value={selectedDoctor ?? ""}
                 onChange={(e) => onDoctorChange(e.target.value || null)}
               >
@@ -43,7 +43,7 @@ const AppointmentsSection = ({ title, appointments, doctors, selectedDoctor, onD
 
             {patients.length > 0 && (
               <select
-                className="dashboardPage__doctor-filter"
+                className="dashboardPage__filter"
                 value={selectedPatient ?? ""}
                 onChange={(e) => onPatientChange(e.target.value || null)}
               >
