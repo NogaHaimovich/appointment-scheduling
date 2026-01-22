@@ -12,5 +12,6 @@ export const API_ENDPOINTS = {
   getPatients: "/patients/by-account", 
   addPatient: "/patients/add-patient",
   deletePatient: "/patients/delete-patient",
+  getChatBotResponse: "/chatbot/",
 } as const;
 

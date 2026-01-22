@@ -91,3 +91,7 @@ export type PatientsResponse = ApiResponse<{
 export type AddPatientResponse = ApiResponse<{
   message: string;
 }>;
+
+export type ChatBotResponse = ApiResponse<{
+  response: string;
+}>;

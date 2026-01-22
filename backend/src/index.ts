@@ -7,6 +7,7 @@ import cors from "cors";
 import appointmentsRoutes from "./appointments/appointments.routes";
 import authRoutes from "./auth/auth.routes";
 import patientsRoutes from "./patients/patients.routes";
+import chatbotRoutes from "./chatbot/chatbot.routes";
 
 import { validateEnvVariables } from "./utils/envValidation";
 import specialtiesRoutes from "./specialties/specialties.routes";
@@ -37,6 +38,7 @@ app.use("/", authRoutes);
 app.use("/appointments", appointmentsRoutes);
 app.use("/specialties", specialtiesRoutes);
 app.use("/patients", patientsRoutes);
+app.use("/chatbot", chatbotRoutes);
 
 initializeOnStartup();
 
