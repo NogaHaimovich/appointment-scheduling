@@ -1,7 +1,9 @@
+/// <reference types="jest" />
+
 import { randomUUID } from "crypto";
 import jwt from "jsonwebtoken";
 import * as dbHelpers from "../../db/dbHelpers";
-import { generateCode, verifyCode, findOrCreateAccount, generateToken } from "../auth.service";
+import { generateCode, verifyCode, findAccount, createAccount, generateToken } from "../auth.service";
 
 jest.mock("crypto", () => ({ randomUUID: jest.fn() }));
 jest.mock("jsonwebtoken", () => ({ sign: jest.fn() }));
@@ -24,16 +26,29 @@ describe("Minimal Auth tests", () => {
     expect(verifyCode(phone, "99999")).toBe(false);
   });
 
-  it("should return existing account or create new", async () => {
-    (dbHelpers.getAsync as jest.Mock).mockResolvedValueOnce({ id: "account123" });
-    const existing = await findOrCreateAccount("111");
-    expect(existing).toBe("account123");
+  it("should find existing account", async () => {
+    (dbHelpers.getAsync as jest.Mock).mockResolvedValueOnce({ id: "account123", name: "John" });
+    const account = await findAccount("111");
+    expect(account).toEqual({ id: "account123", name: "John" });
+    expect(dbHelpers.getAsync).toHaveBeenCalledWith(expect.any(String), ["111"]);
+  });
 
+  it("should return null when account not found", async () => {
     (dbHelpers.getAsync as jest.Mock).mockResolvedValueOnce(null);
-    (randomUUID as jest.Mock).mockReturnValue("new-uuid");
-    const created = await findOrCreateAccount("222");
-    expect(created).toBe("new-uuid");
-    expect(dbHelpers.runAsync).toHaveBeenCalledWith(expect.any(String), ["new-uuid", "222"]);
+    const account = await findAccount("222");
+    expect(account).toBeNull();
+  });
+
+  it("should create new account with patient", async () => {
+    (randomUUID as jest.Mock)
+      .mockReturnValueOnce("account-uuid")
+      .mockReturnValueOnce("patient-uuid");
+    (dbHelpers.runAsync as jest.Mock).mockResolvedValue({ changes: 1, lastID: 0 });
+    const accountId = await createAccount("333", "Jane");
+    expect(accountId).toBe("account-uuid");
+    expect(dbHelpers.runAsync).toHaveBeenCalledTimes(2);
+    expect(dbHelpers.runAsync).toHaveBeenNthCalledWith(1, expect.any(String), ["account-uuid", "333", "Jane"]);
+    expect(dbHelpers.runAsync).toHaveBeenNthCalledWith(2, expect.any(String), ["patient-uuid", "account-uuid", "Jane", "self"]);
   });
 
   it("should generate JWT token", () => {

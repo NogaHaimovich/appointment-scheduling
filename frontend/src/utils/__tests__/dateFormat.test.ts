@@ -1,7 +1,7 @@
 import { formatDateToDisplay, formatDateToAPI, convertToGCalUTC } from "../dateFormat";
 
 test("formatDateToDisplay: YYYY-MM-DD → DD-MM-YYYY", () => {
-  expect(formatDateToDisplay("2025-12-20")).toBe("20-12-2025");
+  expect(formatDateToDisplay("2025-12-20")).toBe("20.12.2025");
 });
 
 test("formatDateToAPI: DD-MM-YYYY → YYYY-MM-DD", () => {

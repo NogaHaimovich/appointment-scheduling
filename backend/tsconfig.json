@@ -1,7 +1,7 @@
 {
   // Visit https://aka.ms/tsconfig to read more about this file
   "include": ["src/**/*"],
-  "exclude": ["src/**/__tests__/**", "src/**/*.test.ts"],
+  "exclude": ["dist"],
   "compilerOptions": {
     // File Layout
     "rootDir": "./src",
@@ -12,7 +12,7 @@
     // See also https://aka.ms/tsconfig/module
     "module": "commonjs",
     "target": "esnext",
-    "types": ["node"],
+    "types": ["node", "jest"],
     "lib": ["esnext"],
     "moduleResolution": "node",
     "esModuleInterop": true,
