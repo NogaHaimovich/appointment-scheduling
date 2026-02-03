@@ -62,9 +62,6 @@ app.use(cors({
   maxAge: 86400 // 24 hours
 }));
 
-// Explicit OPTIONS handler as fallback (though cors middleware should handle it)
-app.options('*', cors());
-
 app.use(express.json());
 app.use(cookieParser());
 
