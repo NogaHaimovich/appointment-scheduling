@@ -6,6 +6,7 @@ frontend/build/
 backend/dist/
 backend/build/
 
+.claude/
 backend/data/
 
 *.log

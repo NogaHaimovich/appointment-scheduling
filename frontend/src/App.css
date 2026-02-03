@@ -1,0 +1,15 @@
+.chatbot-fab {
+  width: 80px !important;
+  height: 80px !important;
+  position: fixed !important;
+  bottom: 40px;
+  right: 40px;
+  z-index: 1300 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+}
+
+.chatbot-icon {
+  width: 60px;
+  height: 80px;
+  object-fit: contain;
+}

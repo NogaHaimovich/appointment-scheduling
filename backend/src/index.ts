@@ -1,7 +1,11 @@
+import dotenv from "dotenv";
+
+// Load environment variables FIRST before any other imports
+dotenv.config();
+
 import express from "express";
 import type { Application, Request, Response } from "express";
 import cookieParser from "cookie-parser";
-import dotenv from "dotenv";
 import cors from "cors";
 
 import appointmentsRoutes from "./appointments/appointments.routes";
@@ -12,8 +16,6 @@ import chatbotRoutes from "./chatbot/chatbot.routes";
 import { validateEnvVariables } from "./utils/envValidation";
 import specialtiesRoutes from "./specialties/specialties.routes";
 import { initializeOnStartup } from "./startup";
-
-dotenv.config();
 
 try {
   validateEnvVariables();
@@ -41,12 +43,6 @@ app.use("/patients", patientsRoutes);
 app.use("/chatbot", chatbotRoutes);
 
 initializeOnStartup();
-
-console.log("Routes registered:");
-console.log("  - Auth routes: /getCode, /validateCode");
-console.log("  - Appointments routes: /appointments/account, /appointments/open-slots-by-doctor-id, etc.");
-console.log("  - Specialties routes: /specialties/, /specialties/doctors-by-specialty");
-console.log("  - Patients routes: /patients/by-account");
 
 app.use((req: Request, res: Response) => {
   console.log(`404 - Route not found: ${req.method} ${req.path}`);

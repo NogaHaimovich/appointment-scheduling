@@ -4,9 +4,11 @@ import ProtectedRoutesWrapper from "./routes/protectedRoutes/ProtectedRoutesWrap
 import Navbar from "./components/Navbar/Navbar";
 import { authUtils } from "./utils/auth";
 import { Fab } from "@mui/material";
-import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
+import BotImage from "./images/chatbotIcon.png";
+
 import { useState } from "react";
 import ChatBot from "./components/Chatbot/Chatbot";
+import "./App.css";
 
 function AppContent() {
   const location = useLocation();
@@ -29,9 +31,9 @@ function AppContent() {
               color="primary"
               aria-label="chat"
               onClick={() => setIsChatBotOpen(true)}
-              sx={{ position: "fixed", bottom: 20, right: 20 }}
+              className="chatbot-fab"
             >
-              <AutoAwesomeIcon />
+              <img src={BotImage} alt="Chat Bot" className="chatbot-icon" />
             </Fab>
             <ChatBot isOpen={isChatBotOpen} onClose={()=> setIsChatBotOpen(false)} />
             </>
