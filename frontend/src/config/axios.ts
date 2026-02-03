@@ -10,14 +10,28 @@ const axiosInstance = axios.create({
   withCredentials: true, // Required for CORS with credentials
 });
 
+// Public endpoints that don't require authentication
+const PUBLIC_ENDPOINTS = [
+  "/getCode",
+  "/validateCode",
+  "/createAccount",
+];
+
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = authUtils.getToken();
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    } else {
-      console.warn("No token available for request to:", config.url);
+    // Check if this is a public endpoint
+    const isPublicEndpoint = PUBLIC_ENDPOINTS.some(endpoint => 
+      config.url?.endsWith(endpoint) || config.url?.includes(endpoint)
+    );
+
+    // Only add token for protected endpoints
+    if (!isPublicEndpoint) {
+      const token = authUtils.getToken();
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
     }
+    
     return config;
   },
   (error) => {

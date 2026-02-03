@@ -27,11 +27,43 @@ try {
 const app: Application = express();
 const PORT = process.env.PORT || 5000;
 
+const corsOrigins = process.env.CORS_ORIGIN 
+  ? process.env.CORS_ORIGIN.split(",").map(origin => origin.trim())
+  : ["http://localhost:5173", "http://localhost:5174"];
 
+console.log("CORS Origins configured:", corsOrigins);
+console.log("NODE_ENV:", process.env.NODE_ENV);
+
+// CORS configuration with explicit preflight handling
 app.use(cors({
-  origin: process.env.CORS_ORIGIN?.split(",") || ["http://localhost:5173", "http://localhost:5174"],
-  credentials: true
+  origin: (origin, callback) => {
+    console.log(`CORS request from origin: ${origin || 'no origin'}`);
+    
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) {
+      console.log("Allowing request with no origin");
+      return callback(null, true);
+    }
+    
+    if (corsOrigins.includes(origin)) {
+      console.log(`Allowing CORS request from: ${origin}`);
+      callback(null, true);
+    } else {
+      console.warn(`CORS blocked origin: ${origin}. Allowed origins:`, corsOrigins);
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+  exposedHeaders: ['Content-Length', 'X-Foo', 'X-Bar'],
+  optionsSuccessStatus: 200, // Some legacy browsers (IE11, various SmartTVs) choke on 204
+  preflightContinue: false,
+  maxAge: 86400 // 24 hours
 }));
+
+// Explicit OPTIONS handler as fallback (though cors middleware should handle it)
+app.options('*', cors());
 
 app.use(express.json());
 app.use(cookieParser());

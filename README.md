@@ -1,6 +1,6 @@
 # Appointment Manager
 
-A full-stack web application for managing medical appointments. Accounts can book, view, and reschedule appointments with doctors across different medical specialties.
+A full-stack web application for managing medical appointments. Accounts can book, view, and reschedule appointments with doctors across different medical specialties. The application features an **AI-powered chatbot** that helps users discover available specialties, doctors, and get assistance with appointment-related questions.
 
 ## 🌐 Live Demo
 
@@ -8,6 +8,7 @@ A full-stack web application for managing medical appointments. Accounts can boo
 
 ## 🚀 Features
 
+- **AI-Powered Chatbot**: Intelligent assistant powered by OpenAI that helps users discover medical specialties, find doctors, and get answers to appointment-related questions
 - **Phone-based Authentication**: Secure login using phone number and OTP verification
 - **Specialty Selection**: Browse and select from various medical specialties
 - **Doctor Selection**: Choose from available doctors within a specialty
@@ -36,6 +37,7 @@ A full-stack web application for managing medical appointments. Accounts can boo
 - **TypeScript** - Type safety
 - **SQLite** - Database
 - **JWT** - Authentication tokens
+- **OpenAI API** - AI-powered chatbot for appointment assistance
 - **bcrypt** - Password hashing (for future use)
 - **Cookie Parser** - Cookie handling
 - **CORS** - Cross-origin resource sharing
@@ -85,6 +87,9 @@ JWT_EXPIRES_IN=1h
 
 # CORS Configuration (comma-separated)
 CORS_ORIGIN=http://localhost:5173,http://localhost:5174
+
+# OpenAI Configuration (for AI Chatbot)
+OPENAI_API_KEY=your-openai-api-key-here
 ```
 
 **Important**: Replace `JWT_SECRET` with a strong, random secret key in production.

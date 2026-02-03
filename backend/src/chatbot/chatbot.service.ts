@@ -1,16 +1,24 @@
 import OpenAI from "openai";
 import { getAllSpecialties, getDoctorsBySpecialty } from "../specialties/specialties.service";
 
-
-
-const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
-});
+// Lazy initialization of OpenAI client - only create if API key is available
+function getOpenAIClient(): OpenAI | null {
+    const apiKey = process.env.OPENAI_API_KEY;
+    if (!apiKey) {
+        return null;
+    }
+    return new OpenAI({ apiKey });
+}
 
 
 
 export async function getResponseFromChatbot(message: string) {
     try {
+        const openai = getOpenAIClient();
+        if (!openai) {
+            console.warn("OpenAI API key not configured. Chatbot feature is disabled.");
+            return "I'm sorry, the chatbot feature is currently unavailable. Please contact us directly for assistance.";
+        }
 
         const specialties = await getAllSpecialties();
         const doctorsPerSpecialty = await Promise.all(
