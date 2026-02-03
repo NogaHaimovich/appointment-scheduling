@@ -66,7 +66,7 @@ WHERE id=?;
 `
 
 export const GET_SPECIALTIES_LIST= `
-SELECT id, name as specialty_name, description
+SELECT id, name, description
 FROM specialties
 `
 
