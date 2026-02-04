@@ -1,7 +1,6 @@
 import OpenAI from "openai";
 import { getAllSpecialties, getDoctorsBySpecialty } from "../specialties/specialties.service";
 
-// Lazy initialization of OpenAI client - only create if API key is available
 function getOpenAIClient(): OpenAI | null {
     const apiKey = process.env.OPENAI_API_KEY;
     if (!apiKey) {

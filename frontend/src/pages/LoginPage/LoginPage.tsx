@@ -144,7 +144,8 @@ const LoginPage = () => {
     if (error) setLocalError("");
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e?: React.FormEvent) => {
+    e?.preventDefault();
     if (isNameMode) return handleNameSubmit();
     if (isVerificationMode) return handleCodeSubmit();
     return handlePhoneSubmit();
@@ -168,23 +169,25 @@ const LoginPage = () => {
         <h2 className="signin__title">Welcome to Appointment Scheduler</h2>
         <h3 className="signin__subtitle">{getSubtitle()}</h3>
 
-        <InputField
-          value={getInputValue()}
-          onChange={handleInputChange}
-          placeholder={getPlaceholder()}
-          error={error || undefined}
-        />
+        <form onSubmit={handleSubmit}>
+          <InputField
+            value={getInputValue()}
+            onChange={handleInputChange}
+            placeholder={getPlaceholder()}
+            error={error || undefined}
+          />
 
-        {message && <div className="signin__message">{message}</div>}
+          {message && <div className="signin__message">{message}</div>}
 
-        <Button
-          onClick={handleSubmit}
-          disabled={isSubmitDisabled()}
-          loading={loading}
-          variant={"primary"}
-        >
-          {getButtonText()}
-        </Button>
+          <Button
+            disabled={isSubmitDisabled()}
+            loading={loading}
+            variant={"primary"}
+            type="submit"
+          >
+            {getButtonText()}
+          </Button>
+        </form>
       </div>
     </div>
   );
