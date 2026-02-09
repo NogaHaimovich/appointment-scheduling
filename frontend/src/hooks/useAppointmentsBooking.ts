@@ -12,6 +12,8 @@ import { useSlots } from "./useSlots";
 import { useNextAvailableSlots } from "./useNextAvailableSlots";
 import { usePatientsContext } from "../contexts/PatientsContext";
 import { useAppointmentsContext } from "../contexts/AppointmentsContext";
+import { useLastVisitPerSpecialty } from "./useLastVisitPerSpecialty";
+
 
 export const useAppointmentBooking = () => {
   const navigate = useNavigate();
@@ -21,6 +23,8 @@ export const useAppointmentBooking = () => {
   const { refetchAppointments } = useAppointmentsContext();
   
   const [selectedPatientId, setSelectedPatientId] = useState<string | null>(null);
+
+  const {lastVisitPerSpecialty, loading: loadingLastVisitPerSpecialty} = useLastVisitPerSpecialty(selectedPatientId || "");  
 
   const {selectedSpecialty, selectedSpecialtyId, specialties,  loadingSpecialties,  handleSpecialtyChange,  resetSpecialty} = 
     useSpecialties(rescheduleParams?.specialty);
@@ -35,6 +39,7 @@ export const useAppointmentBooking = () => {
 
   const [localError, setLocalError] = useState<string | null>(null);
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+
 
   useEffect(() => {
     if (patients.length > 0) {
@@ -106,9 +111,7 @@ export const useAppointmentBooking = () => {
 
     if (response?.success) {
       setShowSuccessPopup(true);
-      // Refetch appointments to update the list immediately
       refetchAppointments();
-      // Refetch patients to update next appointment information
       refetchPatients();
     } else {
       setLocalError(response?.message || "Operation failed.");
@@ -148,12 +151,15 @@ export const useAppointmentBooking = () => {
     doctors,
     patients,
     groupedSlots,
+    lastVisitPerSpecialty,
 
     loadingSpecialties,
     loadingDoctors,
     loadingPatients,
     loadingSlots,
     loadingNextAvailableSlots,
+    loadingLastVisitPerSpecialty,
+
     scheduling: scheduling || rescheduling,
 
     isFormComplete,

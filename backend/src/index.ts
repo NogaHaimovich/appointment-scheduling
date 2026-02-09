@@ -1,6 +1,5 @@
 import dotenv from "dotenv";
 
-// Load environment variables FIRST before any other imports
 dotenv.config();
 
 import express from "express";
@@ -34,12 +33,10 @@ const corsOrigins = process.env.CORS_ORIGIN
 console.log("CORS Origins configured:", corsOrigins);
 console.log("NODE_ENV:", process.env.NODE_ENV);
 
-// CORS configuration with explicit preflight handling
 app.use(cors({
   origin: (origin, callback) => {
     console.log(`CORS request from origin: ${origin || 'no origin'}`);
     
-    // Allow requests with no origin (like mobile apps or curl requests)
     if (!origin) {
       console.log("Allowing request with no origin");
       return callback(null, true);

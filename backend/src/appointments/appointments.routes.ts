@@ -4,7 +4,8 @@ import {
     getAvailableSlotsByDoctorIdHandler,
     assignAppointmentHandler,
     rescheduleAppointmentHandler,
-    getNextAvailableAppointmentHandler
+    getNextAvailableAppointmentHandler,
+    getLastAppointmentBySpecialtyHandler
 } from "./appointments.controller";
 import { authenticateToken } from "../middleware/auth.middleware";
 
@@ -16,5 +17,6 @@ router.get("/next-available", getNextAvailableAppointmentHandler);
 router.get("/account", authenticateToken, getAccountAppointmentsHandler);
 router.patch("/assign", authenticateToken, assignAppointmentHandler);
 router.patch("/reschedule", authenticateToken, rescheduleAppointmentHandler);
+router.get("/last-appointment-by-specialty", authenticateToken, getLastAppointmentBySpecialtyHandler);
 
 export default router;

@@ -167,3 +167,22 @@ export const GET_NEXT_APPOINTMENT_BY_PATIENT_ID = `
   ORDER BY a.date ASC, a.time ASC
   LIMIT 1
 `
+
+export const GET_LAST_VISIT_BY_PATIENT_ID_AND_SPECIALTY = `
+SELECT doctor_id AS doctorId, doctor_name AS doctorName, specialty_name AS specialtyName, last_visit_date AS lastVisitDate
+  FROM (
+    SELECT
+      a.doctor_id,
+      d.name AS doctor_name,
+      s.name AS specialty_name,
+      a.date AS last_visit_date,
+      ROW_NUMBER() OVER (PARTITION BY s.id ORDER BY a.date DESC, a.time DESC) as rn
+    FROM appointments a
+    JOIN doctors d ON a.doctor_id = d.id
+    JOIN doctor_specialties ds ON d.id = ds.doctor_id
+    JOIN specialties s ON ds.specialty_id = s.id
+    WHERE a.patient_id = ?
+      AND (a.date < ? OR (a.date = ? AND a.time < ?))
+  ) sub
+  WHERE rn = 1
+`

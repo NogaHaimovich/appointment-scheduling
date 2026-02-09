@@ -95,3 +95,14 @@ export type AddPatientResponse = ApiResponse<{
 export type ChatBotResponse = ApiResponse<{
   response: string;
 }>;
+
+export type LastVisitPerSpecialty= {
+    doctorName: string;
+    doctorId: number;
+    specialtyName: string;
+    lastVisitDate?: string;
+};
+
+export type LastVisitPerSpecialtyResponse = ApiResponse<{
+  lastVisitPerSpecialty: LastVisitPerSpecialty[];
+}>;

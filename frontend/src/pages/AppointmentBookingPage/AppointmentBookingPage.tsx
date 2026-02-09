@@ -55,6 +55,7 @@ const AppointmentBookingPage = () => {
                   booking.isRescheduleMode ||
                   !booking.selectedSpecialty
                 }
+                lastVisitPerSpecialty={booking.lastVisitPerSpecialty}
               />
             )}
           </div>

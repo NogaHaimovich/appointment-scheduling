@@ -7,10 +7,9 @@ const axiosInstance = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
-  withCredentials: true, // Required for CORS with credentials
+  withCredentials: true, 
 });
 
-// Public endpoints that don't require authentication
 const PUBLIC_ENDPOINTS = [
   "/getCode",
   "/validateCode",
@@ -19,12 +18,10 @@ const PUBLIC_ENDPOINTS = [
 
 axiosInstance.interceptors.request.use(
   (config) => {
-    // Check if this is a public endpoint
     const isPublicEndpoint = PUBLIC_ENDPOINTS.some(endpoint => 
       config.url?.endsWith(endpoint) || config.url?.includes(endpoint)
     );
 
-    // Only add token for protected endpoints
     if (!isPublicEndpoint) {
       const token = authUtils.getToken();
       if (token) {

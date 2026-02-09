@@ -14,6 +14,7 @@ const SpecialtySelector: FC<SpecialtySelectorProps> = ({ selectedSpecialty, spec
   return (
     <div className="specialty-selection">
       <h3 className="specialty-selection-title">2. SPECIALTY</h3>
+
       {loading ? (
         <div className="specialty-selection-loading">Loading specialties...</div>
       ) : (

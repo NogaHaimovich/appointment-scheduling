@@ -22,12 +22,10 @@
     margin: 0;
   }
 
-  .doctor-selection-count {
-    font-size: 0.75rem;
-    color: $color-text-secondary;
-    background-color: rgba(0, 0, 0, 0.04);
-    padding: 4px 8px;
-    border-radius: 4px;
+  .stethoscope-icon {
+    width: 24px;
+    height: 24px;
+    color: $color-background-dark;
   }
 
   .doctor-selection-loading,
@@ -40,77 +38,117 @@
   .doctor-selection-list {
     display: flex;
     flex-direction: column;
-    gap: 0;
+    gap: 16px;
+    max-height: 750px;
+    overflow-y: auto;
+    padding-right: 8px;
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba(0, 0, 0, 0.2);
+      border-radius: 3px;
+    }
   }
 
-  .doctor-item {
+  .doctor-card {
     display: flex;
     flex-direction: column;
-    padding: 16px 0;
-    padding-left: 24px;
+    padding: 20px;
     cursor: pointer;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    border: 2px solid $color-border-default;
+    border-radius: 16px;
+    background-color: $color-background-secondary;
     transition: all $transition-standard;
     position: relative;
 
     &:hover:not(.selected) {
-      background-color: rgba(99, 102, 241, 0.02);
+      border-color: rgba(99, 102, 241, 0.3);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     }
 
     &.selected {
-      &::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 0;
-        bottom: 0;
-        width: 3px;
-        background-color: $color-background-dark;
-      }
+      border-color: $color-background-dark;
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15);
     }
+  }
 
-    .doctor-item-content {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-    }
+  .visited-doctor-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background-color: $color-background-dark;
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    border-radius: 20px;
+    margin-bottom: 12px;
+    width: fit-content;
+  }
 
-    .doctor-info {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      flex: 1;
-    }
+  .doctor-card-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
 
-    .doctor-name {
-      font-size: $font-size-body;
+  .doctor-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+  }
+
+  .doctor-name {
+    font-size:$font-size-large;
+    font-weight: 700;
+    color: $color-text-primary;
+    margin-bottom: 2px;
+  }
+
+  .doctor-specialty {
+    font-size: $font-size-small;
+    color: $color-text-secondary;
+    margin-bottom: 12px;
+
+    &.selected {
+      color:$color-text-green;
       font-weight: 500;
-      color: $color-text-primary;
-      
-      .doctor-item.selected & {
-        color: $color-background-dark;
-      }
     }
+  }
 
-    .doctor-next-available {
-      font-size:$font-size-small;
-      color: $color-text-secondary;
-      margin-top: 4px;
-      
-      .doctor-item.selected & {
-        color: rgba(0, 0, 0, 0.7);
-      }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    background-color: #ECFDF5;
+    color: $color-text-green;
+    font-size: 0.85rem;
+    border-radius: 8px;
+    width: fit-content;
+
+    strong {
+      font-weight: 600;
     }
+  }
 
-    .doctor-specialty {
-      font-size: 0.875rem;
-      color: $color-text-secondary;
-      
-      .doctor-item.selected & {
-        color: $color-background-dark;
-      }
-    }
+  .next-available-badge {
+    background-color: #ECFDF5;
+    color: $color-text-green;
+  }
 
+  .no-slots-badge {
+    background-color: #FEF2F2;
+    color: #991B1B;
   }
 }
-

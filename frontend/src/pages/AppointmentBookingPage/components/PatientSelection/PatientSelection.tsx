@@ -26,7 +26,9 @@ const PatientSelector: FC<PatientSelectorProps> = ({
 
   return (
     <div className="patient-selection">
-      <h3 className="patient-selection-title">1. PATIENT</h3>
+      <div className="patient-selection-header">
+        <h3 className="patient-selection-title">1. PATIENT</h3>
+      </div>
       {loading ? (
         <div className="patient-selection-loading">Loading patients...</div>
       ) : patients.length === 0 ? (
@@ -38,11 +40,13 @@ const PatientSelector: FC<PatientSelectorProps> = ({
             return (
               <div
                 key={patient.id}
-                className={`patient-item ${isSelected ? 'selected' : ''}`}
+                className={`patient-card ${isSelected ? 'selected' : ''}`}
                 onClick={() => !disabled && !loading && onChange(patient.id)}
               >
-                <div className="patient-content">
-                  <span className="patient-name">{getPatientDisplayName(patient)}</span>
+                <div className="patient-card-content">
+                  <div className="patient-info">
+                    <span className="patient-name">{getPatientDisplayName(patient)}</span>
+                  </div>
                 </div>
               </div>
             );

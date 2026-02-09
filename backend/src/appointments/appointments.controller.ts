@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { AuthRequest } from "../middleware/auth.middleware";
-import { getAccountAppointments, getAvailableSlotsByDoctorId, updateAppointmentAccountID, rescheduleAppointment, getNextAvailableAppointmentDate } from "./appointments.service";
+import { getAccountAppointments, getAvailableSlotsByDoctorId, updateAppointmentAccountID, rescheduleAppointment, getNextAvailableAppointmentDate, getLastVisitPerSpecialty } from "./appointments.service";
 
 export async function getAccountAppointmentsHandler(req: AuthRequest, res: Response) {
     const accountID = req.accountId;
@@ -134,6 +134,29 @@ export async function getNextAvailableAppointmentHandler(req: Request, res: Resp
         res.status(500).json({ 
             success: false,
             message: "Failed to retrieve next available appointment date" 
+        });
+    }
+}
+
+export async function getLastAppointmentBySpecialtyHandler(req: Request, res: Response) {
+    const patientId = req.query.patientId as string;
+    if (!patientId) {
+        return res.status(400).json({
+            success: false,
+            message: "Patient ID is required"
+        });
+    }
+    try{
+        const lastVisitPerSpecialty = await getLastVisitPerSpecialty(patientId);
+        res.json({
+            success: true,
+            lastVisitPerSpecialty
+        });
+    } catch (error) {
+        console.error("Error getting last appointment by specialty:", error);
+        res.status(500).json({ 
+            success: false,
+            message: "Failed to retrieve last appointment by specialty" 
         });
     }
 }

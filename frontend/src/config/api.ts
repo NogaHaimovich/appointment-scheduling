@@ -13,5 +13,6 @@ export const API_ENDPOINTS = {
   addPatient: "/patients/add-patient",
   deletePatient: "/patients/delete-patient",
   getChatBotResponse: "/chatbot/",
+  getLastVisitPerSpecialty: "/appointments/last-appointment-by-specialty",
 } as const;
 
