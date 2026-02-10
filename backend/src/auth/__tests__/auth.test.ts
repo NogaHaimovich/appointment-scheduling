@@ -9,7 +9,7 @@ jest.mock("crypto", () => ({ randomUUID: jest.fn() }));
 jest.mock("jsonwebtoken", () => ({ sign: jest.fn() }));
 jest.mock("../../db/dbHelpers");
 
-describe("Minimal Auth tests", () => {
+describe("Auth tests", () => {
   beforeEach(() => jest.clearAllMocks());
 
   it("should create a 5-character code and prevent reuse after verification", () => {
