@@ -1,7 +1,6 @@
 import { getCurrentDateTime } from "../../utils/dateUtils";
 import { allAsync, getAsync, runAsync } from "../../db/dbHelpers";
 import { getAccountAppointments, getAvailableSlotsByDoctorId, getLastVisitPerSpecialty, getNextAvailableAppointmentDate, rescheduleAppointment, updateAppointmentAccountID } from "../appointments.service";
-import e from "express";
 
 jest.mock("../../db/dbHelpers", () => ({
   allAsync: jest.fn(),

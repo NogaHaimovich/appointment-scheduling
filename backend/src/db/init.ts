@@ -9,7 +9,7 @@ export function initializeDatabase(db: Database): void {
       CREATE TABLE IF NOT EXISTS accounts (
         id TEXT PRIMARY KEY,
         phone TEXT NOT NULL UNIQUE,
-        name TEXT
+        name TEXT NOT NULL
       )
     `);
 

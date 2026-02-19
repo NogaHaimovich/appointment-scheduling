@@ -92,9 +92,16 @@ export async function rescheduleAppointmentHandler(req: AuthRequest, res: Respon
     }
     
     if (!oldAppointmentId || !newAppointmentId) {
-        return res.status(400).json({ 
-            success: false, 
-            message: "Old Appointment ID and New Appointment ID are required" 
+        return res.status(400).json({
+            success: false,
+            message: "Old Appointment ID and New Appointment ID are required"
+        });
+    }
+
+    if (!patientId || !patientName) {
+        return res.status(400).json({
+            success: false,
+            message: "Patient ID and Patient Name are required"
         });
     }
 

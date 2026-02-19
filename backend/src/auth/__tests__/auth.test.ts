@@ -3,6 +3,7 @@
 import { randomUUID } from "crypto";
 import jwt from "jsonwebtoken";
 import * as dbHelpers from "../../db/dbHelpers";
+import { GET_ACCOUNT_BY_PHONE, INPUT_NEW_ACCOUNT, INPUT_NEW_PATIENT } from "../../db/queries";
 import { generateCode, verifyCode, findAccount, createAccount, generateToken } from "../auth.service";
 
 jest.mock("crypto", () => ({ randomUUID: jest.fn() }));
@@ -10,14 +11,14 @@ jest.mock("jsonwebtoken", () => ({ sign: jest.fn() }));
 jest.mock("../../db/dbHelpers");
 
 describe("Auth tests", () => {
-  beforeEach(() => jest.clearAllMocks());
+  afterEach(() => jest.clearAllMocks());
 
   it("should create a 5-character code and prevent reuse after verification", () => {
     const phone = "1234567890";
     const code = generateCode(phone);
     expect(code).toHaveLength(5);
     expect(verifyCode(phone, code)).toBe(true);
-    expect(verifyCode(phone, code)).toBe(false); 
+    expect(verifyCode(phone, code)).toBe(false);
   });
 
   it("should reject wrong code", () => {
@@ -30,7 +31,7 @@ describe("Auth tests", () => {
     (dbHelpers.getAsync as jest.Mock).mockResolvedValueOnce({ id: "account123", name: "John" });
     const account = await findAccount("111");
     expect(account).toEqual({ id: "account123", name: "John" });
-    expect(dbHelpers.getAsync).toHaveBeenCalledWith(expect.any(String), ["111"]);
+    expect(dbHelpers.getAsync).toHaveBeenCalledWith(GET_ACCOUNT_BY_PHONE, ["111"]);
   });
 
   it("should return null when account not found", async () => {
@@ -47,8 +48,8 @@ describe("Auth tests", () => {
     const accountId = await createAccount("333", "Jane");
     expect(accountId).toBe("account-uuid");
     expect(dbHelpers.runAsync).toHaveBeenCalledTimes(2);
-    expect(dbHelpers.runAsync).toHaveBeenNthCalledWith(1, expect.any(String), ["account-uuid", "333", "Jane"]);
-    expect(dbHelpers.runAsync).toHaveBeenNthCalledWith(2, expect.any(String), ["patient-uuid", "account-uuid", "Jane", "self"]);
+    expect(dbHelpers.runAsync).toHaveBeenNthCalledWith(1, INPUT_NEW_ACCOUNT, ["account-uuid", "333", "Jane"]);
+    expect(dbHelpers.runAsync).toHaveBeenNthCalledWith(2, INPUT_NEW_PATIENT, ["patient-uuid", "account-uuid", "Jane", "self"]);
   });
 
   it("should generate JWT token", () => {
@@ -73,4 +74,3 @@ describe("Auth tests", () => {
     expect(() => generateToken("u")).toThrow("JWT_EXPIRES_IN is not defined");
   });
 });
-
